@@ -69,6 +69,10 @@ export type Property = {
   // Until then, elegant gradient placeholders are shown.
   images: string[];
   palette: [string, string]; // placeholder gradient colors
+  rooms?: { name: string; beds: string; detail: string }[];
+  spaces?: { title: string; items: string[] }[];
+  nearby?: { place: string; distance: string }[];
+  cameraDisclosure?: string;
   arrival: {
     address: string;
     doorCode: string;
@@ -82,58 +86,124 @@ export type Property = {
 export const properties: Property[] = [
   {
     slug: "ironwood-acres",
-    name: "Ironwood Acres", // 328 Brandon Way — description, specs & rates below are PLACEHOLDER copy
-    headline: "A modern farmhouse among the vines",
+    name: "Ironwood Acres", // 328 Brandon Way
+    headline: "Putting green + hot tub on a private acre, 2 miles from Highport Marina",
     summary:
-      "Ten private acres minutes from the Texoma wine trail, with a wraparound porch, outdoor kitchen, and stars for days.",
+      "A private, fully fenced 1-acre luxury estate just 2 miles from Highport Marina on Lake Texoma: 5 bedrooms, 4.5 baths, 4 king beds, and room for 12.",
     story: [
-      "Ironwood Acres is where slow weekends happen. Pour a glass on the wraparound porch, fire up the outdoor kitchen, and watch the horses in the neighboring pasture as the sun drops behind the hills.",
-      "With wine trail tastings, horseback rides, and the lake all close by, it's the perfect base for couples' getaways, girls' trips, and milestone celebrations.",
+      "Sink putts on the private green, soak in the 7-person hot tub, fire up the outdoor kitchen, and end the night at the stone fire pit beneath uplit trees. An 8-foot cedar fence wraps the entire acre, so the whole place is yours.",
+      "Inside, 16-foot vaulted ceilings rise over a floor-to-ceiling slate fireplace, a leather sofa and swivel chairs gather the group, and a custom 12-seat dining table fits everyone at one meal. When the sun goes down, the air-conditioned game room takes over.",
     ],
-    location: "North Texas", // PLACEHOLDER — add city, e.g. "Denison, TX · Lake Texoma"
-    bedrooms: 3,
-    beds: 4,
-    baths: 2.5,
-    maxGuests: 8,
+    location: "Pottsboro, TX · Lake Texoma",
+    bedrooms: 5,
+    beds: 6,
+    baths: 4.5,
+    maxGuests: 12,
     minNights: 2,
-    baseRateCents: 42500,
-    weekendRateCents: 54500,
-    cleaningFeeCents: 20000,
-    petFeeCents: 7500,
+    baseRateCents: 42500, // PLACEHOLDER rate
+    weekendRateCents: 54500, // PLACEHOLDER rate
+    cleaningFeeCents: 20000, // PLACEHOLDER fee
+    petFeeCents: null,
     highlights: [
-      "10 private acres near the wine trail",
-      "Outdoor kitchen & pizza oven",
-      "Wraparound porch with swing beds",
-      "Pet friendly (dogs welcome)",
+      "4-hole private putting green on 2,400 SF of turf",
+      "7-person hot tub & stone fire pit under lit trees",
+      "Air-conditioned game room with 85\" TV & poker table",
+      "Fully fenced acre · 2 miles to Highport Marina",
+    ],
+    rooms: [
+      { name: "Primary Suite", beds: "King", detail: "King bed under an 11' white pine ceiling, with a private en-suite bath." },
+      { name: "The Highland Room", beds: "King", detail: "Private en-suite bath and shaggy Highland cow art: cozy farmhouse with a touch of Texas whimsy." },
+      { name: "The 19th Hole", beds: "2 Queens · sleeps 4", detail: "Golf-themed to match the putting green out back, with a private en-suite bath." },
+      { name: "The Drover Room", beds: "King", detail: "Moss-green accent wall and leather headboard, inspired by the cattle-drive hotels of the Texas frontier. Shares a full bath with the Lake Room." },
+      { name: "The Lake Room", beds: "King", detail: "Vintage paddles on the wall, a nod to the Lake Texoma days that bring you here. Shares a full bath with the Drover Room." },
+    ],
+    spaces: [
+      {
+        title: "Living & dining",
+        items: [
+          "16' vaulted ceiling and floor-to-ceiling slate fireplace with wood beam mantel",
+          "Leather Castlery sofa and four swivel chairs",
+          "Custom 12-person dining table",
+          "12' iron sliding door to the covered porch",
+          "Half bath off the living room",
+        ],
+      },
+      {
+        title: "Game room",
+        items: [
+          "Air-conditioned converted garage",
+          "85\" TV and lounge sofa",
+          "Poker table for 8",
+          "Foosball",
+          "Bumper pool that converts to a second card table",
+        ],
+      },
+      {
+        title: "Outdoor oasis",
+        items: [
+          "32'×18' covered porch with pine ceilings and propane heater",
+          "Outdoor kitchen: large grill, flat-top griddle, side burner",
+          "7-person hot tub",
+          "2,400 SF of turf: 4-hole putting green, bocce, giant Jenga, giant dice & yard games",
+          "Lit pathways to a stone wood-burning fire pit ringed by uplit trees",
+          "8' cedar privacy fence around the full acre",
+        ],
+      },
+      {
+        title: "The details",
+        items: [
+          "Pottery Barn beds throughout",
+          "Whole-house water filtration",
+          "Tankless water heater, so the hot water won't run out",
+          "Mesh Wi-Fi across the property",
+          "Self check-in", // PLACEHOLDER: keypad or smart lock
+        ],
+      },
+    ],
+    nearby: [
+      { place: "Highport Marina", distance: "2 miles" },
+      { place: "Denison", distance: "15 minutes" },
+      { place: "Sherman", distance: "20 minutes" },
     ],
     amenities: [
-      "Outdoor kitchen",
-      "Wood-fired pizza oven",
-      "Hot tub under the stars",
-      "Fire pit",
-      "Porch swing beds",
-      "Yard games",
-      "Wine fridge",
-      "Record player & vinyl",
-      "Fast Wi-Fi",
-      "Washer & dryer",
-      "Fenced dog run",
+      "Private putting green",
+      "7-person hot tub",
+      "Outdoor kitchen & griddle",
+      "Stone fire pit",
+      "Covered porch with heater",
+      "Air-conditioned game room",
+      "Poker table for 8",
+      "Foosball & bumper pool",
+      "Bocce & giant yard games",
+      "12-seat dining table",
+      "Slate fireplace",
+      "Mesh Wi-Fi",
+      "Whole-house water filtration",
+      "Tankless water heater",
+      "Fully fenced acre",
     ],
     houseRules: [
-      "No parties or events without written approval",
-      "Quiet hours 10 PM – 8 AM",
+      "Maximum 12 guests",
+      "No parties or events",
+      "No pets",
+      "Quiet hours 10 PM – 8 AM", // PLACEHOLDER: confirm quiet hours
       "No smoking indoors",
-      "Up to 2 dogs with pet fee",
+      "Park in the driveway only, never on the street or grass",
     ],
+    cameraDisclosure:
+      "Exterior security cameras monitor the front door, the garage, and the left side of the house. There are no cameras inside the home.",
     images: [],
-    palette: ["#3b2f2a", "#8a6a3b"],
+    palette: ["#1f3a2e", "#b08d57"],
     arrival: {
-      address: "328 Brandon Way", // PLACEHOLDER — add city, state, ZIP
-      doorCode: "PLACEHOLDER-0000",
+      address: "328 Brandon Way, Pottsboro, TX", // PLACEHOLDER: confirm city & add ZIP
+      doorCode: "PLACEHOLDER-0000", // keypad / smart lock code
       wifiName: "IronwoodAcres",
       wifiPassword: "PLACEHOLDER",
-      parking: "Gravel drive — park by the barn.",
-      notes: ["Gate code is the same as the door code."],
+      parking: "Driveway parking only. Please don't park on the street or the grass.", // PLACEHOLDER: add "Driveway fits # vehicles"
+      notes: [
+        "Hot tub is ready on arrival; please shower before soaking.",
+        "Firewood: PLACEHOLDER (e.g. one starter bundle provided; more available nearby).",
+      ],
     },
   },
   {

@@ -49,10 +49,54 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             ))}
           </ul>
 
-          <h2 className="mt-12 text-3xl">Amenities</h2>
-          <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-ink-soft sm:grid-cols-3">
-            {property.amenities.map((a) => <li key={a}>· {a}</li>)}
-          </ul>
+          {property.rooms && (
+            <>
+              <h2 className="mt-12 text-3xl">Where you'll sleep</h2>
+              <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                {property.rooms.map((r) => (
+                  <div key={r.name} className="card !bg-white">
+                    <p className="font-display text-2xl">{r.name}</p>
+                    <p className="text-xs uppercase tracking-wider text-brass-dark">{r.beds}</p>
+                    <p className="mt-2 text-sm text-ink-soft">{r.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+
+          {property.spaces ? (
+            <div className="mt-12 grid gap-10 sm:grid-cols-2">
+              {property.spaces.map((sp) => (
+                <div key={sp.title}>
+                  <h2 className="text-3xl">{sp.title}</h2>
+                  <ul className="mt-4 space-y-2 text-sm text-ink-soft">
+                    {sp.items.map((i) => <li key={i}>· {i}</li>)}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <>
+              <h2 className="mt-12 text-3xl">Amenities</h2>
+              <ul className="mt-5 grid grid-cols-2 gap-x-6 gap-y-2 text-sm text-ink-soft sm:grid-cols-3">
+                {property.amenities.map((a) => <li key={a}>· {a}</li>)}
+              </ul>
+            </>
+          )}
+
+          {property.nearby && (
+            <>
+              <h2 className="mt-12 text-3xl">Getting around</h2>
+              <div className="mt-5 grid grid-cols-3 gap-4">
+                {property.nearby.map((n) => (
+                  <div key={n.place} className="card !p-4 text-center">
+                    <p className="font-display text-2xl">{n.distance}</p>
+                    <p className="text-xs uppercase tracking-wider text-ink-soft">{n.place}</p>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
 
           <div className="mt-12 rounded-2xl bg-lake-deep p-8 text-sand">
             <p className="eyebrow !text-brass-light">Included with every direct stay</p>
@@ -78,6 +122,12 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
               <p className="font-medium">House rules</p>
               <ul className="mt-1 text-ink-soft">{property.houseRules.map((r) => <li key={r}>{r}</li>)}</ul>
             </div>
+            {property.cameraDisclosure && (
+              <div className="sm:col-span-3">
+                <p className="font-medium">Security cameras</p>
+                <p className="mt-1 text-ink-soft">{property.cameraDisclosure}</p>
+              </div>
+            )}
           </div>
         </div>
 

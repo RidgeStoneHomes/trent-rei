@@ -86,7 +86,9 @@ export function renderAgreement(a: AgreementInput): { title: string; sections: {
       {
         heading: "10. Access, Privacy & Cameras",
         body: [
-          "Exterior cameras may monitor entrances and driveways for security; no cameras are located inside the home. Host may enter the Property with reasonable notice, or without notice in an emergency.",
+          p.cameraDisclosure ??
+            "Exterior cameras may monitor entrances and driveways for security; no cameras are located inside the home.",
+          "Host may enter the Property with reasonable notice, or without notice in an emergency.",
         ],
       },
       {

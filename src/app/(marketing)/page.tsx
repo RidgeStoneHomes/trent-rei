@@ -13,7 +13,7 @@ const reasons = [
 ];
 
 const journey = [
-  { step: "01", title: "Choose your escape", body: "Lake-view glass house or farmhouse in the vines." },
+  { step: "01", title: "Choose your escape", body: "Two private homes minutes from Lake Texoma, each with its own personality." },
   { step: "02", title: "Reserve in minutes", body: "Live availability, transparent pricing, secure checkout." },
   { step: "03", title: "Sign & settle in", body: "A simple digital rental agreement — no printing, no fuss." },
   { step: "04", title: "Unlock the Insider Portal", body: "Partner perks, curated itineraries, and arrival details." },
@@ -24,6 +24,7 @@ const moments = [
   "Anniversaries that deserve a view",
   "Girls' trips & wine-trail weekends",
   "Striper fishing with the crew",
+  "Golf weekends on a private putting green",
   "Family reunions around the fire",
   "Proposals at golden hour",
   "Remote work with a lake breeze",
