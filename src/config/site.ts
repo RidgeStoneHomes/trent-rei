@@ -8,9 +8,9 @@ export const site = {
   tagline: "Private luxury stays on Lake Texoma",
   region: "Lake Texoma · North Texas",
   hostName: "Trent",
-  email: "stay@example.com", // PLACEHOLDER
-  phone: "(555) 555-0100", // PLACEHOLDER
-  instagram: "https://instagram.com/", // PLACEHOLDER
+  email: "reynoldsretreatstx@gmail.com",
+  phone: "(682) 532-6007",
+  instagram: "", // add your Instagram URL to show it in the footer
   timeZone: "America/Chicago",
   currency: "usd",
 

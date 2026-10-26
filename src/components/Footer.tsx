@@ -24,9 +24,9 @@ export function Footer() {
         </div>
         <div className="text-sm">
           <p className="eyebrow mb-3 !text-brass-light">Contact</p>
-          <p className="py-1">{site.email}</p>
-          <p className="py-1">{site.phone}</p>
-          <a href={site.instagram} className="block py-1 hover:text-sand">Instagram</a>
+          <a href={`mailto:${site.email}`} className="block py-1 hover:text-sand">{site.email}</a>
+          <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="block py-1 hover:text-sand">{site.phone}</a>
+          {site.instagram && <a href={site.instagram} className="block py-1 hover:text-sand">Instagram</a>}
         </div>
       </div>
       <div className="border-t border-sand/10 py-6 text-center text-xs text-sand/50">
