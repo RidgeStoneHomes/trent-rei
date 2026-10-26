@@ -4,7 +4,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 export const site = {
-  brand: "Ridgestone Retreats", // PLACEHOLDER brand name
+  brand: "Reynolds Retreats",
   tagline: "Private luxury stays on Lake Texoma",
   region: "Lake Texoma · North Texas",
   hostName: "Trent",
@@ -81,8 +81,64 @@ export type Property = {
 
 export const properties: Property[] = [
   {
+    slug: "ironwood-acres",
+    name: "Ironwood Acres", // 328 Brandon Way — description, specs & rates below are PLACEHOLDER copy
+    headline: "A modern farmhouse among the vines",
+    summary:
+      "Ten private acres minutes from the Texoma wine trail, with a wraparound porch, outdoor kitchen, and stars for days.",
+    story: [
+      "Ironwood Acres is where slow weekends happen. Pour a glass on the wraparound porch, fire up the outdoor kitchen, and watch the horses in the neighboring pasture as the sun drops behind the hills.",
+      "With wine trail tastings, horseback rides, and the lake all close by, it's the perfect base for couples' getaways, girls' trips, and milestone celebrations.",
+    ],
+    location: "North Texas", // PLACEHOLDER — add city, e.g. "Denison, TX · Lake Texoma"
+    bedrooms: 3,
+    beds: 4,
+    baths: 2.5,
+    maxGuests: 8,
+    minNights: 2,
+    baseRateCents: 42500,
+    weekendRateCents: 54500,
+    cleaningFeeCents: 20000,
+    petFeeCents: 7500,
+    highlights: [
+      "10 private acres near the wine trail",
+      "Outdoor kitchen & pizza oven",
+      "Wraparound porch with swing beds",
+      "Pet friendly (dogs welcome)",
+    ],
+    amenities: [
+      "Outdoor kitchen",
+      "Wood-fired pizza oven",
+      "Hot tub under the stars",
+      "Fire pit",
+      "Porch swing beds",
+      "Yard games",
+      "Wine fridge",
+      "Record player & vinyl",
+      "Fast Wi-Fi",
+      "Washer & dryer",
+      "Fenced dog run",
+    ],
+    houseRules: [
+      "No parties or events without written approval",
+      "Quiet hours 10 PM – 8 AM",
+      "No smoking indoors",
+      "Up to 2 dogs with pet fee",
+    ],
+    images: [],
+    palette: ["#3b2f2a", "#8a6a3b"],
+    arrival: {
+      address: "328 Brandon Way", // PLACEHOLDER — add city, state, ZIP
+      doorCode: "PLACEHOLDER-0000",
+      wifiName: "IronwoodAcres",
+      wifiPassword: "PLACEHOLDER",
+      parking: "Gravel drive — park by the barn.",
+      notes: ["Gate code is the same as the door code."],
+    },
+  },
+  {
     slug: "the-overlook",
-    name: "The Overlook", // PLACEHOLDER
+    name: "The Overlook", // PLACEHOLDER — second home name
     headline: "A glass-walled lake house above the water",
     summary:
       "Floor-to-ceiling views of Lake Texoma, a heated plunge pool, and sunsets that stop conversation mid-sentence.",
@@ -138,62 +194,6 @@ export const properties: Property[] = [
         "Pool heat is set on arrival day — allow 6 hours to reach temperature.",
         "Life jackets are in the dock box.",
       ],
-    },
-  },
-  {
-    slug: "the-vineyard-house",
-    name: "The Vineyard House", // PLACEHOLDER
-    headline: "A modern farmhouse among the vines",
-    summary:
-      "Ten private acres minutes from the Texoma wine trail, with a wraparound porch, outdoor kitchen, and stars for days.",
-    story: [
-      "The Vineyard House is where slow weekends happen. Pour a glass on the wraparound porch, fire up the outdoor kitchen, and watch the horses in the neighboring pasture as the sun drops behind the hills.",
-      "With wine trail tastings, horseback rides, and the lake all close by, it's the perfect base for couples' getaways, girls' trips, and milestone celebrations.",
-    ],
-    location: "Denison, TX · Texoma Wine Country", // PLACEHOLDER
-    bedrooms: 3,
-    beds: 4,
-    baths: 2.5,
-    maxGuests: 8,
-    minNights: 2,
-    baseRateCents: 42500,
-    weekendRateCents: 54500,
-    cleaningFeeCents: 20000,
-    petFeeCents: 7500,
-    highlights: [
-      "10 private acres near the wine trail",
-      "Outdoor kitchen & pizza oven",
-      "Wraparound porch with swing beds",
-      "Pet friendly (dogs welcome)",
-    ],
-    amenities: [
-      "Outdoor kitchen",
-      "Wood-fired pizza oven",
-      "Hot tub under the stars",
-      "Fire pit",
-      "Porch swing beds",
-      "Yard games",
-      "Wine fridge",
-      "Record player & vinyl",
-      "Fast Wi-Fi",
-      "Washer & dryer",
-      "Fenced dog run",
-    ],
-    houseRules: [
-      "No parties or events without written approval",
-      "Quiet hours 10 PM – 8 AM",
-      "No smoking indoors",
-      "Up to 2 dogs with pet fee",
-    ],
-    images: [],
-    palette: ["#3b2f2a", "#8a6a3b"],
-    arrival: {
-      address: "456 Vineyard Rd, Denison, TX", // PLACEHOLDER
-      doorCode: "PLACEHOLDER-0000",
-      wifiName: "VineyardHouse",
-      wifiPassword: "PLACEHOLDER",
-      parking: "Gravel drive — park by the barn.",
-      notes: ["Gate code is the same as the door code."],
     },
   },
 ];

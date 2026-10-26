@@ -1,4 +1,4 @@
-# Ridgestone Retreats: direct booking and guest experience platform
+# Reynolds Retreats: direct booking and guest experience platform
 
 A marketing site and direct-booking engine for two luxury short-term rentals on Lake Texoma. It covers the whole guest path:
 

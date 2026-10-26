@@ -124,7 +124,7 @@ async function main() {
   if (process.argv.includes("--demo")) {
     const demos = [
       { code: "DEMO01", firstName: "Avery", checkIn: iso(60), checkOut: iso(63), slug: "the-overlook" }, // refundable — portal locked
-      { code: "DEMO02", firstName: "Jordan", checkIn: iso(12), checkOut: iso(15), slug: "the-vineyard-house" }, // portal open
+      { code: "DEMO02", firstName: "Jordan", checkIn: iso(12), checkOut: iso(15), slug: "ironwood-acres" }, // portal open
       { code: "DEMO03", firstName: "Morgan", checkIn: iso(-1), checkOut: iso(2), slug: "the-overlook" }, // currently staying
     ];
     for (const d of demos) {
