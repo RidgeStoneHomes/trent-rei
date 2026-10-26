@@ -8,6 +8,7 @@ import { endAdminSession, isAdmin, safeEqual, startAdminSession } from "@/lib/se
 import { slugify } from "@/lib/codes";
 import { getProperty } from "@/config/site";
 import { isIsoDate } from "@/lib/dates";
+import { sampleVendors } from "@/content/sample-vendors";
 
 async function guard() {
   if (!(await isAdmin())) redirect("/admin/login");
@@ -106,4 +107,10 @@ export async function cancelBooking(form: FormData) {
   await guard();
   await db.booking.update({ where: { id: String(form.get("id")) }, data: { status: "CANCELLED" } });
   revalidatePath("/admin");
+}
+
+export async function loadSampleVendors() {
+  await guard();
+  if ((await db.vendor.count()) === 0) await db.vendor.createMany({ data: sampleVendors });
+  revalidatePath("/admin/vendors");
 }

@@ -1,8 +1,9 @@
-// Local dev uses SQLite. For production, switch provider to "postgresql"
-// and point DATABASE_URL at a hosted Postgres (Neon, Supabase, RDS...).
+// Postgres everywhere (Neon via Vercel Storage in production).
+// DATABASE_URL is the pooled connection; DATABASE_URL_UNPOOLED is used for migrations.
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 generator client {

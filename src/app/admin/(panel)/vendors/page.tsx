@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { vendorCategories } from "@/config/site";
 import { db } from "@/lib/db";
-import { toggleVendor } from "@/app/actions/admin";
+import { loadSampleVendors, toggleVendor } from "@/app/actions/admin";
 
 export default async function VendorsAdmin() {
   const since = new Date(Date.now() - 30 * 86_400_000);
@@ -18,6 +18,13 @@ export default async function VendorsAdmin() {
         </div>
         <Link href="/admin/vendors/new" className="btn-primary">Add partner</Link>
       </div>
+      {vendors.length === 0 && (
+        <form action={loadSampleVendors} className="card mt-6 !bg-white">
+          <p className="font-medium">No partners yet.</p>
+          <p className="mt-1 text-sm text-ink-soft">Add your own, or load 8 sample partners to see how the portal looks and edit them into your real ones.</p>
+          <button className="btn-ghost mt-4">Load sample partners</button>
+        </form>
+      )}
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         {vendors.map((v) => {
           const qr = v.clicks.filter((c) => c.source === "qr").length;

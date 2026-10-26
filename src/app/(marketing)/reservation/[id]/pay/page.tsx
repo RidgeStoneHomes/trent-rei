@@ -4,7 +4,7 @@ import { loadReservation, bookingLines } from "@/lib/reservation";
 import { startPayment } from "@/app/actions/booking";
 import { ActionForm, SubmitButton } from "@/components/forms";
 import { StaySummary, Steps } from "@/components/StaySummary";
-import { stripeEnabled } from "@/lib/stripe";
+import { paymentsAvailable, stripeEnabled } from "@/lib/stripe";
 import { formatMoney } from "@/lib/money";
 
 export const dynamic = "force-dynamic";
@@ -28,13 +28,19 @@ export default async function PayPage({ params }: { params: Promise<{ id: string
           <p className="mt-2 text-sm text-ink-soft">
             Fully refundable until {site.policies.refundWindowDays} days before check-in. Payments are processed securely by Stripe — we never see your card number.
           </p>
-          <ActionForm action={startPayment} className="mt-6">
-            <input type="hidden" name="bookingId" value={booking.id} />
-            <SubmitButton pendingText="Opening secure checkout…">
-              {stripeEnabled ? "Continue to secure payment" : "Complete booking (demo mode — no charge)"}
-            </SubmitButton>
-          </ActionForm>
-          {!stripeEnabled && (
+          {paymentsAvailable ? (
+            <ActionForm action={startPayment} className="mt-6">
+              <input type="hidden" name="bookingId" value={booking.id} />
+              <SubmitButton pendingText="Opening secure checkout…">
+                {stripeEnabled ? "Continue to secure payment" : "Complete booking (demo mode — no charge)"}
+              </SubmitButton>
+            </ActionForm>
+          ) : (
+            <p className="mt-6 rounded-lg bg-sand px-4 py-3 text-sm">
+              Online payment opens soon. To lock in these dates now, email {site.email} or text {site.phone} with code {booking.code}.
+            </p>
+          )}
+          {!stripeEnabled && paymentsAvailable && (
             <p className="mt-3 text-xs text-amber-700">Demo mode: add STRIPE_SECRET_KEY to accept real payments.</p>
           )}
         </div>

@@ -10,7 +10,7 @@ import { validateStay } from "@/lib/availability";
 import { quoteStay } from "@/lib/pricing";
 import { confirmBooking, referralDiscount, uniqueBookingCode } from "@/lib/booking";
 import { AGREEMENT_VERSION, agreementPlainText, renderAgreement } from "@/content/agreement";
-import { stripe, stripeEnabled } from "@/lib/stripe";
+import { demoPaymentsAllowed, stripe, stripeEnabled } from "@/lib/stripe";
 import { siteUrl } from "@/lib/url";
 import { formatRange } from "@/lib/dates";
 
@@ -142,6 +142,7 @@ export async function startPayment(_prev: FormState, form: FormData): Promise<Fo
   if (booking.status !== "PENDING_PAYMENT") redirect(`/reservation/${booking.id}/agreement`);
 
   if (!stripeEnabled) {
+    if (!demoPaymentsAllowed) return { error: "Online payment isn't available yet. Please contact us to book." };
     // DEMO MODE — no Stripe key configured; simulate a successful payment.
     await confirmBooking(booking.id);
     redirect(`/reservation/${booking.id}/confirmed`);

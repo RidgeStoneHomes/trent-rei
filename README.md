@@ -23,10 +23,11 @@ A marketing site and direct-booking engine for two luxury short-term rentals on 
   - **Per-partner QR codes** for welcome books or partner counters, tracked as `qr` scans.
 
 ## Run locally
+Needs Node 20+ and a Postgres database (a free Neon branch works).
 ```bash
 npm install
-cp .env.example .env      # set SESSION_SECRET and ADMIN_PASSWORD
-npm run setup             # create the database and add sample partners
+cp .env.example .env      # set DATABASE_URL, SESSION_SECRET, ADMIN_PASSWORD
+npm run setup             # create tables and add sample partners
 npm run demo              # optional: 3 demo bookings, one per trip stage
 npm run dev               # http://localhost:3000
 ```
@@ -46,9 +47,19 @@ Calendars sync both ways over iCal, so nothing is double-booked:
 
 With OwnerRez as the channel manager, the simplest setup is one feed each way: this site ⇄ OwnerRez, and OwnerRez ⇄ VRBO, Airbnb and the others.
 
-## Deploy
-- Vercel or any Node host. For production, switch `prisma/schema.prisma` to `provider = "postgresql"` (Neon or Supabase) and set `DATABASE_URL`.
-- Set `NEXT_PUBLIC_SITE_URL`, `SESSION_SECRET`, `ADMIN_PASSWORD`, `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET` (webhook event `checkout.session.completed` → `/api/stripe/webhook`), `RESEND_API_KEY`, `EMAIL_FROM` and `HOST_NOTIFY_EMAIL`.
+## Deploy on Vercel
+1. **Import:** Vercel → Add New → Project → import `trent-rei`. The first deploy works even before a database is connected.
+2. **Database:** Project → Storage → Create Database → Neon (Postgres) → connect it to the project. This adds `DATABASE_URL` and `DATABASE_URL_UNPOOLED`. Tables are created automatically on every deploy (`prisma migrate deploy`).
+3. **Environment variables** (Project → Settings → Environment Variables):
+   - `SESSION_SECRET`: a long random string
+   - `ADMIN_PASSWORD`: your host dashboard password
+   - `NEXT_PUBLIC_SITE_URL`: `https://reynoldsretreats.com`
+   - `ALLOW_DEMO_PAYMENTS=true` for a free click-through preview only. **Remove it before launch.**
+   - Later: `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `RESEND_API_KEY`, `EMAIL_FROM`, `HOST_NOTIFY_EMAIL`, `ICAL_IMPORT_*`
+4. **Redeploy** (Deployments → ⋯ → Redeploy) after changing variables.
+5. **Partners:** in `/admin/vendors`, click "Load sample partners" or add your own.
+6. **Domain:** Project → Settings → Domains → add `reynoldsretreats.com` and `www.reynoldsretreats.com`, then add the DNS records Vercel shows at your domain registrar.
+7. **Stripe webhook:** endpoint `https://reynoldsretreats.com/api/stripe/webhook`, event `checkout.session.completed`.
 
 ## Stack
 Next.js 15 (App Router, server actions), TypeScript, Tailwind CSS, Prisma, Stripe, Resend, qrcode.
