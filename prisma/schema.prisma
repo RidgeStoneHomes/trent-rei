@@ -1,0 +1,129 @@
+// Local dev uses SQLite. For production, switch provider to "postgresql"
+// and point DATABASE_URL at a hosted Postgres (Neon, Supabase, RDS...).
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Booking lifecycle: PENDING_AGREEMENT -> PENDING_PAYMENT -> CONFIRMED (or CANCELLED)
+model Booking {
+  id             String   @id @default(cuid())
+  code           String   @unique // short confirmation code guests use to sign in
+  propertySlug   String
+  checkIn        String // YYYY-MM-DD (property local date)
+  checkOut       String // YYYY-MM-DD
+  guests         Int
+  pets           Int      @default(0)
+  firstName      String
+  lastName       String
+  email          String
+  phone          String
+  notes          String?
+  occasion       String?
+  nightlyCents   Int // sum of nightly rates
+  cleaningCents  Int
+  petCents       Int      @default(0)
+  taxCents       Int
+  discountCents  Int      @default(0)
+  totalCents     Int
+  status         String   @default("PENDING_AGREEMENT")
+  referralCode   String? // code that was applied to this booking
+  stripeSession  String?
+  paidAt         DateTime?
+  guestPassToken String   @unique @default(cuid()) // shown as QR to partner vendors
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  agreement Agreement?
+  clicks    Click[]
+
+  @@index([propertySlug, checkIn])
+  @@index([email])
+}
+
+// Signed short-term rental agreement (electronic signature record)
+model Agreement {
+  id          String   @id @default(cuid())
+  bookingId   String   @unique
+  booking     Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  version     String
+  signedName  String
+  initials    String
+  contentHash String // SHA-256 of the exact agreement text the guest saw
+  content     String // full text snapshot
+  ip          String?
+  userAgent   String?
+  signedAt    DateTime @default(now())
+}
+
+// Owner blocks (maintenance, personal use) — Airbnb/VRBO blocks come from iCal import
+model BlockedRange {
+  id           String   @id @default(cuid())
+  propertySlug String
+  start        String // YYYY-MM-DD inclusive
+  end          String // YYYY-MM-DD exclusive
+  reason       String?
+  createdAt    DateTime @default(now())
+}
+
+// Local preferred partners shown in the guest Insider portal
+model Vendor {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  category    String // fishing, dining, wine, outdoors, casino, wellness, ...
+  blurb       String // short public teaser
+  description String
+  perk        String // headline, e.g. "15% off any half-day charter"
+  perkDetails String? // fine print / how to redeem
+  promoCode   String? // code guests mention or enter when booking
+  bookingUrl  String? // affiliate / booking link (tracked through /go/[slug])
+  phone       String?
+  address     String?
+  distance    String? // "12 min drive"
+  imageUrl    String?
+  featured    Boolean  @default(false)
+  active      Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  clicks Click[]
+}
+
+// Each tap on an affiliate link or scan of a partner QR code
+model Click {
+  id        String   @id @default(cuid())
+  vendorId  String
+  vendor    Vendor   @relation(fields: [vendorId], references: [id], onDelete: Cascade)
+  bookingId String?
+  booking   Booking? @relation(fields: [bookingId], references: [id], onDelete: SetNull)
+  source    String   @default("link") // link | qr
+  createdAt DateTime @default(now())
+}
+
+// "Share the Lake" referral program — one code per past/upcoming guest
+model ReferralCode {
+  id         String   @id @default(cuid())
+  code       String   @unique
+  ownerEmail String   @unique
+  ownerName  String
+  uses       Int      @default(0)
+  creditCents Int     @default(0) // credit earned toward the owner's next stay
+  createdAt  DateTime @default(now())
+}
+
+// Interest capture — "Founding Guest" list and inquiries
+model Lead {
+  id        String   @id @default(cuid())
+  email     String
+  name      String?
+  interest  String? // which property / dates / occasion
+  message   String?
+  source    String   @default("founding-list")
+  createdAt DateTime @default(now())
+}

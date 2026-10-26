@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body { @apply bg-sand text-ink font-sans antialiased; }
+  h1, h2, h3 { @apply font-display; }
+  ::selection { @apply bg-brass-light text-ink; }
+}
+
+@layer components {
+  .container-x { @apply mx-auto w-full max-w-6xl px-4 sm:px-6; }
+  .eyebrow { @apply text-[11px] uppercase tracking-luxe text-brass-dark; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium tracking-wide transition disabled:cursor-not-allowed disabled:opacity-50; }
+  .btn-primary { @apply btn bg-ink text-sand hover:bg-lake-deep; }
+  .btn-brass { @apply btn bg-brass text-ink hover:bg-brass-light; }
+  .btn-ghost { @apply btn border border-ink/20 hover:border-ink/60; }
+  .btn-light { @apply btn border border-sand/40 text-sand hover:bg-sand hover:text-ink; }
+  .card { @apply rounded-2xl bg-white/70 p-6 shadow-sm ring-1 ring-ink/5; }
+  .input { @apply w-full rounded-lg border border-ink/15 bg-white px-3 py-2.5 text-sm outline-none transition focus:border-lake focus:ring-2 focus:ring-lake/20; }
+  .label { @apply mb-1 block text-xs font-medium uppercase tracking-wider text-ink-soft; }
+  .prose-luxe p { @apply mb-4 leading-relaxed text-ink-soft; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+}
