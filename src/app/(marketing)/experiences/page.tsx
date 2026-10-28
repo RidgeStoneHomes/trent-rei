@@ -23,7 +23,7 @@ export default async function ExperiencesPage() {
       <section className="container-x py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {vendors.map((v) => (
-            <article key={v.id} className="card flex flex-col !bg-white">
+            <article key={v.id} data-reveal className="card flex flex-col !bg-white transition hover:-translate-y-1 hover:shadow-md">
               <p className="text-xs uppercase tracking-wider text-ink-soft">{vendorCategories[v.category]?.icon} {vendorCategories[v.category]?.label ?? v.category}</p>
               <p className="mt-2 font-display text-2xl">{v.name}</p>
               <p className="mt-2 flex-1 text-sm text-ink-soft">{v.blurb}</p>

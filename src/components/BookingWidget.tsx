@@ -27,6 +27,7 @@ export function BookingWidget({
   minNights,
   allowsPets,
   baseRateCents,
+  initial,
 }: {
   slug: string;
   today: string;
@@ -35,13 +36,20 @@ export function BookingWidget({
   minNights: number;
   allowsPets: boolean;
   baseRateCents: number;
+  initial?: { checkIn?: string; checkOut?: string; guests?: number };
 }) {
   const router = useRouter();
   const bookedSet = useMemo(() => new Set(booked), [booked]);
-  const [monthOffset, setMonthOffset] = useState(0);
-  const [checkIn, setCheckIn] = useState<string | null>(null);
-  const [checkOut, setCheckOut] = useState<string | null>(null);
-  const [guests, setGuests] = useState(2);
+  // Dates carried over from a search are only kept if they're actually bookable here
+  const carried =
+    initial?.checkIn && initial.checkOut && initial.checkIn >= today && initial.checkIn < initial.checkOut && ![...bookedSet].some((d) => d >= initial.checkIn! && d < initial.checkOut!);
+  const [checkIn, setCheckIn] = useState<string | null>(carried ? initial!.checkIn! : null);
+  const [checkOut, setCheckOut] = useState<string | null>(carried ? initial!.checkOut! : null);
+  const [guests, setGuests] = useState(Math.min(maxGuests, Math.max(1, initial?.guests ?? 2)));
+  // Open the calendar on the month of a carried-over check-in
+  const [monthOffset, setMonthOffset] = useState(() =>
+    carried ? Math.min(16, (Number(initial!.checkIn!.slice(0, 4)) - Number(today.slice(0, 4))) * 12 + Number(initial!.checkIn!.slice(5, 7)) - Number(today.slice(5, 7))) : 0,
+  );
   const [pets, setPets] = useState(0);
   const [quote, setQuote] = useState<QuoteResponse | null>(null);
 
@@ -98,7 +106,7 @@ export function BookingWidget({
   }
 
   return (
-    <div className="card !bg-white">
+    <div id="book" className="card scroll-mt-28 !bg-white">
       <p className="text-sm text-ink-soft">
         from <span className="font-display text-3xl text-ink">{money(baseRateCents)}</span> / night
       </p>

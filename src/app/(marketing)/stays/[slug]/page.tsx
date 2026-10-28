@@ -4,7 +4,7 @@ import { getProperty, properties, site } from "@/config/site";
 import { Media } from "@/components/Media";
 import { BookingWidget } from "@/components/BookingWidget";
 import { bookedNights } from "@/lib/availability";
-import { todayLocal } from "@/lib/dates";
+import { isIsoDate, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 
 export const dynamic = "force-dynamic";
@@ -14,8 +14,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return p ? { title: p.name, description: p.summary } : {};
 }
 
-export default async function PropertyPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function PropertyPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
   const property = getProperty((await params).slug);
+  const q = await searchParams;
+  const initial = isIsoDate(q.checkIn) && isIsoDate(q.checkOut) ? { checkIn: q.checkIn, checkOut: q.checkOut, guests: Number(q.guests) || 2 } : undefined;
   if (!property) notFound();
   const booked = await bookedNights(property.slug);
   const other = properties.find((p) => p.slug !== property.slug);
@@ -23,13 +31,17 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
   return (
     <>
       <section className="container-x pt-10">
-        <p className="eyebrow">{property.location}</p>
-        <h1 className="mt-3 text-5xl sm:text-6xl">{property.name}</h1>
-        <p className="mt-3 text-lg text-ink-soft">{property.headline}</p>
-        <div className="mt-8 grid h-[28rem] grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl">
-          <Media property={property} index={0} className="col-span-4 row-span-2 h-full w-full sm:col-span-2" label="Photo coming soon" />
+        <p className="eyebrow animate-rise">{property.location}</p>
+        <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">{property.name}</h1>
+        <p className="mt-3 animate-rise text-lg text-ink-soft [animation-delay:200ms]">{property.headline}</p>
+        <div className="mt-8 grid h-[28rem] animate-rise grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl [animation-delay:300ms]">
+          <div className="col-span-4 row-span-2 overflow-hidden sm:col-span-2">
+            <Media property={property} index={0} className="h-full w-full transition duration-700 hover:scale-105" label="Photo coming soon" />
+          </div>
           {[1, 2, 3, 4].map((i) => (
-            <Media key={i} property={property} index={i} className="hidden h-full w-full sm:block" />
+            <div key={i} className="hidden overflow-hidden sm:block">
+              <Media property={property} index={i} className="h-full w-full transition duration-700 hover:scale-105" />
+            </div>
           ))}
         </div>
       </section>
@@ -45,7 +57,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
           <h2 className="mt-12 text-3xl">Highlights</h2>
           <ul className="mt-5 grid gap-3 sm:grid-cols-2">
             {property.highlights.map((h) => (
-              <li key={h} className="card !p-4 text-sm">✦ {h}</li>
+              <li key={h} data-reveal className="card !p-4 text-sm transition hover:-translate-y-0.5 hover:shadow-md"><span className="text-ember">✦</span> {h}</li>
             ))}
           </ul>
 
@@ -54,7 +66,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
               <h2 className="mt-12 text-3xl">Where you'll sleep</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {property.rooms.map((r) => (
-                  <div key={r.name} className="card !bg-white">
+                  <div key={r.name} data-reveal className="card !bg-white transition hover:-translate-y-0.5 hover:shadow-md">
                     <p className="font-display text-2xl">{r.name}</p>
                     <p className="text-xs uppercase tracking-wider text-brass-dark">{r.beds}</p>
                     <p className="mt-2 text-sm text-ink-soft">{r.detail}</p>
@@ -98,7 +110,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             </>
           )}
 
-          <div className="mt-12 rounded-2xl bg-lake-deep p-8 text-sand">
+          <div data-reveal className="relative mt-12 overflow-hidden rounded-2xl bg-lake-deep p-8 text-sand">
+            <div aria-hidden className="absolute -right-16 -top-16 h-56 w-56 animate-glow rounded-full bg-ember/25 blur-3xl" />
             <p className="eyebrow !text-brass-light">Included with every direct stay</p>
             <h3 className="mt-2 text-3xl">The Insider Portal</h3>
             <p className="mt-3 text-sand/80">
@@ -140,6 +153,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             minNights={property.minNights}
             allowsPets={property.petFeeCents !== null}
             baseRateCents={property.baseRateCents}
+            initial={initial}
           />
           <p className="mt-3 text-center text-xs text-ink-soft">
             Weekend nights {formatMoney(property.weekendRateCents)} · Cleaning {formatMoney(property.cleaningFeeCents)}
@@ -148,7 +162,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
       </section>
 
       {other && (
-        <section className="border-t border-ink/5 bg-white/50">
+        <section className="border-t border-ink/5">
           <div className="container-x flex flex-wrap items-center justify-between gap-6 py-12">
             <div>
               <p className="eyebrow">Also consider</p>
@@ -159,6 +173,15 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
           </div>
         </section>
       )}
+
+      {/* Mobile: keep the price and a jump to the calendar in reach */}
+      <div className="no-print fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 border-t border-ink/10 bg-sand/95 px-4 py-3 backdrop-blur lg:hidden">
+        <p className="text-sm">
+          from <span className="font-display text-2xl">{formatMoney(property.baseRateCents)}</span> / night
+        </p>
+        <a href="#book" className="btn-primary !py-2.5">Check dates</a>
+      </div>
+      <div aria-hidden className="h-16 lg:hidden" />
     </>
   );
 }
