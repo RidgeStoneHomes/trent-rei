@@ -1,0 +1,1018 @@
+{
+ "EC": {
+  "use": "A",
+  "engine": "B",
+  "unit": "C",
+  "zclass": "D",
+  "mine": "E",
+  "usable_all": "F",
+  "used0": "G",
+  "f0": "H",
+  "net0": "I",
+  "zstat": "J",
+  "zone_ok": "K",
+  "rez": "L",
+  "acc_ok": "M",
+  "front_ok": "N",
+  "sewer_ok": "O",
+  "water_ok": "P",
+  "loc_fail": "Q",
+  "loc_ok": "R",
+  "size_ok": "S",
+  "gate": "T",
+  "cap_den": "U",
+  "cap_site": "V",
+  "cap_lot": "W",
+  "cap_minlot": "X",
+  "cap_front": "Y",
+  "cap_ww": "Z",
+  "cap_phys": "AA",
+  "cap_dem": "AB",
+  "dratio": "AC",
+  "used_ac": "AD",
+  "ufrac": "AE",
+  "net_u": "AF",
+  "det_ac": "AG",
+  "dev_ac": "AH",
+  "excess_ac": "AI",
+  "capmin": "AJ",
+  "capacity": "AK",
+  "binding": "AL",
+  "on": "AM",
+  "hz": "AN",
+  "sewer_pot": "AO",
+  "unlock": "AP",
+  "road_lf": "AQ",
+  "pave_sf": "AR",
+  "conns": "AS",
+  "water_lf": "AT",
+  "wtaps": "AU",
+  "pws": "AV",
+  "sewer_lf": "AW",
+  "staps": "AX",
+  "septics": "AY",
+  "ww_gpd": "AZ",
+  "wwpermit": "BA",
+  "wells": "BB",
+  "clear_ac": "BC",
+  "grade_ac": "BD",
+  "plats": "BE",
+  "isres": "BF",
+  "c_survey": "BG",
+  "c_plat": "BH",
+  "c_civil": "BI",
+  "c_geo": "BJ",
+  "c_septev": "BK",
+  "c_wwperm": "BL",
+  "c_p1": "BM",
+  "c_drain": "BN",
+  "c_ent": "BO",
+  "c_rezone": "BP",
+  "c_legal": "BQ",
+  "c_clear": "BR",
+  "c_grade": "BS",
+  "c_road": "BT",
+  "c_pave": "BU",
+  "c_det": "BV",
+  "c_swppp": "BW",
+  "c_drive": "BX",
+  "c_wline": "BY",
+  "c_wtap": "BZ",
+  "c_sline": "CA",
+  "c_stap": "CB",
+  "c_septic": "CC",
+  "c_well": "CD",
+  "c_pws": "CE",
+  "c_elec": "CF",
+  "h_sub": "CG",
+  "h_cont": "CH",
+  "h_bias": "CI",
+  "H": "CJ",
+  "vert": "CK",
+  "vsc": "CL",
+  "tilc": "CM",
+  "impact": "CN",
+  "devmo_e": "CO",
+  "sell1": "CP",
+  "sell2": "CQ",
+  "lu": "CR",
+  "T1": "CS",
+  "T2": "CT",
+  "T3": "CU",
+  "mg1": "CV",
+  "mg2": "CW",
+  "mg3": "CX",
+  "lf_base": "CY",
+  "landfac1": "CZ",
+  "landfac2": "DA",
+  "landfac3": "DB",
+  "ff1": "DC",
+  "ff2": "DD",
+  "ff3": "DE",
+  "sc_land": "DF",
+  "sc_fs": "DG",
+  "sc_inc": "DH",
+  "excess_rev": "DI",
+  "rev1": "DJ",
+  "nl1": "DK",
+  "k1": "DL",
+  "cost1": "DM",
+  "profit1": "DN",
+  "max1": "DO",
+  "nl2": "DP",
+  "k2": "DQ",
+  "cost2": "DR",
+  "gpr": "DS",
+  "egi": "DT",
+  "opex": "DU",
+  "ptax": "DV",
+  "mgmtx": "DW",
+  "recov": "DX",
+  "noi": "DY",
+  "capr": "DZ",
+  "value": "EA",
+  "dnoi": "EB",
+  "yoc": "EC",
+  "rev2": "ED",
+  "drev2": "EE",
+  "profit2": "EF",
+  "max2": "EG",
+  "rev3": "EH",
+  "nl3": "EI",
+  "k3": "EJ",
+  "cost3": "EK",
+  "drev3": "EL",
+  "profit3": "EM",
+  "max3": "EN",
+  "devloan": "EO",
+  "ploan": "EP",
+  "dscr": "EQ",
+  "cashout": "ER",
+  "best": "ES",
+  "bestx": "ET",
+  "bestexit": "EU",
+  "months": "EV",
+  "open": "EW",
+  "spread": "EX",
+  "peracre": "EY",
+  "perunit": "EZ",
+  "verdict": "FA",
+  "conf": "FB",
+  "verify": "FC",
+  "flags": "FD",
+  "rankkey": "FE"
+ },
+ "EFIRST": 6,
+ "N": 62,
+ "ENG": [
+  [
+   "use",
+   "Use",
+   "Identity"
+  ],
+  [
+   "engine",
+   "Engine",
+   "Identity"
+  ],
+  [
+   "unit",
+   "Capacity unit",
+   "Identity"
+  ],
+  [
+   "zclass",
+   "Zoning class",
+   "Identity"
+  ],
+  [
+   "mine",
+   "Org builds this (1/0)",
+   "Identity"
+  ],
+  [
+   "usable_all",
+   "Usable acres (net - open space - detention)",
+   "Yield (before demand)"
+  ],
+  [
+   "used0",
+   "Usable acres used (market acre cap)",
+   "Yield (before demand)"
+  ],
+  [
+   "f0",
+   "Share of parcel used (before demand)",
+   "Yield (before demand)"
+  ],
+  [
+   "net0",
+   "Net acres in use (before demand)",
+   "Yield (before demand)"
+  ],
+  [
+   "zstat",
+   "Zoning status",
+   "Gates"
+  ],
+  [
+   "zone_ok",
+   "Zoning / deed passes (1/0)",
+   "Gates"
+  ],
+  [
+   "rez",
+   "Rezone needed (1/0)",
+   "Gates"
+  ],
+  [
+   "acc_ok",
+   "Access passes (1/0)",
+   "Gates"
+  ],
+  [
+   "front_ok",
+   "Frontage passes (1/0)",
+   "Gates"
+  ],
+  [
+   "sewer_ok",
+   "Sewer requirement met (1/0)",
+   "Gates"
+  ],
+  [
+   "water_ok",
+   "Water requirement met (1/0)",
+   "Gates"
+  ],
+  [
+   "loc_fail",
+   "Location test failures",
+   "Gates"
+  ],
+  [
+   "loc_ok",
+   "Location passes (1/0)",
+   "Gates"
+  ],
+  [
+   "size_ok",
+   "Parcel big enough (1/0)",
+   "Gates"
+  ],
+  [
+   "gate",
+   "All gates pass (1/0)",
+   "Gates"
+  ],
+  [
+   "cap_den",
+   "Capacity by density",
+   "Capacity"
+  ],
+  [
+   "cap_site",
+   "Capacity by site area",
+   "Capacity"
+  ],
+  [
+   "cap_lot",
+   "Capacity by septic min lot (subdivided lots)",
+   "Capacity"
+  ],
+  [
+   "cap_minlot",
+   "Capacity by min lot size (gross)",
+   "Capacity"
+  ],
+  [
+   "cap_front",
+   "Capacity by road frontage",
+   "Capacity"
+  ],
+  [
+   "cap_ww",
+   "Capacity by on-site septic (gal/day)",
+   "Capacity"
+  ],
+  [
+   "cap_phys",
+   "Physical capacity",
+   "Capacity"
+  ],
+  [
+   "cap_dem",
+   "Capacity by market demand",
+   "Capacity"
+  ],
+  [
+   "dratio",
+   "Demand ratio (share of physical capacity the market takes)",
+   "Capacity"
+  ],
+  [
+   "used_ac",
+   "Usable acres used by this use",
+   "Capacity"
+  ],
+  [
+   "ufrac",
+   "Share of parcel used",
+   "Capacity"
+  ],
+  [
+   "net_u",
+   "Net acres in use",
+   "Capacity"
+  ],
+  [
+   "det_ac",
+   "Detention acres",
+   "Capacity"
+  ],
+  [
+   "dev_ac",
+   "Developed acres",
+   "Capacity"
+  ],
+  [
+   "excess_ac",
+   "Excess gross acres (resold as raw land)",
+   "Capacity"
+  ],
+  [
+   "capmin",
+   "Binding capacity (physical or demand)",
+   "Capacity"
+  ],
+  [
+   "capacity",
+   "CAPACITY (units / SF / acres)",
+   "Capacity"
+  ],
+  [
+   "binding",
+   "Binding constraint",
+   "Capacity"
+  ],
+  [
+   "on",
+   "Anything fits (1/0)",
+   "Capacity"
+  ],
+  [
+   "hz",
+   "Horizontal by us (1/0)",
+   "Capacity"
+  ],
+  [
+   "sewer_pot",
+   "Capacity if sewer were available",
+   "Capacity"
+  ],
+  [
+   "unlock",
+   "Unlock",
+   "Capacity"
+  ],
+  [
+   "road_lf",
+   "Internal road LF",
+   "Quantities"
+  ],
+  [
+   "pave_sf",
+   "Paving / hardscape SF",
+   "Quantities"
+  ],
+  [
+   "conns",
+   "Utility connections",
+   "Quantities"
+  ],
+  [
+   "water_lf",
+   "Water line LF",
+   "Quantities"
+  ],
+  [
+   "wtaps",
+   "Water taps",
+   "Quantities"
+  ],
+  [
+   "pws",
+   "Public water system needed (1/0)",
+   "Quantities"
+  ],
+  [
+   "sewer_lf",
+   "Sewer line LF",
+   "Quantities"
+  ],
+  [
+   "staps",
+   "Sewer taps",
+   "Quantities"
+  ],
+  [
+   "septics",
+   "Septic systems",
+   "Quantities"
+  ],
+  [
+   "ww_gpd",
+   "On-site wastewater gal/day",
+   "Quantities"
+  ],
+  [
+   "wwpermit",
+   "State wastewater permit needed (1/0)",
+   "Quantities"
+  ],
+  [
+   "wells",
+   "Private wells",
+   "Quantities"
+  ],
+  [
+   "clear_ac",
+   "Acres to clear",
+   "Quantities"
+  ],
+  [
+   "grade_ac",
+   "Acres to grade (disturbed)",
+   "Quantities"
+  ],
+  [
+   "plats",
+   "Lots to plat",
+   "Quantities"
+  ],
+  [
+   "isres",
+   "Dwelling (pays impact fees) (1/0)",
+   "Quantities"
+  ],
+  [
+   "c_survey",
+   "02-100 Survey",
+   "Horizontal budget"
+  ],
+  [
+   "c_plat",
+   "02-110 Platting",
+   "Horizontal budget"
+  ],
+  [
+   "c_civil",
+   "02-200 Civil engineering",
+   "Horizontal budget"
+  ],
+  [
+   "c_geo",
+   "02-300 Geotech (only when most of the site is disturbed)",
+   "Horizontal budget"
+  ],
+  [
+   "c_septev",
+   "02-310 Septic evaluations",
+   "Horizontal budget"
+  ],
+  [
+   "c_wwperm",
+   "02-320 State wastewater permit",
+   "Horizontal budget"
+  ],
+  [
+   "c_p1",
+   "02-400 Phase I",
+   "Horizontal budget"
+  ],
+  [
+   "c_drain",
+   "02-500 Drainage study (when detention applies)",
+   "Horizontal budget"
+  ],
+  [
+   "c_ent",
+   "Entitlement (use-specific, localized)",
+   "Horizontal budget"
+  ],
+  [
+   "c_rezone",
+   "Rezoning (location)",
+   "Horizontal budget"
+  ],
+  [
+   "c_legal",
+   "02-700 Legal & title",
+   "Horizontal budget"
+  ],
+  [
+   "c_clear",
+   "03-100 Clearing",
+   "Horizontal budget"
+  ],
+  [
+   "c_grade",
+   "03-200 Grading",
+   "Horizontal budget"
+  ],
+  [
+   "c_road",
+   "03-300 Roads / drives",
+   "Horizontal budget"
+  ],
+  [
+   "c_pave",
+   "03-350 Paving / parking",
+   "Horizontal budget"
+  ],
+  [
+   "c_det",
+   "03-400 Detention",
+   "Horizontal budget"
+  ],
+  [
+   "c_swppp",
+   "03-500 SWPPP",
+   "Horizontal budget"
+  ],
+  [
+   "c_drive",
+   "03-600 Driveway / turn lane",
+   "Horizontal budget"
+  ],
+  [
+   "c_wline",
+   "04-100 Water line",
+   "Horizontal budget"
+  ],
+  [
+   "c_wtap",
+   "04-110 Water taps",
+   "Horizontal budget"
+  ],
+  [
+   "c_sline",
+   "04-200 Sewer line",
+   "Horizontal budget"
+  ],
+  [
+   "c_stap",
+   "04-210 Sewer taps",
+   "Horizontal budget"
+  ],
+  [
+   "c_septic",
+   "04-300 Septic systems",
+   "Horizontal budget"
+  ],
+  [
+   "c_well",
+   "04-310 Wells",
+   "Horizontal budget"
+  ],
+  [
+   "c_pws",
+   "04-320/330 Public water system",
+   "Horizontal budget"
+  ],
+  [
+   "c_elec",
+   "04-400 Electric",
+   "Horizontal budget"
+  ],
+  [
+   "h_sub",
+   "Horizontal subtotal",
+   "Horizontal budget"
+  ],
+  [
+   "h_cont",
+   "Horizontal contingency",
+   "Horizontal budget"
+  ],
+  [
+   "h_bias",
+   "Org estimating bias (learned)",
+   "Horizontal budget"
+  ],
+  [
+   "H",
+   "HORIZONTAL TOTAL (ex land)",
+   "Horizontal budget"
+  ],
+  [
+   "vert",
+   "Vertical hard cost",
+   "Vertical"
+  ],
+  [
+   "vsc",
+   "Vertical soft + contingency",
+   "Vertical"
+  ],
+  [
+   "tilc",
+   "TI + leasing commissions",
+   "Vertical"
+  ],
+  [
+   "impact",
+   "Impact fees (location)",
+   "Vertical"
+  ],
+  [
+   "devmo_e",
+   "Development months (incl. rezoning / permits)",
+   "Timing & hurdle"
+  ],
+  [
+   "sell1",
+   "Exit 1 sell-out months",
+   "Timing & hurdle"
+  ],
+  [
+   "sell2",
+   "Exit 2 sell-out months (For-Sale)",
+   "Timing & hurdle"
+  ],
+  [
+   "lu",
+   "Lease-up months (Income)",
+   "Timing & hurdle"
+  ],
+  [
+   "T1",
+   "Exit 1 total months",
+   "Timing & hurdle"
+  ],
+  [
+   "T2",
+   "Exit 2 total months",
+   "Timing & hurdle"
+  ],
+  [
+   "T3",
+   "Exit 3 total months",
+   "Timing & hurdle"
+  ],
+  [
+   "mg1",
+   "Exit 1 required margin",
+   "Timing & hurdle"
+  ],
+  [
+   "mg2",
+   "Exit 2 required margin",
+   "Timing & hurdle"
+  ],
+  [
+   "mg3",
+   "Exit 3 required margin",
+   "Timing & hurdle"
+  ],
+  [
+   "lf_base",
+   "Land factor before carry (closing + conversion penalty)",
+   "Land & financing factors"
+  ],
+  [
+   "landfac1",
+   "Land cost factor - exit 1",
+   "Land & financing factors"
+  ],
+  [
+   "landfac2",
+   "Land cost factor - exit 2",
+   "Land & financing factors"
+  ],
+  [
+   "landfac3",
+   "Land cost factor - exit 3",
+   "Land & financing factors"
+  ],
+  [
+   "ff1",
+   "Financing factor - exit 1",
+   "Land & financing factors"
+  ],
+  [
+   "ff2",
+   "Financing factor - exit 2",
+   "Land & financing factors"
+  ],
+  [
+   "ff3",
+   "Financing factor - exit 3",
+   "Land & financing factors"
+  ],
+  [
+   "sc_land",
+   "Selling cost - land (incl. transfer tax)",
+   "Land & financing factors"
+  ],
+  [
+   "sc_fs",
+   "Selling cost - homes (incl. transfer tax)",
+   "Land & financing factors"
+  ],
+  [
+   "sc_inc",
+   "Sale cost - income (incl. transfer tax)",
+   "Land & financing factors"
+  ],
+  [
+   "excess_rev",
+   "Excess land resale (net)",
+   "Land & financing factors"
+  ],
+  [
+   "rev1",
+   "Exit 1 net revenue",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "nl1",
+   "Exit 1 non-land cost (buyer builds paving, septic systems and wells)",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "k1",
+   "Exit 1 cost per $1 of land",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "cost1",
+   "Exit 1 total cost at asking",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "profit1",
+   "Exit 1 profit at asking",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "max1",
+   "EXIT 1 MAX OFFER",
+   "Exit 1 - Land / pad sale"
+  ],
+  [
+   "nl2",
+   "Build non-land cost (pre-financing)",
+   "Build cost (exits 2 & 3)"
+  ],
+  [
+   "k2",
+   "Build cost per $1 of land",
+   "Build cost (exits 2 & 3)"
+  ],
+  [
+   "cost2",
+   "Build total cost at asking",
+   "Build cost (exits 2 & 3)"
+  ],
+  [
+   "gpr",
+   "Gross potential rent",
+   "Income (Income engine)"
+  ],
+  [
+   "egi",
+   "Effective gross income",
+   "Income (Income engine)"
+  ],
+  [
+   "opex",
+   "Operating expenses (ex tax, ex mgmt)",
+   "Income (Income engine)"
+  ],
+  [
+   "ptax",
+   "Property tax",
+   "Income (Income engine)"
+  ],
+  [
+   "mgmtx",
+   "Management",
+   "Income (Income engine)"
+  ],
+  [
+   "recov",
+   "Expense recoveries",
+   "Income (Income engine)"
+  ],
+  [
+   "noi",
+   "NET OPERATING INCOME",
+   "Income (Income engine)"
+  ],
+  [
+   "capr",
+   "Cap rate used (localized)",
+   "Income (Income engine)"
+  ],
+  [
+   "value",
+   "Stabilized value (NOI / cap)",
+   "Income (Income engine)"
+  ],
+  [
+   "dnoi",
+   "Change in NOI per $1 of land",
+   "Income (Income engine)"
+  ],
+  [
+   "yoc",
+   "Yield on cost",
+   "Income (Income engine)"
+  ],
+  [
+   "rev2",
+   "Exit 2 net revenue",
+   "Exit 2 - Build & sell"
+  ],
+  [
+   "drev2",
+   "Change in exit 2 revenue per $1 of land",
+   "Exit 2 - Build & sell"
+  ],
+  [
+   "profit2",
+   "Exit 2 profit at asking",
+   "Exit 2 - Build & sell"
+  ],
+  [
+   "max2",
+   "EXIT 2 MAX OFFER",
+   "Exit 2 - Build & sell"
+  ],
+  [
+   "rev3",
+   "Exit 3 value",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "nl3",
+   "Exit 3 non-land cost",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "k3",
+   "Exit 3 cost per $1 of land",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "cost3",
+   "Exit 3 total cost at asking",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "drev3",
+   "Change in exit 3 value per $1 of land",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "profit3",
+   "Exit 3 value created at asking",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "max3",
+   "EXIT 3 MAX OFFER",
+   "Exit 3 - Build & hold / lease"
+  ],
+  [
+   "devloan",
+   "Development loan",
+   "Hold financing (Income)"
+  ],
+  [
+   "ploan",
+   "Permanent loan (lesser of LTV, DSCR, debt yield)",
+   "Hold financing (Income)"
+  ],
+  [
+   "dscr",
+   "DSCR on permanent loan",
+   "Hold financing (Income)"
+  ],
+  [
+   "cashout",
+   "Cash out at refi (perm - dev loan)",
+   "Hold financing (Income)"
+  ],
+  [
+   "best",
+   "BEST MAX OFFER",
+   "Answer"
+  ],
+  [
+   "bestx",
+   "Best exit number",
+   "Answer"
+  ],
+  [
+   "bestexit",
+   "Best exit",
+   "Answer"
+  ],
+  [
+   "months",
+   "Months to exit (best)",
+   "Answer"
+  ],
+  [
+   "open",
+   "Opening offer",
+   "Answer"
+  ],
+  [
+   "spread",
+   "Max offer minus asking",
+   "Answer"
+  ],
+  [
+   "peracre",
+   "Max offer per gross acre",
+   "Answer"
+  ],
+  [
+   "perunit",
+   "Max offer per unit of capacity",
+   "Answer"
+  ],
+  [
+   "verdict",
+   "Verdict",
+   "Answer"
+  ],
+  [
+   "conf",
+   "Confidence",
+   "Answer"
+  ],
+  [
+   "verify",
+   "Verify before relying (untested location rules)",
+   "Answer"
+  ],
+  [
+   "flags",
+   "Flags",
+   "Answer"
+  ],
+  [
+   "rankkey",
+   "Rank key",
+   "Answer"
+  ]
+ ],
+ "P": {
+  "name": "Parcel!$C$5",
+  "state": "Parcel!$C$6",
+  "county": "Parcel!$C$7",
+  "city": "Parcel!$C$8",
+  "jtype": "Parcel!$C$9",
+  "zallowed": "Parcel!$C$10",
+  "zdeed": "Parcel!$C$11",
+  "rezone_ok": "Parcel!$C$12",
+  "scenario": "Parcel!$C$13",
+  "gross": "Parcel!$C$14",
+  "buildpct": "Parcel!$C$15",
+  "flood": "Parcel!$C$16",
+  "slope": "Parcel!$C$17",
+  "tree": "Parcel!$C$18",
+  "frontage": "Parcel!$C$19",
+  "access": "Parcel!$C$20",
+  "water_site": "Parcel!$C$21",
+  "water_dist": "Parcel!$C$22",
+  "sewer_site": "Parcel!$C$23",
+  "sewer_dist": "Parcel!$C$24",
+  "soil": "Parcel!$C$25",
+  "agex": "Parcel!$C$26",
+  "land": "Parcel!$C$27",
+  "vpd": "Parcel!$C$28",
+  "hh": "Parcel!$C$29",
+  "hh10": "Parcel!$C$30",
+  "hwy": "Parcel!$C$31",
+  "corner": "Parcel!$C$32",
+  "sub": "Parcel!$C$33",
+  "anchor": "Parcel!$C$34",
+  "net": "Parcel!$C$37",
+  "pubW": "Parcel!$C$38",
+  "pubS": "Parcel!$C$39",
+  "extW": "Parcel!$C$40",
+  "extS": "Parcel!$C$41",
+  "sidx": "Parcel!$C$42",
+  "slopem": "Parcel!$C$43",
+  "soilm": "Parcel!$C$44",
+  "soilg": "Parcel!$C$45",
+  "zapplies": "Parcel!$C$46"
+ },
+ "OPFIRST": 22,
+ "FIRST": 5
+}
