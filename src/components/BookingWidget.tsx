@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { site } from "@/config/site";
 
 type QuoteResponse =
   | { ok: true; quote: { nights: number; totalCents: number; otaEstimateCents: number; lines: { label: string; cents: number }[] } }
@@ -27,6 +28,7 @@ export function BookingWidget({
   minNights,
   allowsPets,
   baseRateCents,
+  bookingOpen = true,
 }: {
   slug: string;
   today: string;
@@ -35,6 +37,7 @@ export function BookingWidget({
   minNights: number;
   allowsPets: boolean;
   baseRateCents: number;
+  bookingOpen?: boolean;
 }) {
   const router = useRouter();
   const bookedSet = useMemo(() => new Set(booked), [booked]);
@@ -95,6 +98,20 @@ export function BookingWidget({
     if (!checkIn || !checkOut) return;
     const qs = new URLSearchParams({ checkIn, checkOut, guests: String(guests), pets: String(pets) });
     router.push(`/book/${slug}?${qs}`);
+  }
+
+  if (!bookingOpen) {
+    return (
+      <div className="card !bg-white">
+        <p className="text-sm text-ink-soft">
+          from <span className="font-display text-3xl text-ink">{money(baseRateCents)}</span> / night
+        </p>
+        <p className="mt-4 font-display text-2xl">Online booking is almost ready.</p>
+        <p className="mt-2 text-sm text-ink-soft">Tell us your dates and we'll hold them for you.</p>
+        <a href={`mailto:${site.email}?subject=Booking inquiry`} className="btn-primary mt-5 w-full">Email {site.email}</a>
+        <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="btn-ghost mt-2 w-full">Call or text {site.phone}</a>
+      </div>
+    );
   }
 
   return (

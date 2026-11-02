@@ -17,7 +17,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 export default async function PropertyPage({ params }: { params: Promise<{ slug: string }> }) {
   const property = getProperty((await params).slug);
   if (!property) notFound();
-  const booked = await bookedNights(property.slug);
+  // If the database isn't reachable yet, still show the home and offer contact instead of booking
+  let booked: string[] = [];
+  let bookingOpen = true;
+  try {
+    booked = await bookedNights(property.slug);
+  } catch (err) {
+    console.error("[stays] availability unavailable:", err);
+    bookingOpen = false;
+  }
   const other = properties.find((p) => p.slug !== property.slug);
 
   return (
@@ -140,6 +148,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ slug:
             minNights={property.minNights}
             allowsPets={property.petFeeCents !== null}
             baseRateCents={property.baseRateCents}
+            bookingOpen={bookingOpen}
           />
           <p className="mt-3 text-center text-xs text-ink-soft">
             Weekend nights {formatMoney(property.weekendRateCents)} · Cleaning {formatMoney(property.cleaningFeeCents)}

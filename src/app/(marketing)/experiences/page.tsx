@@ -1,12 +1,19 @@
 import Link from "next/link";
 import { site, vendorCategories } from "@/config/site";
 import { db } from "@/lib/db";
+import { sampleVendors } from "@/content/sample-vendors";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Experiences & Insider Perks" };
 
 export default async function ExperiencesPage() {
-  const vendors = await db.vendor.findMany({ where: { active: true }, orderBy: [{ featured: "desc" }, { sortOrder: "asc" }] });
+  let vendors: { slug: string; category: string; name: string; blurb: string; perk: string }[];
+  try {
+    vendors = await db.vendor.findMany({ where: { active: true }, orderBy: [{ featured: "desc" }, { sortOrder: "asc" }] });
+  } catch (err) {
+    console.error("[experiences] database unavailable, showing sample partners:", err);
+    vendors = sampleVendors;
+  }
   return (
     <>
       <section className="bg-lake-deep text-sand">
@@ -23,7 +30,7 @@ export default async function ExperiencesPage() {
       <section className="container-x py-20">
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {vendors.map((v) => (
-            <article key={v.id} className="card flex flex-col !bg-white">
+            <article key={v.slug} className="card flex flex-col !bg-white">
               <p className="text-xs uppercase tracking-wider text-ink-soft">{vendorCategories[v.category]?.icon} {vendorCategories[v.category]?.label ?? v.category}</p>
               <p className="mt-2 font-display text-2xl">{v.name}</p>
               <p className="mt-2 flex-1 text-sm text-ink-soft">{v.blurb}</p>
