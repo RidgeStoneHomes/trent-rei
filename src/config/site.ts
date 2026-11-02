@@ -44,6 +44,18 @@ export const site = {
     offer:
       "Our first 50 direct bookings receive a complimentary private sunset cruise or wine-trail tasting for two, plus founding rates for life.",
   },
+
+  // Announcement bar across the top of every guest page. It hides itself the day
+  // after `endsOn`, so an expired offer never lingers. Set to null to turn it off.
+  promo: {
+    label: "Founding Guest",
+    text: "First 50 direct bookings get a sunset cruise or wine tasting for two.",
+    href: "/#founding",
+    endsOn: "2027-06-30", // PLACEHOLDER: set the real end date
+  } as { label: string; text: string; href: string; endsOn: string } | null,
+
+  // Real guest reviews only. The reviews section stays hidden until this has entries.
+  reviews: [] as { quote: string; name: string; home: string }[],
 } as const;
 
 export type Property = {
