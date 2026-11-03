@@ -42,6 +42,7 @@ export default async function PropertyPage({
         <p className="eyebrow animate-rise">{property.location}</p>
         <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">{property.name}</h1>
         <p className="mt-3 animate-rise text-lg text-ink-soft [animation-delay:200ms]">{property.headline}</p>
+        <p className="mt-2 animate-rise text-sm text-brass-dark [animation-delay:250ms]">Owned and hosted by {site.hostName}</p>
         <div className="mt-8 grid h-[28rem] animate-rise grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl [animation-delay:300ms]">
           <div className="col-span-4 row-span-2 overflow-hidden sm:col-span-2">
             <Media property={property} index={0} className="h-full w-full transition duration-700 hover:scale-105" label="Photo coming soon" />

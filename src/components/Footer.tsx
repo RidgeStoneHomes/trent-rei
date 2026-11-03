@@ -23,7 +23,7 @@ export function Footer() {
       <div className="container-x grid gap-10 border-t border-sand/10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <p className="font-display text-2xl text-sand">{site.brand}</p>
-          <p className="mt-2 text-sm">{site.tagline}. Owned and hosted locally by {site.hostName}.</p>
+          <p className="mt-2 text-sm">{site.tagline}. Owned and hosted by {site.hostName}.</p>
         </div>
         <div className="text-sm">
           <p className="eyebrow mb-3 !text-brass-light">The Homes</p>

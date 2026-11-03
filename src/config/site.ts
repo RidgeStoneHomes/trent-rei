@@ -7,7 +7,7 @@ export const site = {
   brand: "Reynolds Retreats",
   tagline: "Private luxury stays on Lake Texoma",
   region: "Lake Texoma · North Texas",
-  hostName: "Trent",
+  hostName: "Trent & Michelle",
   email: "reynoldsretreatstx@gmail.com",
   phone: "(682) 532-6007",
   instagram: "", // add your Instagram URL to show it in the footer

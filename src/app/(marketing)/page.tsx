@@ -65,7 +65,8 @@ export default function HomePage() {
             Two private luxury homes near Lake Texoma, with no platform fees, a host who picks up, and perks from the best
             guides, vineyards and kitchens around the lake.
           </p>
-          <div className="mt-10 w-full max-w-3xl animate-rise text-left [animation-delay:360ms]">
+          <p className="mt-5 animate-rise text-sm tracking-wide text-brass-light [animation-delay:300ms]">Owned and hosted by {site.hostName}</p>
+          <div className="mt-8 w-full max-w-3xl animate-rise text-left [animation-delay:360ms]">
             <DateSearch today={todayLocal()} maxGuests={maxGuests} />
           </div>
         </div>
