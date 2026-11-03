@@ -124,6 +124,7 @@ export async function saveArrival(_prev: { error: string } | null, form: FormDat
     address: field("address"),
     checkInMethod: field("checkInMethod"),
     doorCode: field("doorCode"),
+    codeRevealHours: form.get("codeRevealHours") === "manual" ? null : Number(form.get("codeRevealHours") ?? 24),
     wifiName: field("wifiName"),
     wifiPassword: field("wifiPassword"),
     parking: field("parking"),
@@ -132,4 +133,12 @@ export async function saveArrival(_prev: { error: string } | null, form: FormDat
   await db.propertyArrival.upsert({ where: { propertySlug: slug }, create: { propertySlug: slug, ...data }, update: data });
   revalidatePath("/admin/arrival");
   return { error: "" };
+}
+
+export async function toggleCodeRelease(form: FormData) {
+  await guard();
+  const id = String(form.get("id"));
+  const b = await db.booking.findUniqueOrThrow({ where: { id }, select: { codeReleasedAt: true } });
+  await db.booking.update({ where: { id }, data: { codeReleasedAt: b.codeReleasedAt ? null : new Date() } });
+  revalidatePath("/admin");
 }

@@ -3,20 +3,23 @@ import { db } from "@/lib/db";
 import { formatRange, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import { tripTimeline } from "@/lib/trip";
-import { cancelBooking } from "@/app/actions/admin";
+import { cancelBooking, toggleCodeRelease } from "@/app/actions/admin";
+import { codeRelease, formatLocalTime } from "@/lib/arrival";
 
 const stageLabel = { refundable: "Refundable", insider: "Portal open", arrival: "Arriving soon", staying: "In house", departed: "Departed" };
 
 export default async function AdminHome() {
   const today = todayLocal();
-  const [upcoming, pending, revenue, leads, clicks] = await Promise.all([
+  const [upcoming, pending, revenue, leads, arrivals, clicks] = await Promise.all([
     db.booking.findMany({ where: { status: "CONFIRMED", checkOut: { gte: today } }, orderBy: { checkIn: "asc" }, include: { agreement: true } }),
     db.booking.count({ where: { status: { in: ["PENDING_AGREEMENT", "PENDING_PAYMENT"] } } }),
     db.booking.aggregate({ where: { status: "CONFIRMED" }, _sum: { totalCents: true }, _count: true }),
     db.lead.count(),
+    db.propertyArrival.findMany({ select: { propertySlug: true, codeRevealHours: true } }),
     db.click.count(),
   ]);
 
+  const revealHours = new Map(arrivals.map((a) => [a.propertySlug, a.codeRevealHours]));
   const stats = [
     { label: "Confirmed bookings", value: String(revenue._count) },
     { label: "Direct revenue", value: formatMoney(revenue._sum.totalCents ?? 0) },
@@ -40,10 +43,10 @@ export default async function AdminHome() {
       <div className="mt-4 overflow-x-auto rounded-2xl bg-white shadow-sm">
         <table className="w-full min-w-[56rem] text-left text-sm">
           <thead className="bg-sand-deep/50 text-xs uppercase tracking-wider text-ink-soft">
-            <tr><th className="p-3">Guest</th><th className="p-3">Home</th><th className="p-3">Dates</th><th className="p-3">Guests</th><th className="p-3">Total</th><th className="p-3">Stage</th><th className="p-3">Agreement</th><th className="p-3" /></tr>
+            <tr><th className="p-3">Guest</th><th className="p-3">Home</th><th className="p-3">Dates</th><th className="p-3">Guests</th><th className="p-3">Total</th><th className="p-3">Stage</th><th className="p-3">Agreement</th><th className="p-3">Door code</th><th className="p-3" /></tr>
           </thead>
           <tbody>
-            {upcoming.length === 0 && <tr><td className="p-6 text-ink-soft" colSpan={8}>No upcoming stays yet.</td></tr>}
+            {upcoming.length === 0 && <tr><td className="p-6 text-ink-soft" colSpan={9}>No upcoming stays yet.</td></tr>}
             {upcoming.map((b) => (
               <tr key={b.id} className="border-t border-ink/5 align-top">
                 <td className="p-3">
@@ -58,6 +61,20 @@ export default async function AdminHome() {
                 <td className="p-3">{formatMoney(b.totalCents, { cents: true })}</td>
                 <td className="p-3">{stageLabel[tripTimeline(b.checkIn, b.checkOut).stage]}</td>
                 <td className="p-3 text-xs">{b.agreement ? `✓ ${b.agreement.signedName}` : "—"}</td>
+                <td className="p-3 text-xs">
+                  {(() => {
+                    const c = codeRelease(b, revealHours.has(b.propertySlug) ? revealHours.get(b.propertySlug)! : 24);
+                    return (
+                      <>
+                        <p>{c.mode === "released" ? "✓ Released by you" : c.visible ? "✓ Showing" : c.at ? `Shows ${formatLocalTime(c.at)}` : "Held"}</p>
+                        <form action={toggleCodeRelease} className="mt-1">
+                          <input type="hidden" name="id" value={b.id} />
+                          <button className="underline">{b.codeReleasedAt ? "Hide code" : "Release code now"}</button>
+                        </form>
+                      </>
+                    );
+                  })()}
+                </td>
                 <td className="p-3">
                   <form action={cancelBooking}>
                     <input type="hidden" name="id" value={b.id} />

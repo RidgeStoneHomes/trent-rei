@@ -52,3 +52,33 @@ export function formatDate(date: string, opts: Intl.DateTimeFormatOptions = {}):
 export function formatRange(checkIn: string, checkOut: string): string {
   return `${formatDate(checkIn, { year: undefined })} – ${formatDate(checkOut)}`;
 }
+
+// Offset (ms) between a time zone's wall clock and UTC at the given instant
+function zoneOffsetMs(utcMs: number, timeZone: string): number {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone,
+    hourCycle: "h23",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  }).formatToParts(new Date(utcMs));
+  const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+  return Date.UTC(get("year"), get("month") - 1, get("day"), get("hour"), get("minute"), get("second")) - utcMs;
+}
+
+// The exact moment of a local date + "4:00 PM"-style time in the site's time zone
+export function localDateTime(date: string, time12: string, timeZone: string = site.timeZone): Date {
+  const m = time12.match(/(\d{1,2}):(\d{2})\s*(AM|PM)/i);
+  let hour = m ? Number(m[1]) % 12 : 0;
+  if (m && m[3].toUpperCase() === "PM") hour += 12;
+  const [y, mo, d] = date.split("-").map(Number);
+  const guess = Date.UTC(y, mo - 1, d, hour, m ? Number(m[2]) : 0);
+  return new Date(guess - zoneOffsetMs(guess, timeZone));
+}
+
+export function formatLocalTime(at: Date): string {
+  return at.toLocaleString("en-US", { timeZone: site.timeZone, weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}

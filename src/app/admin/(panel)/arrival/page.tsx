@@ -2,6 +2,7 @@ import { properties, site } from "@/config/site";
 import { db } from "@/lib/db";
 import { saveArrival } from "@/app/actions/admin";
 import { ActionForm, SubmitButton } from "@/components/forms";
+import { codeRevealOptions } from "@/lib/arrival";
 
 export default async function ArrivalAdmin() {
   const rows = await db.propertyArrival.findMany();
@@ -10,8 +11,8 @@ export default async function ArrivalAdmin() {
     <div>
       <h1 className="text-3xl">Arrival info</h1>
       <p className="mt-1 max-w-2xl text-sm text-ink-soft">
-        Private details for each home. They're stored securely, not in the website code, and a guest only sees them
-        {` ${site.policies.arrivalDetailsDays}`} days before check-in. Change a door code here anytime; it updates instantly.
+        Private details for each home, stored securely and never in the website code. Guests see the address
+        {` ${site.policies.arrivalDetailsDays}`} days before check-in, the Wi-Fi at check-in time, and the door code only when you choose below. Changes apply instantly.
       </p>
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
         {properties.map((p) => {
@@ -30,6 +31,19 @@ export default async function ArrivalAdmin() {
               <div className="grid gap-4 sm:grid-cols-2">
                 {input("checkInMethod", "Check-in method", r?.checkInMethod, "Keypad code")}
                 {input("doorCode", "Door / keypad code", r?.doorCode)}
+                <label className="block sm:col-span-2">
+                  <span className="label">When guests see the door code</span>
+                  <select
+                    name="codeRevealHours"
+                    defaultValue={r ? (r.codeRevealHours === null ? "manual" : String(r.codeRevealHours)) : "24"}
+                    className="input"
+                  >
+                    {codeRevealOptions.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+                  </select>
+                  <span className="mt-1 block text-xs text-ink-soft">
+                    Check-in is {site.policies.checkInTime}. You can also release the code early for one guest from the Bookings page.
+                  </span>
+                </label>
                 {input("wifiName", "Wi-Fi network", r?.wifiName)}
                 {input("wifiPassword", "Wi-Fi password", r?.wifiPassword)}
               </div>

@@ -36,6 +36,7 @@ model Booking {
   stripeSession  String?
   paidAt         DateTime?
   guestPassToken String   @unique @default(cuid()) // shown as QR to partner vendors
+  codeReleasedAt DateTime? // host released the door code early for this booking
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -136,6 +137,8 @@ model PropertyArrival {
   address       String?
   checkInMethod String?
   doorCode      String?
+  // Hours before check-in time the door code appears to the guest; null = hold until released per booking
+  codeRevealHours Int?   @default(24)
   wifiName      String?
   wifiPassword  String?
   parking       String? // overrides the default in site config when set

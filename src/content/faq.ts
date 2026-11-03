@@ -20,7 +20,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What is the Insider Portal?",
-    a: "Your private trip page. It holds partner perks (fishing charters, wine tastings, dining, horseback rides), your digital Guest Pass, and your door code and Wi-Fi a few days before arrival.",
+    a: "Your private trip page. It holds partner perks (fishing charters, wine tastings, dining, horseback rides), your digital Guest Pass, your address a few days before arrival, your door code shortly before check-in, and the Wi-Fi once you're checked in.",
   },
   {
     q: "What time is check-in and check-out?",

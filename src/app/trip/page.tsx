@@ -8,7 +8,8 @@ import { formatMoney } from "@/lib/money";
 import { qrSvg } from "@/lib/qr";
 import { siteUrl } from "@/lib/url";
 import { ensureReferralCode } from "@/lib/booking";
-import { getArrival } from "@/lib/arrival";
+import { codeRelease, formatLocalTime, getArrival } from "@/lib/arrival";
+import { localDateTime } from "@/lib/dates";
 import { guestLogout } from "@/app/actions/guest";
 import { Media } from "@/components/Media";
 import { CopyButton } from "@/components/CopyButton";
@@ -26,6 +27,15 @@ export default async function TripPage() {
   // Only load private arrival details once the guest is allowed to see them
   const arrival = t.arrivalDetailsVisible ? await getArrival(property) : null;
   const pending = `Your host will send this before ${formatDate(booking.checkIn, { weekday: undefined })}.`;
+  const code = arrival ? codeRelease(booking, arrival.codeRevealHours) : null;
+  // Wi-Fi shows from check-in time until check-out
+  const checkInAt = localDateTime(booking.checkIn, site.policies.checkInTime);
+  const wifiVisible = new Date() >= checkInAt && t.stage !== "departed";
+  const codeMessage = !code
+    ? pending
+    : code.at && code.mode === "scheduled"
+      ? `Appears here ${formatLocalTime(code.at)}.`
+      : "Your host will release it before you arrive.";
   const referralUrl = siteUrl(`/r/${referral.code}`);
   const passSvg = await qrSvg(siteUrl(`/verify/${booking.guestPassToken}`));
 
@@ -101,11 +111,17 @@ export default async function TripPage() {
                   <div><p className="label">Address</p><p>{arrival.address ?? pending}</p></div>
                   <div>
                     <p className="label">{arrival.checkInMethod ?? "Door code"}</p>
-                    <p className={arrival.doorCode ? "font-mono text-lg" : "text-sm text-ink-soft"}>{arrival.doorCode ?? pending}</p>
+                    {code?.visible && arrival.doorCode ? (
+                      <p className="font-mono text-lg">{arrival.doorCode}</p>
+                    ) : (
+                      <p className="text-sm text-ink-soft">{code?.visible ? pending : codeMessage}</p>
+                    )}
                   </div>
                   <div>
                     <p className="label">Wi-Fi</p>
-                    {arrival.wifiName ? (
+                    {!wifiVisible ? (
+                      <p className="text-sm text-ink-soft">Appears here at check-in, {formatLocalTime(checkInAt)}.</p>
+                    ) : arrival.wifiName ? (
                       <p>{arrival.wifiName}{arrival.wifiPassword ? <> · <span className="font-mono">{arrival.wifiPassword}</span></> : null}</p>
                     ) : (
                       <p className="text-sm text-ink-soft">Posted inside the home.</p>
@@ -119,7 +135,7 @@ export default async function TripPage() {
                 </div>
               ) : (
                 <p className="mt-3 text-ink-soft">
-                  Your address, door code, and Wi-Fi appear here on {formatDate(t.arrivalDate)} — {site.policies.arrivalDetailsDays} days before arrival.
+                  Your address appears here on {formatDate(t.arrivalDate)} — {site.policies.arrivalDetailsDays} days before arrival.
                 </p>
               )}
             </section>
