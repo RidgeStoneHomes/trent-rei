@@ -215,7 +215,7 @@ export default async function TripPage() {
             <p>Total paid {formatMoney(booking.totalCents, { cents: true })}</p>
             <p className="mt-2 text-ink-soft">{t.refundable ? `Fully refundable until ${formatDate(t.unlockDate)}` : "Non-refundable"}</p>
             <Link href="/trip/agreement" className="mt-3 block underline">View signed rental agreement</Link>
-            <a href={`sms:${site.phone.replace(/[^\d+]/g, "")}`} className="mt-1 block underline">Text {site.hostName}</a>
+            <a href={`sms:${site.phone.replace(/[^\d+]/g, "")}`} className="mt-1 block underline">Call or text {site.contactName}: {site.phone}</a>
             <form action={guestLogout} className="mt-4"><button className="text-xs text-ink-soft underline">Sign out</button></form>
           </div>
         </aside>

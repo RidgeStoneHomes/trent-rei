@@ -14,7 +14,7 @@ export default function PoliciesPage() {
         <div><h2 className="text-2xl">Check-in & check-out</h2><p>Check-in after {p.checkInTime}; check-out by {p.checkOutTime}. Self check-in details are shared in your Insider Portal {p.arrivalDetailsDays} days before arrival.</p></div>
         <div><h2 className="text-2xl">Rental agreement</h2><p>Every reservation includes a short digital rental agreement covering house rules, occupancy, and safety. You'll sign it online before payment.</p></div>
         <div><h2 className="text-2xl">Partner perks</h2><p>Partner offers are provided by independent local businesses, valid during your stay, and subject to change.</p></div>
-        <div><h2 className="text-2xl">Questions</h2><p>Email {site.email} or text {site.phone}.</p></div>
+        <div><h2 className="text-2xl">Questions</h2><p>Call or text {site.contactName} at {site.phone}, or email {site.email}.</p></div>
       </div>
     </section>
   );

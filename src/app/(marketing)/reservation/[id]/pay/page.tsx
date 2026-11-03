@@ -37,7 +37,7 @@ export default async function PayPage({ params }: { params: Promise<{ id: string
             </ActionForm>
           ) : (
             <p className="mt-6 rounded-lg bg-sand px-4 py-3 text-sm">
-              Online payment opens soon. To lock in these dates now, email {site.email} or text {site.phone} with code {booking.code}.
+              Online payment opens soon. To lock in these dates now, call or text {site.contactName} at {site.phone} (or email {site.email}) with code {booking.code}.
             </p>
           )}
           {!stripeEnabled && paymentsAvailable && (

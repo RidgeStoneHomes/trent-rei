@@ -43,7 +43,7 @@ export function Footer() {
         </div>
         <div className="text-sm">
           <p className="eyebrow mb-3 !text-brass-light">Contact</p>
-          <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link-draw block w-fit py-1 hover:text-sand">{site.phone}</a>
+          <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link-draw block w-fit py-1 hover:text-sand">Call {site.contactName}: {site.phone}</a>
           <a href={`mailto:${site.email}`} className="link-draw block w-fit break-all py-1 hover:text-sand">{site.email}</a>
           <p className="py-1">{site.region}</p>
           {site.instagram && <a href={site.instagram} className="link-draw block w-fit py-1 hover:text-sand">Instagram</a>}

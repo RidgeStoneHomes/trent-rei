@@ -26,7 +26,7 @@ export default async function VerifyPage({ params }: { params: Promise<{ token: 
           </div>
         )}
         <p className="mt-6 text-sm opacity-80">
-          {active ? "Please apply the guest partner offer. Thank you for hosting our guests!" : `This pass is only valid during the guest's stay. Questions? Call ${site.phone}.`}
+          {active ? "Please apply the guest partner offer. Thank you for hosting our guests!" : `This pass is only valid during the guest's stay. Questions? Call ${site.contactName} at ${site.phone}.`}
         </p>
       </div>
     </main>

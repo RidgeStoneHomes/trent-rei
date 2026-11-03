@@ -83,7 +83,7 @@ export function Header({ promo }: { promo?: React.ReactNode }) {
               {n.label}
             </Link>
           ))}
-          <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="mt-6 text-sm text-ink-soft">Call or text {site.phone}</a>
+          <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="mt-6 text-sm text-ink-soft">Call or text {site.contactName}: {site.phone}</a>
         </nav>
       </div>
     </header>

@@ -17,7 +17,7 @@ const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProp
 
 const reasons = [
   { title: "No platform fees", body: `Guests typically save around ${Math.round(site.otaGuestFeeRate * 100)}% compared with booking the same home on Airbnb.` },
-  { title: "A real local host", body: `Text ${site.hostName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
+  { title: "A real local host", body: `Call or text ${site.contactName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
   { title: "Book now, decide later", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
 ];
 
@@ -287,7 +287,7 @@ export default function HomePage() {
           <div data-reveal>
             <p className="eyebrow">Good to know</p>
             <h2 className="mt-3 text-4xl sm:text-5xl">Questions, answered.</h2>
-            <p className="mt-4 text-ink-soft">Anything else? Call or text {site.hostName} at <a className="underline" href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}>{site.phone}</a>.</p>
+            <p className="mt-4 text-ink-soft">Anything else? Call or text {site.contactName} at <a className="underline" href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}>{site.phone}</a>.</p>
           </div>
           <div className="divide-y divide-ink/10 border-y border-ink/10">
             {faqs.map((f, i) => (

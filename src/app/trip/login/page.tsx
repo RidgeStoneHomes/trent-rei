@@ -21,7 +21,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <label><span className="label">Confirmation code</span><input name="code" required className="input uppercase tracking-widest" placeholder="e.g. K7P2QX" autoComplete="one-time-code" /></label>
           <SubmitButton pendingText="Opening your portal…">Enter the Insider Portal</SubmitButton>
         </ActionForm>
-        <p className="mt-6 text-center text-xs text-ink-soft">Can't find your code? Text {site.hostName} at {site.phone}.</p>
+        <p className="mt-6 text-center text-xs text-ink-soft">Can't find your code? Call or text {site.contactName} at {site.phone}.</p>
       </div>
     </section>
   );

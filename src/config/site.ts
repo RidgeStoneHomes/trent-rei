@@ -9,6 +9,8 @@ export const site = {
   region: "Lake Texoma · North Texas",
   hostName: "Trent & Michelle",
   email: "reynoldsretreatstx@gmail.com",
+  // Guest questions go to Michelle
+  contactName: "Michelle",
   phone: "(682) 532-6007",
   instagram: "", // add your Instagram URL to show it in the footer
   timeZone: "America/Chicago",

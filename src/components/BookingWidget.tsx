@@ -117,7 +117,7 @@ export function BookingWidget({
         <p className="mt-4 font-display text-2xl">Online booking is almost ready.</p>
         <p className="mt-2 text-sm text-ink-soft">Tell us your dates and we'll hold them for you.</p>
         <a href={`mailto:${site.email}?subject=Booking inquiry`} className="btn-primary mt-5 w-full">Email {site.email}</a>
-        <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="btn-ghost mt-2 w-full">Call or text {site.phone}</a>
+        <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="btn-ghost mt-2 w-full">Call or text {site.contactName}: {site.phone}</a>
       </div>
     );
   }
