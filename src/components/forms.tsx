@@ -12,10 +12,12 @@ export function ActionForm({
   action,
   children,
   className,
+  successText,
 }: {
   action: (prev: State, form: FormData) => Promise<State>;
   children: ReactNode;
   className?: string;
+  successText?: string; // shown when the action returns { error: "" }
 }) {
   const [state, formAction, pending] = useActionState(action, null);
   return (
@@ -29,6 +31,9 @@ export function ActionForm({
     >
       <PendingContext.Provider value={pending}>{children}</PendingContext.Provider>
       {state?.error && <p className="mt-3 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700 sm:col-span-2">{state.error}</p>}
+      {state && !state.error && successText && !pending && (
+        <p className="mt-3 rounded-lg bg-green-50 px-3 py-2 text-sm text-green-800 sm:col-span-2">{successText}</p>
+      )}
     </form>
   );
 }

@@ -128,3 +128,17 @@ model Lead {
   source    String   @default("founding-list")
   createdAt DateTime @default(now())
 }
+
+// Private arrival details per home, edited in /admin → Arrival Info.
+// Shown to a confirmed guest only once their arrival details unlock.
+model PropertyArrival {
+  propertySlug  String   @id
+  address       String?
+  checkInMethod String?
+  doorCode      String?
+  wifiName      String?
+  wifiPassword  String?
+  parking       String? // overrides the default in site config when set
+  notes         String? // one note per line; overrides the defaults when set
+  updatedAt     DateTime @updatedAt
+}

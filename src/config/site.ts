@@ -85,11 +85,9 @@ export type Property = {
   spaces?: { title: string; items: string[] }[];
   nearby?: { place: string; distance: string }[];
   cameraDisclosure?: string;
+  // Non-private arrival defaults. The address, door code and Wi-Fi are entered in
+  // /admin → Arrival Info (stored privately in the database, never in this public code).
   arrival: {
-    address: string;
-    doorCode: string;
-    wifiName: string;
-    wifiPassword: string;
     parking: string;
     notes: string[];
   };
@@ -207,10 +205,6 @@ export const properties: Property[] = [
     images: [],
     palette: ["#1f3a2e", "#b08d57"],
     arrival: {
-      address: "328 Brandon Way, Pottsboro, TX", // PLACEHOLDER: confirm city & add ZIP
-      doorCode: "PLACEHOLDER-0000", // keypad / smart lock code
-      wifiName: "IronwoodAcres",
-      wifiPassword: "PLACEHOLDER",
       parking: "Driveway parking only. Please don't park on the street or the grass.", // PLACEHOLDER: add "Driveway fits # vehicles"
       notes: [
         "Hot tub is ready on arrival; please shower before soaking.",
@@ -267,10 +261,6 @@ export const properties: Property[] = [
     images: [],
     palette: ["#123543", "#b08d57"],
     arrival: {
-      address: "123 Bluff View Dr, Pottsboro, TX", // PLACEHOLDER
-      doorCode: "PLACEHOLDER-0000",
-      wifiName: "Overlook-Guest",
-      wifiPassword: "PLACEHOLDER",
       parking: "Driveway fits 4 vehicles; boat trailer parking at the side gate.",
       notes: [
         "Pool heat is set on arrival day — allow 6 hours to reach temperature.",

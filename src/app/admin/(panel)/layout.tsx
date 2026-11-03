@@ -17,6 +17,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
           <nav className="flex flex-wrap gap-5 text-sm">
             <Link href="/admin">Bookings</Link>
             <Link href="/admin/vendors">Partners</Link>
+            <Link href="/admin/arrival">Arrival Info</Link>
             <Link href="/admin/calendar">Calendar</Link>
             <Link href="/admin/qr">QR Codes</Link>
             <Link href="/admin/guests">Leads & Referrals</Link>

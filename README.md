@@ -35,7 +35,8 @@ npm run dev               # http://localhost:3000
 - Host dashboard: `/admin`, using `ADMIN_PASSWORD`.
 
 ## Customize before launch
-- `src/config/site.ts`: brand, homes, rates, fees, tax rate, refund window, referral amounts, arrival details. Anything marked `PLACEHOLDER` must be replaced.
+- `src/config/site.ts`: brand, homes, rates, fees, tax rate, refund window, referral amounts. Anything marked `PLACEHOLDER` must be replaced.
+- `/admin → Arrival Info`: address, door code and Wi-Fi for each home. These live in the database, never in this (public) code.
 - Photos: put them in `public/images/<slug>/` and list them in the `images` array of each home.
 - `src/content/agreement.ts`: **have a Texas attorney review the rental agreement**, then bump `AGREEMENT_VERSION`.
 - Replace the sample partners in `/admin/vendors` with your real agreements.

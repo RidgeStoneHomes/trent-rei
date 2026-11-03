@@ -114,3 +114,22 @@ export async function loadSampleVendors() {
   if ((await db.vendor.count()) === 0) await db.vendor.createMany({ data: sampleVendors });
   revalidatePath("/admin/vendors");
 }
+
+export async function saveArrival(_prev: { error: string } | null, form: FormData) {
+  await guard();
+  const slug = String(form.get("propertySlug"));
+  if (!getProperty(slug)) return { error: "Unknown home." };
+  const field = (k: string) => String(form.get(k) ?? "").trim() || null;
+  const data = {
+    address: field("address"),
+    checkInMethod: field("checkInMethod"),
+    doorCode: field("doorCode"),
+    wifiName: field("wifiName"),
+    wifiPassword: field("wifiPassword"),
+    parking: field("parking"),
+    notes: field("notes"),
+  };
+  await db.propertyArrival.upsert({ where: { propertySlug: slug }, create: { propertySlug: slug, ...data }, update: data });
+  revalidatePath("/admin/arrival");
+  return { error: "" };
+}

@@ -45,6 +45,17 @@ export async function runChecks(): Promise<Check[]> {
     });
   }
 
+  if (tablesOk) {
+    const filled = await db.propertyArrival.count({ where: { doorCode: { not: null } } });
+    checks.push({
+      label: "Arrival info (door code, Wi-Fi)",
+      ok: filled > 0,
+      optional: true,
+      detail: filled > 0 ? `Entered for ${filled} home(s).` : "Not entered yet. Guests will see \"your host will send this\" instead.",
+      fix: "Open /admin → Arrival Info and fill in each home.",
+    });
+  }
+
   const envCheck = (key: string, label: string, fix: string, optional = false) =>
     checks.push({ label, ok: Boolean(process.env[key]), detail: process.env[key] ? `${key} is set.` : `${key} is not set.`, fix, optional });
 

@@ -8,6 +8,7 @@ import { formatMoney } from "@/lib/money";
 import { qrSvg } from "@/lib/qr";
 import { siteUrl } from "@/lib/url";
 import { ensureReferralCode } from "@/lib/booking";
+import { getArrival } from "@/lib/arrival";
 import { guestLogout } from "@/app/actions/guest";
 import { Media } from "@/components/Media";
 import { CopyButton } from "@/components/CopyButton";
@@ -22,6 +23,9 @@ export default async function TripPage() {
     ? await db.vendor.findMany({ where: { active: true }, orderBy: [{ featured: "desc" }, { sortOrder: "asc" }, { name: "asc" }] })
     : [];
   const referral = await ensureReferralCode(booking.email, booking.firstName);
+  // Only load private arrival details once the guest is allowed to see them
+  const arrival = t.arrivalDetailsVisible ? await getArrival(property) : null;
+  const pending = `Your host will send this before ${formatDate(booking.checkIn, { weekday: undefined })}.`;
   const referralUrl = siteUrl(`/r/${referral.code}`);
   const passSvg = await qrSvg(siteUrl(`/verify/${booking.guestPassToken}`));
 
@@ -92,15 +96,25 @@ export default async function TripPage() {
           {t.insiderUnlocked && t.stage !== "departed" && (
             <section className="card !bg-white">
               <p className="eyebrow">Arrival</p>
-              {t.arrivalDetailsVisible ? (
+              {arrival ? (
                 <div className="mt-4 grid gap-6 sm:grid-cols-2">
-                  <div><p className="label">Address</p><p>{property.arrival.address}</p></div>
-                  <div><p className="label">Door code</p><p className="font-mono text-lg">{property.arrival.doorCode}</p></div>
-                  <div><p className="label">Wi-Fi</p><p>{property.arrival.wifiName} · <span className="font-mono">{property.arrival.wifiPassword}</span></p></div>
+                  <div><p className="label">Address</p><p>{arrival.address ?? pending}</p></div>
+                  <div>
+                    <p className="label">{arrival.checkInMethod ?? "Door code"}</p>
+                    <p className={arrival.doorCode ? "font-mono text-lg" : "text-sm text-ink-soft"}>{arrival.doorCode ?? pending}</p>
+                  </div>
+                  <div>
+                    <p className="label">Wi-Fi</p>
+                    {arrival.wifiName ? (
+                      <p>{arrival.wifiName}{arrival.wifiPassword ? <> · <span className="font-mono">{arrival.wifiPassword}</span></> : null}</p>
+                    ) : (
+                      <p className="text-sm text-ink-soft">Posted inside the home.</p>
+                    )}
+                  </div>
                   <div><p className="label">Check-in / out</p><p>{site.policies.checkInTime} / {site.policies.checkOutTime}</p></div>
-                  <div className="sm:col-span-2"><p className="label">Parking</p><p className="text-sm text-ink-soft">{property.arrival.parking}</p></div>
-                  {property.arrival.notes.length > 0 && (
-                    <ul className="list-disc pl-5 text-sm text-ink-soft sm:col-span-2">{property.arrival.notes.map((n) => <li key={n}>{n}</li>)}</ul>
+                  <div className="sm:col-span-2"><p className="label">Parking</p><p className="text-sm text-ink-soft">{arrival.parking}</p></div>
+                  {arrival.notes.length > 0 && (
+                    <ul className="list-disc pl-5 text-sm text-ink-soft sm:col-span-2">{arrival.notes.map((n) => <li key={n}>{n}</li>)}</ul>
                   )}
                 </div>
               ) : (
