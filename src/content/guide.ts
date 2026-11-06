@@ -6,7 +6,7 @@ export const tripStyles: { title: string; blurb: string; href: string; icon: str
   { title: "Girls' trip", blurb: "Hot tub, wine trail, and a fire pit for late talks.", href: "/experiences", icon: "🥂", tone: "from-[#7a3b3b] to-[#d9774b]" },
   { title: "Striper fishing", blurb: "Guides, early mornings, and a grill for the catch.", href: "/experiences", icon: "🎣", tone: "from-[#123543] to-[#1f4e5f]" },
   { title: "Lake views", blurb: "Glass walls, a plunge pool, and the sunset over the water.", href: "/stays/the-overlook", icon: "🌅", tone: "from-[#2a3a48] to-[#7fa7b3]" },
-  { title: "Game night", blurb: "Poker for 8, foosball, and an 85\" screen.", href: "/stays/ironwood-acres", icon: "🃏", tone: "from-[#14202b] to-[#2a3a48]" },
+  { title: "Game night", blurb: "Poker for 8, an Infinity game table, foosball, and an 85\" screen.", href: "/stays/ironwood-acres", icon: "🃏", tone: "from-[#14202b] to-[#2a3a48]" },
 ];
 
 // Area guide highlights on the homepage.

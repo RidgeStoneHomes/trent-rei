@@ -101,7 +101,7 @@ export const properties: Property[] = [
     name: "Ironwood Acres", // 328 Brandon Way
     headline: "Putting green + hot tub on a private acre, 2 miles from Highport Marina",
     summary:
-      "A private, fully fenced 1-acre luxury estate just 2 miles from Highport Marina on Lake Texoma: 5 bedrooms, 4.5 baths, 4 king beds, and room for 12.",
+      "A private, fully fenced 1-acre luxury estate just 2 miles from Highport Marina on Lake Texoma: 5 bedrooms, 4.5 baths (3 en-suite), 4 king beds plus 2 queens, and room for 12.",
     story: [
       "Sink putts on the private green, soak in the 7-person hot tub, fire up the outdoor kitchen, and end the night at the stone fire pit beneath uplit trees. An 8-foot cedar fence wraps the entire acre, so the whole place is yours.",
       "Inside, 16-foot vaulted ceilings rise over a floor-to-ceiling slate fireplace, a leather sofa and swivel chairs gather the group, and a custom 12-seat dining table fits everyone at one meal. When the sun goes down, the air-conditioned game room takes over.",
@@ -145,9 +145,19 @@ export const properties: Property[] = [
         items: [
           "Air-conditioned converted garage",
           "85\" TV and lounge sofa",
+          "Infinity 32\" electronic game table (buy and download new games right on it)",
           "Poker table for 8",
           "Foosball",
           "Bumper pool that converts to a second card table",
+          "Huksie toss game",
+        ],
+      },
+      {
+        title: "Kitchen",
+        items: [
+          "Keurig-style coffee maker that brews single cups or a full pot",
+          "Toaster oven",
+          "Toaster",
         ],
       },
       {
@@ -157,6 +167,9 @@ export const properties: Property[] = [
           "Outdoor kitchen: large grill, flat-top griddle, side burner",
           "7-person hot tub",
           "2,400 SF of turf: 4-hole putting green, bocce, giant Jenga, giant dice & yard games",
+          "Two disc golf baskets",
+          "Cornhole boards",
+          "Paddle boards for the lake",
           "Lit pathways to a stone wood-burning fire pit ringed by uplit trees",
           "8' cedar privacy fence around the full acre",
         ],
@@ -186,6 +199,11 @@ export const properties: Property[] = [
       "Air-conditioned game room",
       "Poker table for 8",
       "Foosball & bumper pool",
+      "Infinity 32\" electronic game table",
+      "Disc golf (2 baskets)",
+      "Cornhole",
+      "Paddle boards",
+      "Coffee maker (single cup or full pot)",
       "Bocce & giant yard games",
       "12-seat dining table",
       "Slate fireplace",
