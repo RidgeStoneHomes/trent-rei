@@ -351,7 +351,7 @@ export const properties: Property[] = [
     ],
     location: "Pottsboro, TX · Lake Texoma",
     bedrooms: 4,
-    beds: 5, // PLACEHOLDER — confirm bed count and sizes
+    beds: 6,
     baths: 4.5,
     maxGuests: 10,
     minNights: 2,
@@ -395,11 +395,19 @@ export const properties: Property[] = [
       "Turf yard behind an 8-foot privacy fence",
       "Half a mile from Ironwood Acres: book both for up to 22 guests",
     ],
+    sleepIntro: "Four bedrooms in the main house, plus a king bed up in the barndo loft.",
+    rooms: [
+      { name: "King Bedroom", beds: "King", detail: "A king bed in the main house." }, // PLACEHOLDER detail and name
+      { name: "Second King Bedroom", beds: "King", detail: "Another king bed in the main house." }, // PLACEHOLDER detail and name
+      { name: "Queen Bedroom", beds: "Queen", detail: "A queen bed in the main house." }, // PLACEHOLDER detail and name
+      { name: "Twin XL Bedroom", beds: "2 Twin XL", detail: "Two twin XL beds, great for kids or friends who'd rather not share." }, // PLACEHOLDER
+      { name: "The Barn Loft", beds: "King", detail: "A king bed in the loft of the 600 sq ft barndo guest house, with its own full bath downstairs." },
+    ],
     spaces: [
       {
         title: "The barndo",
         blurb: "A 600 sq ft barndominium guest house steps from the main home.",
-        items: ["Full bathroom", "Sleeping loft", "Its own space for grandparents, teens or late-night games"],
+        items: ["Sleeping loft with a king bed", "Full bathroom", "Its own space for grandparents, teens or late-night games"],
       },
       {
         title: "Outdoor oasis",
