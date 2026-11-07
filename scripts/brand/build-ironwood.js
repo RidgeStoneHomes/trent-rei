@@ -73,10 +73,10 @@ function lineScene(c) {
 }
 let GREEN_FILL = "none";
 
-function badge({ mode = "photo", ring = GREEN, gold = GOLD_LIGHT, text = CREAM, inner = GREEN }) {
+function badge({ mode = "photo", ring = GREEN, gold = GOLD_LIGHT, text = CREAM, inner = GREEN, fade = GREEN, accent = gold }) {
   const c = 260;
   let b = `<defs><clipPath id="iw-${mode}"><circle cx="${c}" cy="${c}" r="186"/></clipPath>
-    <linearGradient id="iw-fade" x1="0" y1="0" x2="0" y2="1"><stop offset=".72" stop-color="#1f3a2e" stop-opacity="0"/><stop offset="1" stop-color="#1f3a2e" stop-opacity=".55"/></linearGradient></defs>
+    <linearGradient id="iw-fade" x1="0" y1="0" x2="0" y2="1"><stop offset=".72" stop-color="${fade}" stop-opacity="0"/><stop offset="1" stop-color="${fade}" stop-opacity=".55"/></linearGradient></defs>
   <circle cx="${c}" cy="${c}" r="256" fill="${ring}"/>
   <circle cx="${c}" cy="${c}" r="247" fill="none" stroke="${gold}" stroke-width="3"/>
   <circle cx="${c}" cy="${c}" r="241" fill="none" stroke="${gold}" stroke-width="1"/>`;
@@ -91,7 +91,7 @@ function badge({ mode = "photo", ring = GREEN, gold = GOLD_LIGHT, text = CREAM, 
   b += `<circle cx="${c}" cy="${c}" r="189" fill="none" stroke="${gold}" stroke-width="4"/>
   <circle cx="${c}" cy="${c}" r="196" fill="none" stroke="${gold}" stroke-width="1"/>`;
   b += arcText(serif, "IRONWOOD ACRES", 40, 0.16, c, c, 207, true, text);
-  b += arcText(serif, "TEXOMA", 30, 0.55, c, c, 228, false, gold);
+  b += arcText(serif, "TEXOMA", 30, 0.55, c, c, 228, false, accent);
   b += flag(c - 220, c + 2, 26, gold) + flag(c + 220, c + 2, 26, gold);
   return svg(520, 520, b, "Ironwood Acres Texoma");
 }
@@ -99,4 +99,11 @@ function badge({ mode = "photo", ring = GREEN, gold = GOLD_LIGHT, text = CREAM, 
 fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-photo.svg"), badge({ mode: "photo" }));
 fs.writeFileSync(path.join(OUT, "ironwood-acres-badge.svg"), badge({ mode: "line" }));
 fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-light.svg"), badge({ mode: "line", ring: CREAM, gold: GOLD, text: GREEN, inner: CREAM }));
+const BLACK = "#141414", GOLD_BRIGHT = "#c9a862", NAVY = "#1b2c48";
+const blackGold = { ring: BLACK, gold: GOLD_BRIGHT, text: GOLD_BRIGHT, inner: BLACK, fade: BLACK };
+const creamBlue = { ring: CREAM, gold: NAVY, text: NAVY, inner: CREAM, fade: NAVY };
+fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-photo-black-gold.svg"), badge({ mode: "photo", ...blackGold }));
+fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-black-gold.svg"), badge({ mode: "line", ...blackGold }));
+fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-photo-cream-blue.svg"), badge({ mode: "photo", ...creamBlue }));
+fs.writeFileSync(path.join(OUT, "ironwood-acres-badge-cream-blue.svg"), badge({ mode: "line", ...creamBlue }));
 console.log("ok");
