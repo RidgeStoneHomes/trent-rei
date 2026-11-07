@@ -6,16 +6,21 @@ export function Media({
   index = 0,
   className = "",
   label,
+  size = "sm",
+  eager = false,
 }: {
   property: Property;
   index?: number;
   className?: string;
   label?: string;
+  size?: "sm" | "full"; // "sm" (~800px) for cards and grids, "full" for large views
+  eager?: boolean; // load immediately (above-the-fold photos)
 }) {
-  const src = property.images[index];
-  if (src) {
+  const photo = property.images[index];
+  if (photo) {
+    const src = size === "sm" ? photo.sm ?? photo.src : photo.src;
     // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt={label ?? property.name} className={`object-cover ${className}`} />;
+    return <img src={src} alt={photo.alt} loading={eager ? "eager" : "lazy"} decoding="async" className={`object-cover ${className}`} />;
   }
   const [a, b] = property.palette;
   const angle = 135 + index * 40;

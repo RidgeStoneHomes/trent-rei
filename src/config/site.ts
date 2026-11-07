@@ -60,6 +60,9 @@ export const site = {
   reviews: [] as { quote: string; name: string; home: string }[],
 } as const;
 
+// A photo in /public/images/<slug>/: `src` is the full-size file, `sm` an ~800px version for cards and grids.
+export type Photo = { src: string; sm?: string; alt: string };
+
 export type Property = {
   slug: string;
   name: string;
@@ -79,11 +82,11 @@ export type Property = {
   highlights: string[];
   amenities: string[];
   houseRules: string[];
-  // Put photos in /public/images/<slug>/ and list them here, e.g. "/images/the-overlook/1.jpg".
-  // Until then, elegant gradient placeholders are shown.
-  images: string[];
+  // Gallery photos in display order; the first is the main photo. With none, gradient placeholders show.
+  images: Photo[];
+  heroPhoto?: Photo; // wide photo behind the homepage headline
   palette: [string, string]; // placeholder gradient colors
-  rooms?: { name: string; beds: string; detail: string }[];
+  rooms?: { name: string; beds: string; detail: string; photo?: Photo }[];
   spaces?: { title: string; items: string[] }[];
   nearby?: { place: string; distance: string }[];
   cameraDisclosure?: string;
@@ -123,11 +126,11 @@ export const properties: Property[] = [
       "Fully fenced acre · 2 miles to Highport Marina",
     ],
     rooms: [
-      { name: "Primary Suite", beds: "King", detail: "King bed under an 11' white pine ceiling, with a private en-suite bath." },
-      { name: "The Highland Room", beds: "King", detail: "Private en-suite bath and shaggy Highland cow art: cozy farmhouse with a touch of Texas whimsy." },
-      { name: "The 19th Hole", beds: "2 Queens · sleeps 4", detail: "Golf-themed to match the putting green out back, with a private en-suite bath." },
-      { name: "The Drover Room", beds: "King", detail: "Moss-green accent wall and leather headboard, inspired by the cattle-drive hotels of the Texas frontier. Shares a full bath with the Lake Room." },
-      { name: "The Lake Room", beds: "King", detail: "Vintage paddles on the wall, a nod to the Lake Texoma days that bring you here. Shares a full bath with the Drover Room." },
+      { name: "Primary Suite", beds: "King", detail: "King bed under an 11' white pine ceiling, with a private en-suite bath.", photo: { src: "/images/ironwood-acres/078.jpg", sm: "/images/ironwood-acres/078-sm.jpg", alt: "Primary Suite" } },
+      { name: "The Highland Room", beds: "King", detail: "Private en-suite bath and shaggy Highland cow art: cozy farmhouse with a touch of Texas whimsy.", photo: { src: "/images/ironwood-acres/062.jpg", sm: "/images/ironwood-acres/062-sm.jpg", alt: "The Highland Room" } },
+      { name: "The 19th Hole", beds: "2 Queens · sleeps 4", detail: "Golf-themed to match the putting green out back, with a private en-suite bath.", photo: { src: "/images/ironwood-acres/091.jpg", sm: "/images/ironwood-acres/091-sm.jpg", alt: "The 19th Hole" } },
+      { name: "The Drover Room", beds: "King", detail: "Moss-green accent wall and leather headboard, inspired by the cattle-drive hotels of the Texas frontier. Shares a full bath with the Lake Room.", photo: { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Drover Room" } },
+      { name: "The Lake Room", beds: "King", detail: "Vintage paddles on the wall, a nod to the Lake Texoma days that bring you here. Shares a full bath with the Drover Room.", photo: { src: "/images/ironwood-acres/057.jpg", sm: "/images/ironwood-acres/057-sm.jpg", alt: "The Lake Room" } },
     ],
     spaces: [
       {
@@ -222,7 +225,44 @@ export const properties: Property[] = [
     ],
     cameraDisclosure:
       "Exterior security cameras monitor the front door, the garage, and the left side of the house. There are no cameras inside the home.",
-    images: [],
+    images: [
+      { src: "/images/ironwood-acres/132.jpg", sm: "/images/ironwood-acres/132-sm.jpg", alt: "Private 4-hole putting green at twilight" },
+      { src: "/images/ironwood-acres/021.jpg", sm: "/images/ironwood-acres/021-sm.jpg", alt: "Living room with slate fireplace and leather sectional" },
+      { src: "/images/ironwood-acres/099.jpg", sm: "/images/ironwood-acres/099-sm.jpg", alt: "7-person hot tub on the covered porch" },
+      { src: "/images/ironwood-acres/042.jpg", sm: "/images/ironwood-acres/042-sm.jpg", alt: "Kitchen with island seating" },
+      { src: "/images/ironwood-acres/123.jpg", sm: "/images/ironwood-acres/123-sm.jpg", alt: "Covered porch at dusk" },
+      { src: "/images/ironwood-acres/005.jpg", sm: "/images/ironwood-acres/005-sm.jpg", alt: "Sunset over Lake Texoma, minutes from the house" },
+      { src: "/images/ironwood-acres/025.jpg", sm: "/images/ironwood-acres/025-sm.jpg", alt: "Open living room under the 16-foot vaulted ceiling" },
+      { src: "/images/ironwood-acres/027.jpg", sm: "/images/ironwood-acres/027-sm.jpg", alt: "Living room and entry" },
+      { src: "/images/ironwood-acres/032.jpg", sm: "/images/ironwood-acres/032-sm.jpg", alt: "Sitting area with swivel chairs" },
+      { src: "/images/ironwood-acres/038.jpg", sm: "/images/ironwood-acres/038-sm.jpg", alt: "Custom 12-seat dining table" },
+      { src: "/images/ironwood-acres/036.jpg", sm: "/images/ironwood-acres/036-sm.jpg", alt: "Dining room" },
+      { src: "/images/ironwood-acres/043.jpg", sm: "/images/ironwood-acres/043-sm.jpg", alt: "Kitchen and pantry" },
+      { src: "/images/ironwood-acres/045.jpg", sm: "/images/ironwood-acres/045-sm.jpg", alt: "Farmhouse sink looking out to the living room" },
+      { src: "/images/ironwood-acres/078.jpg", sm: "/images/ironwood-acres/078-sm.jpg", alt: "Primary suite under a white pine ceiling" },
+      { src: "/images/ironwood-acres/079.jpg", sm: "/images/ironwood-acres/079-sm.jpg", alt: "Primary suite seating" },
+      { src: "/images/ironwood-acres/081.jpg", sm: "/images/ironwood-acres/081-sm.jpg", alt: "Primary bath soaking tub" },
+      { src: "/images/ironwood-acres/083.jpg", sm: "/images/ironwood-acres/083-sm.jpg", alt: "Primary bath double vanity" },
+      { src: "/images/ironwood-acres/062.jpg", sm: "/images/ironwood-acres/062-sm.jpg", alt: "The Highland Room" },
+      { src: "/images/ironwood-acres/064.jpg", sm: "/images/ironwood-acres/064-sm.jpg", alt: "Highland Room details" },
+      { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Drover Room" },
+      { src: "/images/ironwood-acres/057.jpg", sm: "/images/ironwood-acres/057-sm.jpg", alt: "The Lake Room" },
+      { src: "/images/ironwood-acres/091.jpg", sm: "/images/ironwood-acres/091-sm.jpg", alt: "The 19th Hole: two queens" },
+      { src: "/images/ironwood-acres/070.jpg", sm: "/images/ironwood-acres/070-sm.jpg", alt: "Air-conditioned game room" },
+      { src: "/images/ironwood-acres/073.jpg", sm: "/images/ironwood-acres/073-sm.jpg", alt: "Game room lounge and arcade" },
+      { src: "/images/ironwood-acres/075.jpg", sm: "/images/ironwood-acres/075-sm.jpg", alt: "Foosball" },
+      { src: "/images/ironwood-acres/076.jpg", sm: "/images/ironwood-acres/076-sm.jpg", alt: "Poker table for 8" },
+      { src: "/images/ironwood-acres/072.jpg", sm: "/images/ironwood-acres/072-sm.jpg", alt: "Bumper pool" },
+      { src: "/images/ironwood-acres/098.jpg", sm: "/images/ironwood-acres/098-sm.jpg", alt: "Covered porch lounge" },
+      { src: "/images/ironwood-acres/102.jpg", sm: "/images/ironwood-acres/102-sm.jpg", alt: "Porch dining" },
+      { src: "/images/ironwood-acres/129.jpg", sm: "/images/ironwood-acres/129-sm.jpg", alt: "Outdoor kitchen with grill and griddle" },
+      { src: "/images/ironwood-acres/130.jpg", sm: "/images/ironwood-acres/130-sm.jpg", alt: "Hot tub at dusk" },
+      { src: "/images/ironwood-acres/124.jpg", sm: "/images/ironwood-acres/124-sm.jpg", alt: "Porch seating at dusk" },
+      { src: "/images/ironwood-acres/019.jpg", sm: "/images/ironwood-acres/019-sm.jpg", alt: "Front entry" },
+      { src: "/images/ironwood-acres/007.jpg", sm: "/images/ironwood-acres/007-sm.jpg", alt: "Golden hour over the neighborhood and lake" },
+      { src: "/images/ironwood-acres/003.jpg", sm: "/images/ironwood-acres/003-sm.jpg", alt: "Lake Texoma from above" },
+    ],
+    heroPhoto: { src: "/images/ironwood-acres/005.jpg", sm: "/images/ironwood-acres/005-sm.jpg", alt: "Sunset over Lake Texoma" },
     palette: ["#1f3a2e", "#b08d57"],
     arrival: {
       parking: "Driveway parking only. Please don't park on the street or the grass.", // PLACEHOLDER: add "Driveway fits # vehicles"

@@ -50,7 +50,7 @@ export default function HomePage() {
 
       {/* HERO */}
       <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden text-sand">
-        <LakeScene photo={properties[0].images[0]} />
+        <LakeScene photo={properties.find((p) => p.heroPhoto)?.heroPhoto?.src} />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/50 via-transparent to-ink/40" />
         <div className={`container-x flex flex-1 flex-col items-center justify-center pb-16 text-center ${promo ? "pt-40" : "pt-32"}`}>
           <p className="eyebrow animate-rise !text-brass-light">{site.region} · Book direct</p>

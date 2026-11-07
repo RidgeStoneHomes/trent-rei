@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getProperty, properties, site } from "@/config/site";
 import { Media } from "@/components/Media";
+import { Gallery } from "@/components/Gallery";
 import { BookingWidget } from "@/components/BookingWidget";
 import { bookedNights } from "@/lib/availability";
 import { isIsoDate, todayLocal } from "@/lib/dates";
@@ -43,15 +44,16 @@ export default async function PropertyPage({
         <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">{property.name}</h1>
         <p className="mt-3 animate-rise text-lg text-ink-soft [animation-delay:200ms]">{property.headline}</p>
         <p className="mt-2 animate-rise text-sm text-brass-dark [animation-delay:250ms]">Owned and hosted by {site.hostName}</p>
-        <div className="mt-8 grid h-[28rem] animate-rise grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl [animation-delay:300ms]">
+        <div className="relative mt-8 grid h-[28rem] animate-rise grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl [animation-delay:300ms]">
           <div className="col-span-4 row-span-2 overflow-hidden sm:col-span-2">
-            <Media property={property} index={0} className="h-full w-full transition duration-700 hover:scale-105" label="Photo coming soon" />
+            <Media property={property} index={0} size="full" eager className="h-full w-full transition duration-700 hover:scale-105" label="Photo coming soon" />
           </div>
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="hidden overflow-hidden sm:block">
-              <Media property={property} index={i} className="h-full w-full transition duration-700 hover:scale-105" />
+              <Media property={property} index={i} eager className="h-full w-full transition duration-700 hover:scale-105" />
             </div>
           ))}
+          <Gallery photos={property.images} name={property.name} />
         </div>
       </section>
 
@@ -75,10 +77,16 @@ export default async function PropertyPage({
               <h2 className="mt-12 text-3xl">Where you'll sleep</h2>
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {property.rooms.map((r) => (
-                  <div key={r.name} data-reveal className="card !bg-white transition hover:-translate-y-0.5 hover:shadow-md">
+                  <div key={r.name} data-reveal className="card overflow-hidden !bg-white !p-0 transition hover:-translate-y-0.5 hover:shadow-md">
+                    {r.photo && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={r.photo.sm ?? r.photo.src} alt={r.photo.alt} loading="lazy" decoding="async" className="aspect-[3/2] w-full object-cover" />
+                    )}
+                    <div className="p-6">
                     <p className="font-display text-2xl">{r.name}</p>
                     <p className="text-xs uppercase tracking-wider text-brass-dark">{r.beds}</p>
                     <p className="mt-2 text-sm text-ink-soft">{r.detail}</p>
+                    </div>
                   </div>
                 ))}
               </div>

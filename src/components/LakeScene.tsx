@@ -14,6 +14,8 @@ export function LakeScene({ photo }: { photo?: string }) {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={photo} alt="" className="h-full w-full scale-110 animate-[kenburns_24s_ease-in-out_infinite_alternate] object-cover" />
+        {/* Darken the photo so the headline and search stay readable */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/45 to-ink/80" />
       </div>
     );
   }
