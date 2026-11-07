@@ -11,6 +11,7 @@ import { HomeJsonLd } from "@/components/JsonLd";
 import { CountUp, RotatingWords, TiltCard } from "@/components/motion";
 import { activePromo } from "@/components/PromoBar";
 import { formatMoney } from "@/lib/money";
+import { lowestRate } from "@/lib/pricing";
 import { todayLocal } from "@/lib/dates";
 
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProperties;
@@ -107,7 +108,7 @@ export default function HomePage() {
                   <Link href={`/stays/${p.slug}`} className="relative block overflow-hidden rounded-3xl">
                     <Media property={p} className="aspect-[4/3] w-full transition duration-700 group-hover:scale-105" label={p.location} />
                     <span className="absolute right-4 top-4 rounded-full bg-sand/90 px-3 py-1 text-xs font-medium text-ink backdrop-blur">
-                      from {formatMoney(p.baseRateCents)}/night
+                      from {formatMoney(lowestRate(p))}/night
                     </span>
                   </Link>
                 </TiltCard>

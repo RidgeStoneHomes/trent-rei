@@ -29,7 +29,9 @@ export const site = {
   },
 
   // Texas state hotel occupancy tax is 6%; add county/city rates for your address.
-  taxRate: 0.13, // PLACEHOLDER — confirm with your CPA
+  // Texas state hotel occupancy tax (6%). Ironwood Acres is outside Pottsboro city limits, so no
+  // city hotel tax applies; no Grayson County hotel tax was found. Confirm with your CPA.
+  taxRate: 0.06,
 
   // Typical Airbnb guest service fee — used for the "book direct & save" message
   otaGuestFeeRate: 0.14,
@@ -63,6 +65,18 @@ export const site = {
 // A photo in /public/images/<slug>/: `src` is the full-size file, `sm` an ~800px version for cards and grids.
 export type Photo = { src: string; sm?: string; alt: string };
 
+// One pricing season. `from`/`to` are inclusive night dates: "MM-DD" repeats every year,
+// "YYYY-MM-DD" applies to that year only. A dated season beats a yearly one, and among
+// seasons of the same kind the one listed later wins (so holidays go after the base seasons).
+export type RateSeason = {
+  label: string;
+  from: string;
+  to: string;
+  weekdayCents: number; // Sun–Thu nights
+  weekendCents: number; // Fri & Sat nights
+  minNights?: number; // a stay that includes any night of this season must be at least this long
+};
+
 export type Property = {
   slug: string;
   name: string;
@@ -78,6 +92,9 @@ export type Property = {
   baseRateCents: number; // Sun–Thu
   weekendRateCents: number; // Fri & Sat nights
   cleaningFeeCents: number;
+  rateSeasons?: RateSeason[]; // when set, nights are priced by season; base/weekend rates fill any gaps
+  priceFloorCents?: number; // no night is ever priced below this, even after discounts
+  stayDiscounts?: { minNights: number; percent: number }[]; // length-of-stay discounts on the nightly total
   petFeeCents: number | null; // null = no pets
   highlights: string[];
   amenities: string[];
@@ -115,9 +132,41 @@ export const properties: Property[] = [
     baths: 4.5,
     maxGuests: 12,
     minNights: 2,
-    baseRateCents: 42500, // PLACEHOLDER rate
-    weekendRateCents: 54500, // PLACEHOLDER rate
-    cleaningFeeCents: 20000, // PLACEHOLDER fee
+    baseRateCents: 37500, // fallback for any night outside the seasons below
+    weekendRateCents: 57500,
+    cleaningFeeCents: 32500,
+    // Seasonal calendar from the Nov 2026 pricing report (AirDNA comps exclude cleaning, so
+    // summer and holiday rates sit ~12% above the report's first draft).
+    rateSeasons: [
+      // Every year
+      { label: "New Year's", from: "01-01", to: "01-03", weekdayCents: 49500, weekendCents: 49500, minNights: 2 },
+      { label: "Winter", from: "01-04", to: "02-29", weekdayCents: 29500, weekendCents: 45000, minNights: 2 },
+      { label: "Spring", from: "03-01", to: "05-20", weekdayCents: 37500, weekendCents: 57500, minNights: 2 },
+      { label: "Early summer", from: "05-21", to: "06-06", weekdayCents: 46500, weekendCents: 71500, minNights: 2 },
+      { label: "Summer peak", from: "06-07", to: "08-15", weekdayCents: 52500, weekendCents: 79500, minNights: 2 },
+      { label: "Late summer", from: "08-16", to: "09-30", weekdayCents: 35000, weekendCents: 59500, minNights: 2 },
+      { label: "Fall", from: "10-01", to: "11-21", weekdayCents: 37500, weekendCents: 57500, minNights: 2 },
+      { label: "Early December", from: "11-22", to: "12-18", weekdayCents: 29500, weekendCents: 45000, minNights: 2 },
+      { label: "Christmas – New Year's", from: "12-19", to: "12-30", weekdayCents: 61500, weekendCents: 61500, minNights: 3 },
+      { label: "New Year's Eve", from: "12-31", to: "12-31", weekdayCents: 72500, weekendCents: 72500, minNights: 3 },
+      { label: "July 4th", from: "07-01", to: "07-04", weekdayCents: 117500, weekendCents: 117500, minNights: 3 },
+      // Specific dates (holidays that move each year; verify spring break with DFW school calendars)
+      { label: "Opening rates", from: "2026-11-08", to: "2026-11-21", weekdayCents: 29500, weekendCents: 45000, minNights: 2 },
+      { label: "Thanksgiving week", from: "2026-11-22", to: "2026-11-28", weekdayCents: 61500, weekendCents: 61500, minNights: 3 },
+      { label: "Spring break", from: "2027-03-12", to: "2027-03-20", weekdayCents: 49500, weekendCents: 69500, minNights: 3 },
+      { label: "Easter weekend", from: "2027-03-25", to: "2027-03-27", weekdayCents: 61500, weekendCents: 61500, minNights: 2 },
+      { label: "Memorial Day weekend", from: "2027-05-28", to: "2027-05-30", weekdayCents: 89500, weekendCents: 89500, minNights: 3 },
+      { label: "Labor Day weekend", from: "2027-09-03", to: "2027-09-05", weekdayCents: 85000, weekendCents: 85000, minNights: 3 },
+      { label: "Thanksgiving week", from: "2027-11-22", to: "2027-11-28", weekdayCents: 61500, weekendCents: 61500, minNights: 3 },
+      { label: "Spring break", from: "2028-03-10", to: "2028-03-18", weekdayCents: 49500, weekendCents: 69500, minNights: 3 },
+      { label: "Easter weekend", from: "2028-04-13", to: "2028-04-15", weekdayCents: 61500, weekendCents: 61500, minNights: 2 },
+      { label: "Memorial Day weekend", from: "2028-05-26", to: "2028-05-28", weekdayCents: 89500, weekendCents: 89500, minNights: 3 },
+    ],
+    priceFloorCents: 29500,
+    stayDiscounts: [
+      { minNights: 7, percent: 12 },
+      { minNights: 4, percent: 7 },
+    ],
     petFeeCents: null,
     highlights: [
       "4-hole private putting green on 2,400 SF of turf",

@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Property } from "@/config/site";
 import { Media } from "./Media";
 import { formatMoney } from "@/lib/money";
+import { lowestRate } from "@/lib/pricing";
 
 export function PropertyCard({ property, query = "" }: { property: Property; query?: string }) {
   return (
@@ -22,7 +23,7 @@ export function PropertyCard({ property, query = "" }: { property: Property; que
           </p>
         </div>
         <p className="shrink-0 text-right text-sm">
-          from <span className="font-display text-2xl">{formatMoney(property.baseRateCents)}</span>
+          from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span>
           <br />
           <span className="text-xs text-ink-soft">per night</span>
         </p>

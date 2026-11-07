@@ -25,7 +25,8 @@ model Booking {
   phone          String
   notes          String?
   occasion       String?
-  nightlyCents   Int // sum of nightly rates
+  nightlyCents   Int // sum of nightly rates, before discounts
+  stayDiscountCents Int  @default(0) // length-of-stay discount
   cleaningCents  Int
   petCents       Int      @default(0)
   taxCents       Int

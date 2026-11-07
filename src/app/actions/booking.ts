@@ -63,6 +63,7 @@ export async function createBooking(_prev: FormState, form: FormData): Promise<F
       occasion: g.occasion || null,
       notes: g.notes || null,
       nightlyCents: quote.nightlyCents,
+      stayDiscountCents: quote.stayDiscountCents,
       cleaningCents: quote.cleaningCents,
       petCents: quote.petCents,
       taxCents: quote.taxCents,

@@ -2,6 +2,7 @@ import { site, type Property } from "@/config/site";
 import { db } from "./db";
 import { externalBlocks, type Range } from "./ical";
 import { addDays, daysBetween, isIsoDate, todayLocal } from "./dates";
+import { stayMinimum } from "./pricing";
 
 // Bookings that currently hold dates: confirmed ones, plus unpaid holds that are still fresh
 function activeHoldWhere(slug: string) {
@@ -47,7 +48,15 @@ export async function validateStay(
   if (!isIsoDate(checkIn) || !isIsoDate(checkOut)) return { ok: false, error: "Please choose your dates." };
   if (checkIn < todayLocal()) return { ok: false, error: "Check-in can't be in the past." };
   const nights = daysBetween(checkIn, checkOut);
-  if (nights < property.minNights) return { ok: false, error: `This home has a ${property.minNights}-night minimum.` };
+  const minimum = stayMinimum(property, checkIn, checkOut);
+  if (nights < minimum.min) {
+    return {
+      ok: false,
+      error: minimum.label
+        ? `Stays that include ${minimum.label} have a ${minimum.min}-night minimum.`
+        : `This home has a ${minimum.min}-night minimum.`,
+    };
+  }
   if (nights > 30) return { ok: false, error: "For stays over 30 nights, please contact us directly." };
   if (checkIn > addDays(todayLocal(), 540)) return { ok: false, error: "We take reservations up to 18 months out." };
   if (!Number.isInteger(guests) || guests < 1 || guests > property.maxGuests)

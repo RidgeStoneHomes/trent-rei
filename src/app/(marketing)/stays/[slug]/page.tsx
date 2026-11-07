@@ -7,6 +7,8 @@ import { BookingWidget } from "@/components/BookingWidget";
 import { bookedNights } from "@/lib/availability";
 import { isIsoDate, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
+import { lowestRate } from "@/lib/pricing";
+import { RateTable } from "@/components/RateTable";
 
 export const dynamic = "force-dynamic";
 
@@ -138,6 +140,8 @@ export default async function PropertyPage({
             <Link href="/experiences" className="btn-brass mt-6">Preview perks</Link>
           </div>
 
+          <RateTable property={property} today={todayLocal()} />
+
           <h2 className="mt-12 text-3xl">Good to know</h2>
           <div className="mt-5 grid gap-6 text-sm sm:grid-cols-3">
             <div>
@@ -169,12 +173,13 @@ export default async function PropertyPage({
             maxGuests={property.maxGuests}
             minNights={property.minNights}
             allowsPets={property.petFeeCents !== null}
-            baseRateCents={property.baseRateCents}
+            baseRateCents={lowestRate(property)}
             initial={initial}
             bookingOpen={bookingOpen}
           />
           <p className="mt-3 text-center text-xs text-ink-soft">
-            Weekend nights {formatMoney(property.weekendRateCents)} · Cleaning {formatMoney(property.cleaningFeeCents)}
+            Rates vary by season · Cleaning {formatMoney(property.cleaningFeeCents)}
+            {property.stayDiscounts?.length ? ` · Save up to ${Math.max(...property.stayDiscounts.map((d) => d.percent))}% on longer stays` : ""}
           </p>
         </aside>
       </section>
@@ -195,7 +200,7 @@ export default async function PropertyPage({
       {/* Mobile: keep the price and a jump to the calendar in reach */}
       <div className="no-print fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 border-t border-ink/10 bg-sand/95 px-4 py-3 backdrop-blur lg:hidden">
         <p className="text-sm">
-          from <span className="font-display text-2xl">{formatMoney(property.baseRateCents)}</span> / night
+          from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span> / night
         </p>
         <a href="#book" className="btn-primary !py-2.5">Check dates</a>
       </div>

@@ -12,6 +12,7 @@ export async function loadReservation(id: string) {
 
 export function bookingLines(b: {
   nightlyCents: number;
+  stayDiscountCents: number;
   cleaningCents: number;
   petCents: number;
   discountCents: number;
@@ -21,8 +22,9 @@ export function bookingLines(b: {
 }) {
   const lines = [
     { label: "Nightly rate", cents: b.nightlyCents },
-    { label: "Cleaning & turndown", cents: b.cleaningCents },
   ];
+  if (b.stayDiscountCents) lines.push({ label: "Length-of-stay discount", cents: -b.stayDiscountCents });
+  lines.push({ label: "Cleaning & turndown", cents: b.cleaningCents });
   if (b.petCents) lines.push({ label: "Pet fee", cents: b.petCents });
   if (b.discountCents) lines.push({ label: "Referral savings", cents: -b.discountCents });
   lines.push({ label: "Occupancy taxes", cents: b.taxCents });
