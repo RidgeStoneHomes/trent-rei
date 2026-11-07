@@ -42,21 +42,15 @@ export const site = {
     minNightsForReferral: 2,
   },
 
+  // Email list signup on the homepage
   foundingGuest: {
-    // Launch offer shown on the homepage interest form
-    headline: "Become a Founding Guest",
-    offer:
-      "Our first 50 direct bookings receive a complimentary private sunset cruise or wine-trail tasting for two, plus founding rates for life.",
+    headline: "Join our guest list",
+    offer: "Be first to hear about open dates, seasonal rates and new partner perks around the lake.",
   },
 
   // Announcement bar across the top of every guest page. It hides itself the day
   // after `endsOn`, so an expired offer never lingers. Set to null to turn it off.
-  promo: {
-    label: "Founding Guest",
-    text: "First 50 direct bookings get a sunset cruise or wine tasting for two.",
-    href: "/#founding",
-    endsOn: "2027-06-30", // PLACEHOLDER: set the real end date
-  } as { label: string; text: string; href: string; endsOn: string } | null,
+  promo: null as { label: string; text: string; href: string; endsOn: string } | null,
 
   // Real guest reviews only. The reviews section stays hidden until this has entries.
   reviews: [] as { quote: string; name: string; home: string }[],
@@ -122,9 +116,9 @@ export const properties: Property[] = [
     name: "Ironwood Acres", // 328 Brandon Way
     headline: "Putting green + hot tub on a private acre, 2 miles from Highport Marina",
     summary:
-      "Welcome to Ironwood Acres, a private, fully fenced 1-acre luxury estate designed for ultimate group entertainment and relaxation near Lake Texoma.",
+      "Welcome to Ironwood Acres, a private 1-acre luxury estate with a fully fenced backyard, designed for ultimate group entertainment and relaxation near Lake Texoma.",
     story: [
-      "Five bedrooms, 4.5 baths (three of them en-suite), 4 king beds plus 2 queens, and room for 12, just 2 miles from Highport Marina. An 8-foot cedar fence wraps the entire acre, so the whole place is yours.",
+      "Five bedrooms, 4.5 baths (three of them en-suite), 4 king beds plus 2 queens, and room for 12, just 2 miles from Highport Marina. An 8-foot cedar privacy fence wraps the entire backyard, so the fun stays private.",
       "Sink putts on the private green, soak in the 7-person hot tub, fire up the outdoor kitchen, and end the night at the stone fire pit beneath uplit trees. Inside, 16-foot vaulted ceilings rise over a floor-to-ceiling slate fireplace, and the professionally designed rooms are furnished with curated Pottery Barn pieces.",
       "Gather everyone around the custom 12-person dining table for a family dinner where nobody is stuck at the kids' table. When the sun goes down, the air-conditioned game room takes over. This is a house built for making memories together.",
     ],
@@ -175,7 +169,7 @@ export const properties: Property[] = [
       "7-person hot tub & stone fire pit under lit trees",
       "Air-conditioned game room: arcade, bumper pool, poker table & 85\" TV",
       "Bocce ball court & Frisbee golf",
-      "Fully fenced acre · 2 miles to Highport Marina",
+      "Private acre, fully fenced backyard · 2 miles to Highport Marina",
     ],
     sleepIntro:
       "Each bedroom is a sanctuary of comfort: plush Pottery Barn bedding, fluffy pillows in a choice of firmness so everyone sleeps their way, and spa-like baths. Three suites have their own private en-suite bath.",
@@ -222,7 +216,7 @@ export const properties: Property[] = [
       },
       {
         title: "Outdoor oasis",
-        blurb: "Your own private resort on a fully fenced acre, from morning putts to late-night stories around the fire.",
+        blurb: "Your own private resort in a fully fenced backyard, from morning putts to late-night stories around the fire.",
         items: [
           "32'×18' covered porch with pine ceilings and propane heater",
           "Outdoor kitchen: large grill, flat-top griddle, side burner",
@@ -234,7 +228,7 @@ export const properties: Property[] = [
           "Cornhole",
           "Paddle boards for the lake",
           "Lit pathways to a stone wood-burning fire pit ringed by uplit trees",
-          "8' cedar privacy fence around the full acre",
+          "8' cedar privacy fence around the entire backyard",
         ],
       },
       {
@@ -275,7 +269,7 @@ export const properties: Property[] = [
       "Mesh Wi-Fi",
       "Whole-house water filtration",
       "Tankless water heater",
-      "Fully fenced acre",
+      "Fully fenced backyard",
     ],
     houseRules: [
       "Maximum 12 guests",
@@ -293,7 +287,7 @@ export const properties: Property[] = [
       { src: "/images/ironwood-acres/099.jpg", sm: "/images/ironwood-acres/099-sm.jpg", alt: "7-person hot tub on the covered porch" },
       { src: "/images/ironwood-acres/042.jpg", sm: "/images/ironwood-acres/042-sm.jpg", alt: "Kitchen with island seating" },
       { src: "/images/ironwood-acres/118.jpg", sm: "/images/ironwood-acres/118-sm.jpg", alt: "Ironwood Acres at twilight" },
-      { src: "/images/ironwood-acres/016.jpg", sm: "/images/ironwood-acres/016-sm.jpg", alt: "The home on a fully fenced acre" },
+      { src: "/images/ironwood-acres/016.jpg", sm: "/images/ironwood-acres/016-sm.jpg", alt: "The home on a private acre" },
       { src: "/images/ironwood-acres/005.jpg", sm: "/images/ironwood-acres/005-sm.jpg", alt: "Sunset over Lake Texoma, minutes from the house" },
       { src: "/images/ironwood-acres/025.jpg", sm: "/images/ironwood-acres/025-sm.jpg", alt: "Open living room under the 16-foot vaulted ceiling" },
       { src: "/images/ironwood-acres/027.jpg", sm: "/images/ironwood-acres/027-sm.jpg", alt: "Living room and entry" },

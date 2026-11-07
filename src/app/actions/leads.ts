@@ -28,7 +28,7 @@ export async function joinList(_prev: LeadState, form: FormData): Promise<LeadSt
   await db.lead.create({ data: { ...lead, email: lead.email.toLowerCase(), source: lead.source ?? "founding-list" } });
   await sendEmail({
     to: lead.email,
-    subject: `Welcome to the ${site.brand} Founding Guest list`,
+    subject: `Welcome to the ${site.brand} guest list`,
     html: emailLayout(
       site.brand,
       `<h1 style="font-weight:400;font-size:28px">You're on the list${lead.name ? `, ${lead.name}` : ""}.</h1>
@@ -44,5 +44,5 @@ export async function joinList(_prev: LeadState, form: FormData): Promise<LeadSt
       html: emailLayout("New lead", `<p>${lead.name ?? ""} ${lead.email}<br/>${lead.interest ?? ""}<br/>${lead.message ?? ""}</p>`),
     });
   }
-  return { ok: true, message: "You're in. Watch your inbox for founding-guest access." };
+  return { ok: true, message: "You're in. Watch your inbox for open dates and seasonal rates." };
 }

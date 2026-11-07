@@ -25,7 +25,7 @@ export function LeadForm({ dark = false, source = "founding-list", compact = fal
         <option>Just exploring</option>
       </select>}
       <button disabled={pending} className={`${dark ? "btn-brass" : "btn-primary"} btn-sheen sm:col-span-2`}>
-        {pending ? "Saving your spot…" : compact ? "Join the list" : "Claim Founding Guest Access"}
+        {pending ? "Saving your spot…" : compact ? "Join the list" : "Join the guest list"}
       </button>
       {state && !state.ok && <p className="text-sm text-red-600 sm:col-span-2">{state.message}</p>}
     </form>

@@ -37,7 +37,7 @@ export default async function SharePage({ searchParams }: { searchParams: Promis
       <section className="container-x pb-24">
         <div className="mx-auto max-w-xl card">
           <p className="font-display text-2xl">Not ready to book yet?</p>
-          <p className="mt-2 text-sm text-ink-soft">Join the Founding Guest list for first access to dates.</p>
+          <p className="mt-2 text-sm text-ink-soft">Join our guest list for first access to open dates.</p>
           <div className="mt-5"><LeadForm source="share-page" /></div>
         </div>
       </section>

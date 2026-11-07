@@ -82,7 +82,7 @@ export default function HomePage() {
             { value: <CountUp to={properties.length} />, label: "Private homes" },
             { value: <CountUp to={totalGuests} />, label: "Guests across both" },
             { value: <CountUp to={site.policies.refundWindowDays} />, label: "Days of free cancellation" },
-            { value: <CountUp to={1} />, label: "Private fenced acre" },
+            { value: <CountUp to={1} />, label: "Private acre" },
           ].map((s, i) => (
             <div key={s.label} data-reveal style={delay(i * 90)}>
               <p className="font-display text-5xl text-ink sm:text-6xl">{s.value}</p>

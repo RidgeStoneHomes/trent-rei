@@ -9,7 +9,7 @@ export default async function GuestsAdmin() {
   return (
     <div className="grid gap-10 lg:grid-cols-2">
       <div>
-        <h1 className="text-3xl">Founding Guest list</h1>
+        <h1 className="text-3xl">Guest list</h1>
         <p className="mt-1 text-sm text-ink-soft">{leads.length} people interested. Email them first when you open dates.</p>
         <div className="mt-4 overflow-hidden rounded-2xl bg-white shadow-sm">
           <table className="w-full text-left text-sm">
