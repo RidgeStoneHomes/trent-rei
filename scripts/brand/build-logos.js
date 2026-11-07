@@ -25,6 +25,25 @@ function tracked(font, text, size, trackingEm) {
   return { d: parts.join(""), width: x };
 }
 
+// Text on a circle. top=true reads clockwise over the top; false reads left-to-right along the bottom.
+function arcText(font, text, size, trackingEm, cx, cy, r, top, fill) {
+  const scale = size / font.unitsPerEm;
+  const glyphs = font.stringToGlyphs(text);
+  const adv = glyphs.map((g, i) => g.advanceWidth * scale + (i < glyphs.length - 1 ? trackingEm * size : 0));
+  const total = adv.reduce((a, b) => a + b, 0) - trackingEm * size;
+  let s = top ? -Math.PI / 2 - total / r / 2 : Math.PI / 2 + total / r / 2;
+  let out = "";
+  glyphs.forEach((g, i) => {
+    const w = g.advanceWidth * scale;
+    const a = top ? s + w / 2 / r : s - w / 2 / r;
+    const px = cx + r * Math.cos(a), py = cy + r * Math.sin(a);
+    const rot = (a * 180) / Math.PI + (top ? 90 : -90);
+    out += `<path transform="translate(${px.toFixed(2)} ${py.toFixed(2)}) rotate(${rot.toFixed(2)}) translate(${(-w / 2).toFixed(2)} 0)" d="${g.getPath(0, 0, size).toPathData(2)}" fill="${fill}"/>`;
+    s += top ? adv[i] / r : -adv[i] / r;
+  });
+  return out;
+}
+
 // ---------- RR monogram: two interlocking R's; the back R is cut where the front R crosses it ----------
 let monoId = 0;
 function monogram(cx, baseline, size, color) {
@@ -140,6 +159,36 @@ write("reynolds-retreats-logo-horizontal-reversed.svg", horizontal({ navy: CREAM
 { const m = monogram(150, 210, 230, GOLD); write("reynolds-retreats-monogram.svg", svg(300, 260, m.svg, "RR")); }
 { const m = monogram(100, 146, 150, GOLD_LIGHT);
   write("reynolds-retreats-favicon.svg", svg(200, 200, `<rect width="200" height="200" rx="36" fill="${NAVY}"/>${m.svg}`, "Reynolds Retreats")); }
+
+// ---------- Round badge: RR in the centre, amenity icons in a ring, name and tagline around the edge ----------
+function round({ bg = NAVY, gold = GOLD_LIGHT, text = CREAM, icons = true } = {}) {
+  const c = 260, R = 256;
+  let b = `<circle cx="${c}" cy="${c}" r="${R}" fill="${bg}"/>
+  <circle cx="${c}" cy="${c}" r="${R - 9}" fill="none" stroke="${gold}" stroke-width="3"/>
+  <circle cx="${c}" cy="${c}" r="${R - 15}" fill="none" stroke="${gold}" stroke-width="1"/>
+  <circle cx="${c}" cy="${c}" r="198" fill="none" stroke="${gold}" stroke-width="1"/>
+  <circle cx="${c}" cy="${c}" r="192" fill="none" stroke="${gold}" stroke-width="3"/>`;
+  b += arcText(serif, "REYNOLDS RETREATS", 36, 0.2, c, c, 208, true, text);
+  b += arcText(sans, "ELEVATED STAYS · MEMORABLE EXPERIENCES", 14.5, 0.22, c, c, 230, false, gold);
+  b += `<path d="M${c - 220} ${c} l6 -6 l6 6 l-6 6 Z M${c + 208} ${c} l6 -6 l6 6 l-6 6 Z" fill="${gold}"/>`;
+  if (icons) {
+    const keys = ["home", "hottub", "pool", "firepit", "golf", "atv", "boat", "fish", "kayak", "lake"];
+    const size = 48, r = 148;
+    keys.forEach((k, i) => {
+      const a = ((-90 - 162 + i * 36) * Math.PI) / 180; // clockwise from upper-left, gaps at top and bottom
+      b += icon(k, c + r * Math.cos(a) - size / 2, c + r * Math.sin(a) - size / 2, size, gold, 1.6);
+    });
+  }
+  const m = monogram(c, c + 52, icons ? 150 : 190, gold);
+  b += m.svg;
+  const lt = tracked(sans, "LAKE TEXOMA", 13, 0.4);
+  b += `<path d="M${c - 62} ${c + 76} H${c + 62}" stroke="${gold}" stroke-width="1"/>`;
+  b += `<path transform="translate(${(c - lt.width / 2).toFixed(1)} ${c + 100})" d="${lt.d}" fill="${text}"/>`;
+  return svg(520, 520, b);
+}
+write("reynolds-retreats-round.svg", round());
+write("reynolds-retreats-round-light.svg", round({ bg: CREAM, gold: GOLD, text: NAVY }));
+write("reynolds-retreats-round-simple.svg", round({ icons: false }));
 
 // ---------- Icon set: one strip with labels for reference, plus each icon as its own file ----------
 {
