@@ -183,8 +183,8 @@ export const properties: Property[] = [
       { name: "Primary Suite", beds: "King", detail: "King bed under an 11' white pine ceiling, with a private en-suite bath.", photo: { src: "/images/ironwood-acres/078.jpg", sm: "/images/ironwood-acres/078-sm.jpg", alt: "Primary Suite" } },
       { name: "The Highland En-suite", beds: "King", detail: "Private en-suite bath and shaggy Highland cow art: cozy farmhouse with a touch of Texas whimsy.", photo: { src: "/images/ironwood-acres/062.jpg", sm: "/images/ironwood-acres/062-sm.jpg", alt: "The Highland En-suite" } },
       { name: "Upstairs 19th Hole Clubhouse En-suite", beds: "2 Queens · sleeps 4", detail: "A golf-themed clubhouse upstairs to match the putting green out back, with a private en-suite bath.", photo: { src: "/images/ironwood-acres/091.jpg", sm: "/images/ironwood-acres/091-sm.jpg", alt: "Upstairs 19th Hole Clubhouse En-suite" } },
-      { name: "The Drover Room", beds: "King", detail: "Moss-green accent wall and leather headboard, inspired by the cattle-drive hotels of the Texas frontier. Shares a full bath with the Lake Room.", photo: { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Drover Room" } },
-      { name: "The Lake Room", beds: "King", detail: "Vintage paddles on the wall, a nod to the Lake Texoma days that bring you here. Shares a full bath with the Drover Room.", photo: { src: "/images/ironwood-acres/057.jpg", sm: "/images/ironwood-acres/057-sm.jpg", alt: "The Lake Room" } },
+      { name: "The Cattle Drive Room", beds: "King", detail: "Moss-green accent wall and leather headboard, inspired by the cattle-drive hotels of the Texas frontier. Shares a full bath with the Lake Room.", photo: { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Cattle Drive Room" } },
+      { name: "The Lake Room", beds: "King", detail: "Vintage paddles on the wall, a nod to the Lake Texoma days that bring you here. Shares a full bath with the Cattle Drive Room.", photo: { src: "/images/ironwood-acres/057.jpg", sm: "/images/ironwood-acres/057-sm.jpg", alt: "The Lake Room" } },
     ],
     spaces: [
       {
@@ -305,7 +305,7 @@ export const properties: Property[] = [
       { src: "/images/ironwood-acres/081.jpg", sm: "/images/ironwood-acres/081-sm.jpg", alt: "Primary bath soaking tub" },
       { src: "/images/ironwood-acres/083.jpg", sm: "/images/ironwood-acres/083-sm.jpg", alt: "Primary bath double vanity" },
       { src: "/images/ironwood-acres/062.jpg", sm: "/images/ironwood-acres/062-sm.jpg", alt: "The Highland En-suite" },
-      { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Drover Room" },
+      { src: "/images/ironwood-acres/051.jpg", sm: "/images/ironwood-acres/051-sm.jpg", alt: "The Cattle Drive Room" },
       { src: "/images/ironwood-acres/057.jpg", sm: "/images/ironwood-acres/057-sm.jpg", alt: "The Lake Room" },
       { src: "/images/ironwood-acres/091.jpg", sm: "/images/ironwood-acres/091-sm.jpg", alt: "Upstairs 19th Hole Clubhouse En-suite: two queens" },
       { src: "/images/ironwood-acres/070.jpg", sm: "/images/ironwood-acres/070-sm.jpg", alt: "Air-conditioned game room" },
