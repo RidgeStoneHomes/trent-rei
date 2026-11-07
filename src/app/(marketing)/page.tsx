@@ -8,7 +8,7 @@ import { LakeScene } from "@/components/LakeScene";
 import { DateSearch } from "@/components/DateSearch";
 import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { HomeJsonLd } from "@/components/JsonLd";
-import { CountUp, RotatingWords, TiltCard } from "@/components/motion";
+import { CountUp, TiltCard } from "@/components/motion";
 import { activePromo } from "@/components/PromoBar";
 import { formatMoney } from "@/lib/money";
 import { lowestRate } from "@/lib/pricing";
@@ -17,7 +17,7 @@ import { todayLocal } from "@/lib/dates";
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProperties;
 
 const reasons = [
-  { title: "No platform fees", body: `Guests typically save around ${Math.round(site.otaGuestFeeRate * 100)}% compared with booking the same home on Airbnb.` },
+  { title: "Our best rate, direct", body: "Booking here always gets you our lowest price, plus private perks with our local partners." },
   { title: "A real local host", body: `Call or text ${site.contactName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
   { title: "Book now, decide later", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
 ];
@@ -58,13 +58,11 @@ export default function HomePage() {
           <h1 className="mt-5 max-w-4xl animate-rise text-5xl leading-[1.02] [animation-delay:120ms] sm:text-7xl lg:text-8xl">
             Where the lake
             <br />
-            <em className="text-brass-light">
-              <RotatingWords words={["slows you down.", "brings everyone in.", "turns to gold.", "feels like yours."]} />
-            </em>
+            <em className="text-brass-light">slows you down.</em>
           </h1>
           <p className="mx-auto mt-6 max-w-xl animate-rise text-base text-sand/85 [animation-delay:240ms] sm:text-lg">
-            Two private luxury homes near Lake Texoma, with no platform fees, a host who picks up, and perks from the best
-            guides, vineyards and kitchens around the lake.
+            Two private luxury homes near Lake Texoma, with a host who picks up and perks from the best guides,
+            vineyards and kitchens around the lake.
           </p>
           <p className="mt-5 animate-rise text-sm tracking-wide text-brass-light [animation-delay:300ms]">Owned and hosted by {site.hostName}</p>
           <div className="mt-8 w-full max-w-3xl animate-rise text-left [animation-delay:360ms]">
@@ -84,7 +82,7 @@ export default function HomePage() {
             { value: <CountUp to={properties.length} />, label: "Private homes" },
             { value: <CountUp to={totalGuests} />, label: "Guests across both" },
             { value: <CountUp to={site.policies.refundWindowDays} />, label: "Days of free cancellation" },
-            { value: "$0", label: "Platform fees" },
+            { value: <CountUp to={1} />, label: "Private fenced acre" },
           ].map((s, i) => (
             <div key={s.label} data-reveal style={delay(i * 90)}>
               <p className="font-display text-5xl text-ink sm:text-6xl">{s.value}</p>

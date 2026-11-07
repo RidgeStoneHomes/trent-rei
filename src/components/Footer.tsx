@@ -50,7 +50,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-sand/10 py-6 text-center text-xs text-sand/50">
-        © {new Date().getFullYear()} {site.brand}. Book direct, with no platform fees.
+        © {new Date().getFullYear()} {site.brand}. Book direct for our best rate.
       </div>
     </footer>
   );

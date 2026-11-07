@@ -77,6 +77,7 @@ export default async function PropertyPage({
           {property.rooms && (
             <>
               <h2 className="mt-12 text-3xl">Where you'll sleep</h2>
+              {property.sleepIntro && <p className="mt-3 max-w-2xl text-ink-soft">{property.sleepIntro}</p>}
               <div className="mt-5 grid gap-4 sm:grid-cols-2">
                 {property.rooms.map((r) => (
                   <div key={r.name} data-reveal className="card overflow-hidden !bg-white !p-0 transition hover:-translate-y-0.5 hover:shadow-md">
@@ -100,6 +101,7 @@ export default async function PropertyPage({
               {property.spaces.map((sp) => (
                 <div key={sp.title}>
                   <h2 className="text-3xl">{sp.title}</h2>
+                  {sp.blurb && <p className="mt-2 text-sm text-ink-soft">{sp.blurb}</p>}
                   <ul className="mt-4 space-y-2 text-sm text-ink-soft">
                     {sp.items.map((i) => <li key={i}>· {i}</li>)}
                   </ul>

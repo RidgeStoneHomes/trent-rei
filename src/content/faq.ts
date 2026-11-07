@@ -4,7 +4,7 @@ import { site } from "@/config/site";
 export const faqs: { q: string; a: string }[] = [
   {
     q: "Why book direct instead of on Airbnb or VRBO?",
-    a: `No platform service fee (guests typically save around ${Math.round(site.otaGuestFeeRate * 100)}%), a real host you can text, and the Insider Portal with private perks from our local partners. It's the same home, just a better deal.`,
+    a: "Our lowest price is always here, you get a real host you can call or text, and the Insider Portal opens private perks with our local partners. It's the same home, just a better stay.",
   },
   {
     q: "Where are the homes?",
@@ -24,7 +24,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What time is check-in and check-out?",
-    a: `Check-in is after ${site.policies.checkInTime} and check-out is before ${site.policies.checkOutTime}. Check-in is self-serve, with arrival details sent ${site.policies.arrivalDetailsDays} days ahead.`,
+    a: `Check-in is after ${site.policies.checkInTime} and check-out is before ${site.policies.checkOutTime}. Check-in is self-serve: your address appears in your trip page ${site.policies.arrivalDetailsDays} days ahead, and your door code shortly before arrival.`,
   },
   {
     q: "Are pets allowed?",
