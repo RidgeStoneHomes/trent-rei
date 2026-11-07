@@ -152,7 +152,7 @@ export const properties: Property[] = [
           "Poker table for 8",
           "Foosball",
           "Bumper pool that converts to a second card table",
-          "Hook and ring toss game",
+          "Huksie toss game",
         ],
       },
       {
