@@ -338,13 +338,13 @@ export const properties: Property[] = [
     },
   },
   {
-    slug: "the-lake-house",
-    name: "The Lake House", // WORKING NAME — final name still to be chosen
+    slug: "the-fog-line",
+    name: "The Fog Line",
     comingSoon: true, // shows "opening soon" with a guest-list signup instead of booking
-    formerSlugs: ["the-overlook"],
+    formerSlugs: ["the-overlook", "the-lake-house"],
     headline: "A barndo guest house, hot tub and two fire pits, half a mile from Ironwood Acres",
     summary:
-      "Welcome to The Lake House, a private Lake Texoma retreat with 4 bedrooms, a 600 sq ft barndominium guest house with its own full bath and sleeping loft, and a fully fenced backyard made for long evenings outside.",
+      "Welcome to The Fog Line, a private Lake Texoma retreat with 4 bedrooms, a 600 sq ft barndominium guest house with its own full bath and sleeping loft, and a fully fenced backyard made for long evenings outside.",
     story: [
       "Four bedrooms in the main house plus the barndo loft, and 4.5 baths in all, give a big group room to spread out. The 600 sq ft barndominium has its own full bath and loft, so it works as a guest suite for grandparents, a hangout for the kids, or a quiet bunkhouse at the end of the day.",
       "Out back, an 8-foot privacy fence wraps a turf-covered yard with a hot tub and not one but two fire pits. Ironwood Acres is just half a mile away, so two families or a large reunion can book both homes and still share every meal.",
@@ -353,17 +353,47 @@ export const properties: Property[] = [
     bedrooms: 4,
     beds: 5, // PLACEHOLDER — confirm bed count and sizes
     baths: 4.5,
-    maxGuests: 12, // PLACEHOLDER — confirm how many it sleeps
+    maxGuests: 10,
     minNights: 2,
-    baseRateCents: 55000, // PLACEHOLDER rates until this home's pricing is set
-    weekendRateCents: 79500,
-    cleaningFeeCents: 32500, // PLACEHOLDER
+    baseRateCents: 54500, // fallback for any night outside the seasons below
+    weekendRateCents: 77500,
+    cleaningFeeCents: 32500, // PLACEHOLDER — confirm with your cleaner
+    // Seasonal calendar about 10–15% below Ironwood Acres (smaller home, sleeps 10)
+    rateSeasons: [
+      // Every year
+      { label: "New Year's", from: "01-01", to: "01-03", weekdayCents: 59500, weekendCents: 59500, minNights: 2 },
+      { label: "Winter", from: "01-04", to: "02-29", weekdayCents: 47500, weekendCents: 69500, minNights: 2 },
+      { label: "Spring", from: "03-01", to: "05-20", weekdayCents: 54500, weekendCents: 77500, minNights: 2 },
+      { label: "Early summer", from: "05-21", to: "06-06", weekdayCents: 59500, weekendCents: 82500, minNights: 2 },
+      { label: "Summer peak", from: "06-07", to: "08-15", weekdayCents: 62500, weekendCents: 87500, minNights: 2 },
+      { label: "Late summer", from: "08-16", to: "09-30", weekdayCents: 51500, weekendCents: 72500, minNights: 2 },
+      { label: "Fall", from: "10-01", to: "11-21", weekdayCents: 54500, weekendCents: 77500, minNights: 2 },
+      { label: "Early December", from: "11-22", to: "12-18", weekdayCents: 47500, weekendCents: 69500, minNights: 2 },
+      { label: "Christmas – New Year's", from: "12-19", to: "12-30", weekdayCents: 69500, weekendCents: 69500, minNights: 3 },
+      { label: "New Year's Eve", from: "12-31", to: "12-31", weekdayCents: 87500, weekendCents: 87500, minNights: 3 },
+      { label: "July 4th", from: "07-01", to: "07-04", weekdayCents: 119500, weekendCents: 119500, minNights: 3 },
+      // Specific dates (verify spring break with DFW school calendars)
+      { label: "Thanksgiving week", from: "2026-11-22", to: "2026-11-28", weekdayCents: 69500, weekendCents: 69500, minNights: 3 },
+      { label: "Spring break", from: "2027-03-12", to: "2027-03-20", weekdayCents: 59500, weekendCents: 82500, minNights: 3 },
+      { label: "Easter weekend", from: "2027-03-25", to: "2027-03-27", weekdayCents: 69500, weekendCents: 69500, minNights: 2 },
+      { label: "Memorial Day weekend", from: "2027-05-28", to: "2027-05-30", weekdayCents: 95000, weekendCents: 95000, minNights: 3 },
+      { label: "Labor Day weekend", from: "2027-09-03", to: "2027-09-05", weekdayCents: 89500, weekendCents: 89500, minNights: 3 },
+      { label: "Thanksgiving week", from: "2027-11-22", to: "2027-11-28", weekdayCents: 69500, weekendCents: 69500, minNights: 3 },
+      { label: "Spring break", from: "2028-03-10", to: "2028-03-18", weekdayCents: 59500, weekendCents: 82500, minNights: 3 },
+      { label: "Easter weekend", from: "2028-04-13", to: "2028-04-15", weekdayCents: 69500, weekendCents: 69500, minNights: 2 },
+      { label: "Memorial Day weekend", from: "2028-05-26", to: "2028-05-28", weekdayCents: 95000, weekendCents: 95000, minNights: 3 },
+    ],
+    priceFloorCents: 47500,
+    stayDiscounts: [
+      { minNights: 7, percent: 12 },
+      { minNights: 4, percent: 7 },
+    ],
     petFeeCents: null,
     highlights: [
       "600 sq ft barndominium guest house with full bath & loft",
       "Hot tub and two fire pits",
       "Turf yard behind an 8-foot privacy fence",
-      "Half a mile from Ironwood Acres: book both for groups of 20+",
+      "Half a mile from Ironwood Acres: book both for up to 22 guests",
     ],
     spaces: [
       {
