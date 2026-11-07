@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Reynolds Retreats"><title>Reynolds Retreats</title>
+  <circle cx="100" cy="100" r="98" fill="#123543"/>
+  <circle cx="100" cy="100" r="90" fill="none" stroke="#b08d57" stroke-width="8"/>
+  <path d="M100 44 L146 140 L54 140 Z" fill="#f5efe6"/>
+  <path d="M100 92 L118 140 L82 140 Z" fill="#d9774b"/>
+  <path d="M46 146 L104 36 M154 146 L96 36" stroke="#b08d57" stroke-width="9" stroke-linecap="round"/>
+  <path d="M30 146 H170" stroke="#b08d57" stroke-width="7" stroke-linecap="round"/></svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200" role="img" aria-label="Reynolds Retreats"><title>Reynolds Retreats</title>
+  <defs><clipPath id="rr-clip"><circle cx="100" cy="100" r="86"/></clipPath></defs>
+  <circle cx="100" cy="100" r="96" fill="#123543"/>
+  <circle cx="100" cy="100" r="91" fill="none" stroke="#b08d57" stroke-width="3.5"/>
+  <g clip-path="url(#rr-clip)">
+    <circle cx="146" cy="56" r="8" fill="#b08d57"/>
+    <!-- pines -->
+    <g fill="#7fa7b3">
+      <path d="M44 76 L58 128 L30 128 Z"/>
+      <path d="M24 98 L34 128 L14 128 Z"/>
+      <path d="M156 76 L170 128 L142 128 Z"/>
+      <path d="M176 98 L186 128 L166 128 Z"/>
+    </g>
+    <!-- A-frame cabin -->
+    <path d="M100 60 L134 128 L66 128 Z" fill="#f5efe6"/>
+    <path d="M100 92 L113 128 L87 128 Z" fill="#d9774b"/>
+    <path d="M100 92 L100 128" stroke="#f5efe6" stroke-width="2.5"/>
+    <path d="M58 132 L104 50 M142 132 L96 50" stroke="#b08d57" stroke-width="4" stroke-linecap="round"/>
+    <!-- shoreline + water -->
+    <path d="M10 130 H190" stroke="#b08d57" stroke-width="3"/>
+    <g stroke="#f5efe6" stroke-linecap="round" fill="none">
+      <path d="M50 144 H82 M118 144 H150" stroke-width="3" opacity=".55"/>
+      <path d="M64 157 H136" stroke-width="3" opacity=".4"/>
+      <path d="M80 170 H120" stroke-width="3" opacity=".28"/>
+    </g>
+    <g stroke="#d9774b" stroke-linecap="round">
+      <path d="M92 144 H108" stroke-width="3"/>
+      <path d="M95 157 H105" stroke-width="3" opacity=".75"/>
+    </g>
+  </g></svg>
