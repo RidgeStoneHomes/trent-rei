@@ -12,7 +12,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "How many guests can stay?",
-    a: "Ironwood Acres sleeps 12 across 5 bedrooms; The Overlook sleeps 10. Booking both makes room for a reunion, retreat or wedding party.",
+    a: "Ironwood Acres sleeps 12 across 5 bedrooms. The Lake House, opening soon just half a mile away, adds 4 more bedrooms plus a barndo guest house, so together they fit a reunion, retreat or wedding party.",
   },
   {
     q: "What's the cancellation policy?",

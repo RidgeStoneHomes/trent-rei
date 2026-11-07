@@ -45,6 +45,7 @@ export async function validateStay(
   guests: number,
   excludeBookingId?: string,
 ): Promise<StayCheck> {
+  if (property.comingSoon) return { ok: false, error: `${property.name} opens for booking soon. Join the guest list to hear first.` };
   if (!isIsoDate(checkIn) || !isIsoDate(checkOut)) return { ok: false, error: "Please choose your dates." };
   if (checkIn < todayLocal()) return { ok: false, error: "Check-in can't be in the past." };
   const nights = daysBetween(checkIn, checkOut);

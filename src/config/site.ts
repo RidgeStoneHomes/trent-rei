@@ -86,6 +86,8 @@ export type Property = {
   baseRateCents: number; // Sun–Thu
   weekendRateCents: number; // Fri & Sat nights
   cleaningFeeCents: number;
+  comingSoon?: boolean; // listed with a guest-list signup, not bookable yet
+  formerSlugs?: string[]; // old web addresses, so earlier bookings and links still find this home
   rateSeasons?: RateSeason[]; // when set, nights are priced by season; base/weekend rates fill any gaps
   priceFloorCents?: number; // no night is ever priced below this, even after discounts
   stayDiscounts?: { minNights: number; percent: number }[]; // length-of-stay discounts on the nightly total
@@ -336,65 +338,74 @@ export const properties: Property[] = [
     },
   },
   {
-    slug: "the-overlook",
-    name: "The Overlook", // PLACEHOLDER — second home name
-    headline: "A glass-walled lake house above the water",
+    slug: "the-lake-house",
+    name: "The Lake House", // WORKING NAME — final name still to be chosen
+    comingSoon: true, // shows "opening soon" with a guest-list signup instead of booking
+    formerSlugs: ["the-overlook"],
+    headline: "A barndo guest house, hot tub and two fire pits, half a mile from Ironwood Acres",
     summary:
-      "Floor-to-ceiling views of Lake Texoma, a heated plunge pool, and sunsets that stop conversation mid-sentence.",
+      "Welcome to The Lake House, a private Lake Texoma retreat with 4 bedrooms, a 600 sq ft barndominium guest house with its own full bath and sleeping loft, and a fully fenced backyard made for long evenings outside.",
     story: [
-      "Perched on a limestone bluff, The Overlook was designed around a single idea: that every room should face the water. Wake to mist lifting off the lake, spend the afternoon between the plunge pool and the dock, and gather around the fire pit as the sky turns copper.",
-      "Inside, it's quiet luxury — hand-finished oak, linen bedding, a chef's kitchen stocked for real cooking, and a primary suite with a soaking tub positioned for the sunrise.",
+      "Four bedrooms in the main house plus the barndo loft, and 4.5 baths in all, give a big group room to spread out. The 600 sq ft barndominium has its own full bath and loft, so it works as a guest suite for grandparents, a hangout for the kids, or a quiet bunkhouse at the end of the day.",
+      "Out back, an 8-foot privacy fence wraps a turf-covered yard with a hot tub and not one but two fire pits. Ironwood Acres is just half a mile away, so two families or a large reunion can book both homes and still share every meal.",
     ],
-    location: "Pottsboro, TX · Lake Texoma", // PLACEHOLDER
+    location: "Pottsboro, TX · Lake Texoma",
     bedrooms: 4,
-    beds: 5,
-    baths: 3.5,
-    maxGuests: 10,
+    beds: 5, // PLACEHOLDER — confirm bed count and sizes
+    baths: 4.5,
+    maxGuests: 12, // PLACEHOLDER — confirm how many it sleeps
     minNights: 2,
-    baseRateCents: 59500,
-    weekendRateCents: 74500,
-    cleaningFeeCents: 25000,
+    baseRateCents: 55000, // PLACEHOLDER rates until this home's pricing is set
+    weekendRateCents: 79500,
+    cleaningFeeCents: 32500, // PLACEHOLDER
     petFeeCents: null,
     highlights: [
-      "Panoramic lake views from every room",
-      "Heated plunge pool & cedar hot tub",
-      "Private dock access for boats & kayaks",
-      "Chef's kitchen with Wolf range",
+      "600 sq ft barndominium guest house with full bath & loft",
+      "Hot tub and two fire pits",
+      "Turf yard behind an 8-foot privacy fence",
+      "Half a mile from Ironwood Acres: book both for groups of 20+",
     ],
-    amenities: [
-      "Heated plunge pool",
-      "Hot tub",
-      "Fire pit lounge",
-      "Kayaks & paddleboards",
-      "Boat dock access",
-      "Chef's kitchen",
-      "Espresso bar",
-      "King primary suite with soaking tub",
-      "Fast Wi-Fi & workspace",
-      "Smart TVs",
-      "EV charger",
-      "Washer & dryer",
+    spaces: [
+      {
+        title: "The barndo",
+        blurb: "A 600 sq ft barndominium guest house steps from the main home.",
+        items: ["Full bathroom", "Sleeping loft", "Its own space for grandparents, teens or late-night games"],
+      },
+      {
+        title: "Outdoor oasis",
+        blurb: "A fully fenced backyard built for evenings outside.",
+        items: [
+          "Hot tub",
+          "Two fire pits",
+          "Artificial turf yard",
+          "8' privacy fence around the backyard",
+          "Yard games coming soon",
+        ],
+      },
     ],
+    nearby: [
+      { place: "Ironwood Acres", distance: "½ mile" },
+      { place: "Highport Marina", distance: "Minutes" },
+      { place: "Denison", distance: "15 minutes" },
+    ],
+    amenities: ["Barndominium guest house", "Sleeping loft", "Hot tub", "Two fire pits", "Turf yard", "Fully fenced backyard"],
     houseRules: [
-      "No parties or events without written approval",
-      "Quiet hours 10 PM – 8 AM",
-      "No smoking indoors",
+      "No parties or events",
       "No pets",
+      "Quiet hours 10 PM – 8 AM", // PLACEHOLDER: confirm quiet hours
+      "No smoking indoors",
     ],
     images: [],
     palette: ["#123543", "#b08d57"],
     arrival: {
-      parking: "Driveway fits 4 vehicles; boat trailer parking at the side gate.",
-      notes: [
-        "Pool heat is set on arrival day — allow 6 hours to reach temperature.",
-        "Life jackets are in the dock box.",
-      ],
+      parking: "Driveway parking only. Please don't park on the street or the grass.", // PLACEHOLDER
+      notes: [],
     },
   },
 ];
 
 export function getProperty(slug: string) {
-  return properties.find((p) => p.slug === slug);
+  return properties.find((p) => p.slug === slug) ?? properties.find((p) => p.formerSlugs?.includes(slug));
 }
 
 export const vendorCategories: Record<string, { label: string; icon: string }> = {

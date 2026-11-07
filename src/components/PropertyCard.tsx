@@ -23,9 +23,15 @@ export function PropertyCard({ property, query = "" }: { property: Property; que
           </p>
         </div>
         <p className="shrink-0 text-right text-sm">
-          from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span>
-          <br />
-          <span className="text-xs text-ink-soft">per night</span>
+          {property.comingSoon ? (
+            <span className="font-display text-xl">Opening soon</span>
+          ) : (
+            <>
+              from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span>
+              <br />
+              <span className="text-xs text-ink-soft">per night</span>
+            </>
+          )}
         </p>
       </div>
     </Link>

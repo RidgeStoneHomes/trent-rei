@@ -9,6 +9,7 @@ import { isIsoDate, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import { lowestRate } from "@/lib/pricing";
 import { RateTable } from "@/components/RateTable";
+import { LeadForm } from "@/components/LeadForm";
 
 export const dynamic = "force-dynamic";
 
@@ -168,6 +169,15 @@ export default async function PropertyPage({
         </div>
 
         <aside className="lg:sticky lg:top-24 lg:self-start">
+          {property.comingSoon ? (
+            <div id="book" className="card !bg-white">
+              <p className="eyebrow">Opening soon</p>
+              <p className="mt-2 font-display text-3xl">{property.name} is almost ready.</p>
+              <p className="mt-2 text-sm text-ink-soft">Join the guest list and we'll let you know the moment dates open.</p>
+              <div className="mt-5"><LeadForm source={property.slug} compact /></div>
+              <p className="mt-4 text-xs text-ink-soft">Need room now? <Link href="/stays/ironwood-acres" className="underline">Ironwood Acres</Link> is half a mile away and booking today.</p>
+            </div>
+          ) : (
           <BookingWidget
             slug={property.slug}
             today={todayLocal()}
@@ -179,10 +189,11 @@ export default async function PropertyPage({
             initial={initial}
             bookingOpen={bookingOpen}
           />
-          <p className="mt-3 text-center text-xs text-ink-soft">
+          )}
+          {!property.comingSoon && <p className="mt-3 text-center text-xs text-ink-soft">
             Rates vary by season · Cleaning {formatMoney(property.cleaningFeeCents)}
             {property.stayDiscounts?.length ? ` · Save up to ${Math.max(...property.stayDiscounts.map((d) => d.percent))}% on longer stays` : ""}
-          </p>
+          </p>}
         </aside>
       </section>
 
@@ -202,9 +213,9 @@ export default async function PropertyPage({
       {/* Mobile: keep the price and a jump to the calendar in reach */}
       <div className="no-print fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-4 border-t border-ink/10 bg-sand/95 px-4 py-3 backdrop-blur lg:hidden">
         <p className="text-sm">
-          from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span> / night
+          {property.comingSoon ? <span className="font-display text-2xl">Opening soon</span> : <>from <span className="font-display text-2xl">{formatMoney(lowestRate(property))}</span> / night</>}
         </p>
-        <a href="#book" className="btn-primary !py-2.5">Check dates</a>
+        <a href="#book" className="btn-primary !py-2.5">{property.comingSoon ? "Get notified" : "Check dates"}</a>
       </div>
       <div aria-hidden className="h-16 lg:hidden" />
     </>
