@@ -12,8 +12,8 @@ export function Footer() {
 
       <div className="container-x grid gap-12 pb-12 pt-24 lg:grid-cols-[1.2fr_1fr]">
         <div data-reveal>
-          <p className="font-display text-4xl text-sand sm:text-5xl">Save a spot on the lake.</p>
-          <p className="mt-3 max-w-md text-sm">Last-minute openings, seasonal rates and new perks, sent a few times a season. Never spam.</p>
+          <p className="font-display text-4xl text-sand sm:text-5xl">Join our guest list</p>
+          <p className="mt-3 max-w-md text-sm">Open dates, seasonal rates and new partner privileges, a few times a season.</p>
         </div>
         <div data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties} className="rounded-2xl bg-sand p-5 text-ink sm:p-6">
           <LeadForm source="footer" compact />

@@ -8,7 +8,28 @@ function wave(y: number, amp: number) {
   return `${d} V 400 H 0 Z`;
 }
 
-export function LakeScene({ photo }: { photo?: string }) {
+export function LakeScene({ photo, video }: { photo?: string; video?: string }) {
+  if (video) {
+    return (
+      <div className="absolute inset-0 -z-10 overflow-hidden bg-ink">
+        {/* The photo shows while the video loads, and instead of it for reduced-motion visitors */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        {photo && <img src={photo} alt="" className="absolute inset-0 h-full w-full object-cover" />}
+        <video
+          src={video}
+          poster={photo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          aria-hidden
+          className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/35 to-ink/75" />
+      </div>
+    );
+  }
   if (photo) {
     return (
       <div className="absolute inset-0 -z-10 overflow-hidden">

@@ -98,6 +98,8 @@ export type Property = {
   // Gallery photos in display order; the first is the main photo. With none, gradient placeholders show.
   images: Photo[];
   heroPhoto?: Photo; // wide photo behind the homepage headline
+  heroVideo?: string; // short silent loop behind the homepage headline (heroPhoto is its poster)
+  video?: { src: string; poster: string; title: string }; // full video tour on the home's page
   palette: [string, string]; // placeholder gradient colors
   rooms?: { name: string; beds: string; detail: string; photo?: Photo }[];
   spaces?: { title: string; blurb?: string; items: string[] }[];
@@ -327,7 +329,9 @@ export const properties: Property[] = [
       { src: "/images/ironwood-acres/121.jpg", sm: "/images/ironwood-acres/121-sm.jpg", alt: "Front entry" },
       { src: "/images/ironwood-acres/003.jpg", sm: "/images/ironwood-acres/003-sm.jpg", alt: "Lake Texoma from above" },
     ],
-    heroPhoto: { src: "/images/ironwood-acres/005.jpg", sm: "/images/ironwood-acres/005-sm.jpg", alt: "Sunset over Lake Texoma" },
+    heroPhoto: { src: "/videos/ironwood-acres/hero-loop-poster.jpg", alt: "Ironwood Acres living room" },
+    heroVideo: "/videos/ironwood-acres/hero-loop.mp4",
+    video: { src: "/videos/ironwood-acres/tour.mp4", poster: "/videos/ironwood-acres/tour-poster.jpg", title: "Ironwood Acres video tour" },
     palette: ["#1f3a2e", "#b08d57"],
     arrival: {
       parking: "Driveway parking only. Please don't park on the street or the grass.", // PLACEHOLDER: add "Driveway fits # vehicles"

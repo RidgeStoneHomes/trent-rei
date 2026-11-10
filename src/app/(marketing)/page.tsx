@@ -6,7 +6,6 @@ import { Media } from "@/components/Media";
 import { LeadForm } from "@/components/LeadForm";
 import { LakeScene } from "@/components/LakeScene";
 import { DateSearch } from "@/components/DateSearch";
-import { SavingsCalculator } from "@/components/SavingsCalculator";
 import { HomeJsonLd } from "@/components/JsonLd";
 import { CountUp, TiltCard } from "@/components/motion";
 import { activePromo } from "@/components/PromoBar";
@@ -19,25 +18,14 @@ const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProp
 const reasons = [
   { title: "Our best rate, direct", body: "Booking here always gets you our lowest price, plus private perks with our local partners." },
   { title: "A real local host", body: `Call or text ${site.contactName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
-  { title: "Book now, decide later", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
+  { title: "Flexible cancellation", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
 ];
 
 const journey = [
   { title: "Pick your home", body: "Live availability and the full price up front." },
   { title: "Sign online", body: "A short digital rental agreement. Nothing to print." },
   { title: "Unlock perks", body: "Your Insider Portal opens with partner offers." },
-  { title: "Arrive & exhale", body: "Door code and Wi-Fi land a few days before." },
-];
-
-const moments = [
-  "Anniversaries with a view",
-  "Wine-trail weekends",
-  "Striper fishing with the crew",
-  "Putting-green golf trips",
-  "Family reunions by the fire",
-  "Golden-hour proposals",
-  "Remote work with a lake breeze",
-  "Hot tub under the stars",
+  { title: "Arrive", body: "Arrival details arrive in your trip page before check-in." },
 ];
 
 export default function HomePage() {
@@ -51,18 +39,15 @@ export default function HomePage() {
 
       {/* HERO */}
       <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden text-sand">
-        <LakeScene photo={properties.find((p) => p.heroPhoto)?.heroPhoto?.src} />
+        <LakeScene photo={properties.find((p) => p.heroPhoto)?.heroPhoto?.src} video={properties.find((p) => p.heroVideo)?.heroVideo} />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/50 via-transparent to-ink/40" />
         <div className={`container-x flex flex-1 flex-col items-center justify-center pb-16 text-center ${promo ? "pt-40" : "pt-32"}`}>
-          <p className="eyebrow animate-rise !text-brass-light">{site.region} · Book direct</p>
-          <h1 className="mt-5 max-w-4xl animate-rise text-5xl leading-[1.02] [animation-delay:120ms] sm:text-7xl lg:text-8xl">
-            Where the lake
-            <br />
-            <em className="text-brass-light">slows you down.</em>
+          <p className="eyebrow animate-rise !text-brass-light">Lake Texoma · Pottsboro, Texas</p>
+          <h1 className="mt-5 max-w-4xl animate-rise text-5xl font-light leading-[1.05] tracking-wide [animation-delay:120ms] sm:text-7xl lg:text-8xl">
+            Private luxury estates
           </h1>
-          <p className="mx-auto mt-6 max-w-xl animate-rise text-base text-sand/85 [animation-delay:240ms] sm:text-lg">
-            Two private luxury homes near Lake Texoma, with a host who picks up and perks from the best guides,
-            vineyards and kitchens around the lake.
+          <p className="mx-auto mt-6 max-w-xl animate-rise text-base tracking-wide text-sand/85 [animation-delay:240ms] sm:text-lg">
+            Ironwood Acres and The Fog Line: two private homes near Highport Marina, thoughtfully designed for gathering.
           </p>
           <p className="mt-5 animate-rise text-sm tracking-wide text-brass-light [animation-delay:300ms]">Owned and hosted by {site.hostName}</p>
           <div className="mt-8 w-full max-w-3xl animate-rise text-left [animation-delay:360ms]">
@@ -96,7 +81,7 @@ export default function HomePage() {
       <section id="homes" className="container-x scroll-mt-24 py-24 sm:py-32">
         <div className="text-center" data-reveal>
           <p className="eyebrow">The Homes</p>
-          <h2 className="mt-3 text-4xl sm:text-6xl">Two retreats, one lake.</h2>
+          <h2 className="mt-3 text-4xl sm:text-6xl">The estates</h2>
         </div>
         <div className="mt-16 space-y-24 sm:space-y-32">
           {properties.map((p, i) => (
@@ -135,8 +120,8 @@ export default function HomePage() {
         <div className="container-x py-24">
           <div className="flex flex-wrap items-end justify-between gap-4" data-reveal>
             <div>
-              <p className="eyebrow">Plan by occasion</p>
-              <h2 className="mt-3 text-4xl sm:text-5xl">Find your kind of weekend</h2>
+              <p className="eyebrow">Occasions</p>
+              <h2 className="mt-3 text-4xl sm:text-5xl">Designed for gathering</h2>
             </div>
             <Link href="/stays" className="btn-ghost">See all dates</Link>
           </div>
@@ -163,8 +148,8 @@ export default function HomePage() {
       {/* BOOK DIRECT */}
       <section className="container-x grid gap-14 py-24 sm:py-32 lg:grid-cols-2 lg:items-center">
         <div data-reveal="left">
-          <p className="eyebrow">Why book direct</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl">Same home. <em className="text-ember">Better stay.</em> Less money.</h2>
+          <p className="eyebrow">Book direct</p>
+          <h2 className="mt-3 text-4xl sm:text-5xl">The direct booking advantage</h2>
           <div className="mt-10 space-y-7">
             {reasons.map((r, i) => (
               <div key={r.title} className="flex gap-5" data-reveal style={delay(100 + i * 100)}>
@@ -177,8 +162,8 @@ export default function HomePage() {
             ))}
           </div>
         </div>
-        <div data-reveal="right">
-          <SavingsCalculator />
+        <div data-reveal="right" className="overflow-hidden rounded-3xl">
+          <Media property={properties[0]} index={1} className="aspect-[4/5] w-full" />
         </div>
       </section>
 
@@ -189,7 +174,7 @@ export default function HomePage() {
         <div className="container-x relative grid gap-14 py-24 sm:py-32 lg:grid-cols-2 lg:items-center">
           <div data-reveal>
             <p className="eyebrow !text-brass-light">The Insider Collection</p>
-            <h2 className="mt-3 text-4xl sm:text-5xl">Your stay comes with friends in town.</h2>
+            <h2 className="mt-3 text-4xl sm:text-5xl">Exclusive privileges with our local partners</h2>
             <p className="mt-6 max-w-lg text-sand/80">
               We've partnered with the best guides, vineyards, kitchens and stables around the lake. As our guest, you
               unlock private discounts and extras, like an hour on the water, a reserved table or a tasting flight on
@@ -214,119 +199,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* MOMENTS MARQUEE */}
-      <section aria-label="Made for" className="overflow-hidden border-y border-ink/5 bg-sand py-8">
-        <div className="flex w-max animate-marquee gap-4 hover:[animation-play-state:paused]">
-          {[...moments, ...moments].map((m, i) => (
-            <span key={i} aria-hidden={i >= moments.length} className="flex items-center gap-4 whitespace-nowrap font-display text-3xl italic text-ink/80 sm:text-4xl">
-              {m}<span className="text-xl not-italic text-ember">✦</span>
-            </span>
-          ))}
-        </div>
-      </section>
-
-      {/* AREA GUIDE */}
-      <section id="guide" className="container-x scroll-mt-24 py-24 sm:py-32">
-        <div className="max-w-2xl" data-reveal>
-          <p className="eyebrow">Area guide</p>
-          <h2 className="mt-3 text-4xl sm:text-5xl">Your weekend, mapped out.</h2>
-          <p className="mt-4 text-ink-soft">
-            Our favorite ways to spend a day around Lake Texoma. Guests get the full list, with partner perks and our
-            personal picks, in the Insider Portal.
-          </p>
-        </div>
-        <div className="mt-12 grid gap-px overflow-hidden rounded-3xl bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
-          {areaGuide.map((g, i) => (
-            <div key={g.place} data-reveal style={delay(i * 70)} className="group bg-sand p-7 transition duration-500 hover:bg-white">
-              <p className="text-[10px] uppercase tracking-luxe text-ember">{g.category}</p>
-              <p className="mt-3 font-display text-2xl transition group-hover:translate-x-1">{g.place}</p>
-              <p className="mt-2 text-sm text-ink-soft">{g.note}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* HOW IT WORKS */}
-      <section className="bg-ink text-sand">
-        <div className="container-x py-24">
-          <p className="eyebrow text-center !text-brass-light" data-reveal>How it works</p>
-          <h2 className="mt-3 text-center text-4xl sm:text-5xl" data-reveal>From daydream to dock</h2>
-          <ol className="relative mt-16 grid gap-10 md:grid-cols-4 md:gap-6">
-            <span aria-hidden className="absolute left-0 right-0 top-6 hidden h-px bg-gradient-to-r from-transparent via-brass/60 to-transparent md:block" />
-            {journey.map((j, i) => (
-              <li key={j.title} className="relative text-center" data-reveal style={delay(i * 140)}>
-                <span className="relative mx-auto grid h-12 w-12 place-items-center rounded-full border border-brass/60 bg-ink font-display text-xl text-brass-light">{i + 1}</span>
-                <p className="mt-5 font-display text-2xl">{j.title}</p>
-                <p className="mt-2 text-sm text-sand/70">{j.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* REVIEWS — only real ones, shown once added in site config */}
-      {site.reviews.length > 0 && (
-        <section className="container-x py-24">
-          <p className="eyebrow text-center" data-reveal>Guest notes</p>
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {site.reviews.map((r, i) => (
-              <figure key={i} className="card !bg-white" data-reveal style={delay(i * 100)}>
-                <p className="text-brass">★★★★★</p>
-                <blockquote className="mt-3 font-display text-xl leading-snug">“{r.quote}”</blockquote>
-                <figcaption className="mt-4 text-xs uppercase tracking-wider text-ink-soft">{r.name} · {r.home}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* FAQ */}
-      <section id="faq" className="container-x scroll-mt-24 py-24 sm:py-32">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-          <div data-reveal>
-            <p className="eyebrow">Good to know</p>
-            <h2 className="mt-3 text-4xl sm:text-5xl">Questions, answered.</h2>
-            <p className="mt-4 text-ink-soft">Anything else? Call or text {site.contactName} at <a className="underline" href={`tel:${site.phone.replace(/[^\d+]/g, "")}`}>{site.phone}</a>.</p>
-          </div>
-          <div className="divide-y divide-ink/10 border-y border-ink/10">
-            {faqs.map((f, i) => (
-              <details key={f.q} className="group" data-reveal style={delay(i * 50)}>
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-5 font-display text-xl transition hover:text-lake sm:text-2xl">
-                  {f.q}
-                  <span className="faq-icon grid h-8 w-8 shrink-0 place-items-center rounded-full border border-ink/15 text-lg transition duration-300">+</span>
-                </summary>
-                <p className="pb-6 pr-12 text-sm leading-relaxed text-ink-soft">{f.a}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FOUNDING GUEST */}
-      <section id="founding" className="relative scroll-mt-24 overflow-hidden bg-ink text-sand">
-        <div aria-hidden className="absolute inset-0 bg-[radial-gradient(ellipse_at_80%_120%,rgba(217,119,75,.35),transparent_55%)]" />
-        <div className="container-x relative grid gap-10 py-24 lg:grid-cols-2 lg:items-center">
-          <div data-reveal>
-            <p className="eyebrow !text-brass-light">Now opening</p>
-            <h2 className="mt-3 text-4xl sm:text-5xl">{site.foundingGuest.headline}</h2>
-            <p className="mt-6 max-w-lg text-sand/80">{site.foundingGuest.offer}</p>
-          </div>
-          <div className="rounded-2xl bg-sand p-6 text-ink sm:p-8" data-reveal style={delay(120)}>
-            <LeadForm />
-            <p className="mt-4 text-xs text-ink-soft">First access to dates and seasonal rates. Unsubscribe anytime.</p>
-          </div>
-        </div>
-      </section>
-
       {/* SHARE THE LAKE */}
       <section className="container-x py-24 text-center sm:py-32">
         <div data-reveal>
-          <p className="eyebrow">Share the Lake</p>
-          <h2 className="mx-auto mt-3 max-w-2xl text-4xl sm:text-5xl">
-            Give {formatMoney(site.referral.friendDiscountCents)}. Get {formatMoney(site.referral.referrerCreditCents)}.
-          </h2>
+          <p className="eyebrow">Referrals</p>
+          <h2 className="mx-auto mt-3 max-w-2xl text-4xl sm:text-5xl">Share Reynolds Retreats</h2>
           <p className="mx-auto mt-5 max-w-xl text-ink-soft">
-            Every guest gets a personal link. Friends save on their first stay, and you earn credit toward your next one.
+            Every guest receives a personal referral link. Friends save {formatMoney(site.referral.friendDiscountCents)} on
+            their first stay, and you receive {formatMoney(site.referral.referrerCreditCents)} toward your next one.
           </p>
           <Link href="/share" className="btn-primary btn-sheen mt-8">How it works</Link>
         </div>

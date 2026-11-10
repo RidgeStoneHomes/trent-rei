@@ -58,6 +58,20 @@ export default async function PropertyPage({
           ))}
           <Gallery photos={property.images} name={property.name} />
         </div>
+        {property.video && (
+          <div className="mt-10">
+            <p className="eyebrow">Video tour</p>
+            <video
+              src={property.video.src}
+              poster={property.video.poster}
+              controls
+              playsInline
+              preload="none"
+              className="mt-3 aspect-video w-full rounded-3xl bg-ink object-cover"
+              aria-label={property.video.title}
+            />
+          </div>
+        )}
       </section>
 
       <section className="container-x grid gap-12 py-14 lg:grid-cols-[1fr_26rem]">
