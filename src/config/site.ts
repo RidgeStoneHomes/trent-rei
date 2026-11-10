@@ -329,7 +329,7 @@ export const properties: Property[] = [
       { src: "/images/ironwood-acres/121.jpg", sm: "/images/ironwood-acres/121-sm.jpg", alt: "Front entry" },
       { src: "/images/ironwood-acres/003.jpg", sm: "/images/ironwood-acres/003-sm.jpg", alt: "Lake Texoma from above" },
     ],
-    heroPhoto: { src: "/videos/ironwood-acres/hero-loop-poster.jpg", alt: "Ironwood Acres living room" },
+    heroPhoto: { src: "/videos/ironwood-acres/hero-loop-poster.jpg", alt: "Ironwood Acres at dusk" },
     heroVideo: "/videos/ironwood-acres/hero-loop.mp4",
     video: { src: "/videos/ironwood-acres/tour.mp4", poster: "/videos/ironwood-acres/tour-poster.jpg", title: "Ironwood Acres video tour" },
     palette: ["#1f3a2e", "#b08d57"],
