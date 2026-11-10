@@ -1,7 +1,6 @@
-// Seeds sample partner vendors. Run with `--demo` to also add demo guest bookings
-// (one in each trip stage) for testing the portal. Don't use --demo in production.
+// Run with `--demo` to add demo guest bookings (one in each trip stage) for testing
+// the portal. Don't use --demo in production. Partners are added in /admin.
 import { PrismaClient } from "@prisma/client";
-import { sampleVendors } from "../src/content/sample-vendors";
 
 const db = new PrismaClient();
 
@@ -12,12 +11,6 @@ function iso(offsetDays: number) {
 }
 
 async function main() {
-  // Only seed partners into an empty table, so partners you've deleted don't come back
-  if ((await db.vendor.count()) === 0) {
-    await db.vendor.createMany({ data: sampleVendors });
-    console.log(`Seeded ${sampleVendors.length} sample partners.`);
-  }
-
   if (process.argv.includes("--demo")) {
     const demos = [
       { code: "DEMO01", firstName: "Avery", checkIn: iso(60), checkOut: iso(63), slug: "ironwood-acres" }, // refundable — portal locked

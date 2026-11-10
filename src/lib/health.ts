@@ -40,8 +40,9 @@ export async function runChecks(): Promise<Check[]> {
     checks.push({
       label: "Partners loaded",
       ok: vendorCount > 0,
-      detail: vendorCount > 0 ? `${vendorCount} partner(s) in the Insider Collection.` : "No partners yet, so Experiences and the guest portal are empty.",
-      fix: "Open /admin → Partners → Load sample partners (or add your own).",
+      detail: vendorCount > 0 ? `${vendorCount} partner(s) in the Insider Collection.` : "No partners yet. The site shows partners as coming soon.",
+      fix: "Open /admin → Partners → Add partner when your first offer is agreed.",
+      optional: true,
     });
   }
 

@@ -4,7 +4,7 @@ import { site } from "@/config/site";
 export const faqs: { q: string; a: string }[] = [
   {
     q: "Why book direct instead of on Airbnb or VRBO?",
-    a: "Our lowest price is always here, you get a real host you can call or text, and the Insider Portal opens private perks with our local partners. It's the same home, just a better stay.",
+    a: "Our lowest price is always here, you get a real host you can call or text, and your trip page keeps every arrival detail in one place. It's the same home, just a better stay.",
   },
   {
     q: "Where are the homes?",
@@ -20,7 +20,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What is the Insider Portal?",
-    a: "Your private trip page. It holds partner perks (fishing charters, wine tastings, dining, horseback rides), your digital Guest Pass, your address a few days before arrival, your door code shortly before check-in, and the Wi-Fi once you're checked in.",
+    a: "Your private trip page. It holds your digital Guest Pass, private offers from our local partners as we add them, your address a few days before arrival, your door code shortly before check-in, and the Wi-Fi once you're checked in.",
   },
   {
     q: "What time is check-in and check-out?",

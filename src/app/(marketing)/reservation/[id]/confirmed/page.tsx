@@ -50,8 +50,8 @@ export default async function ConfirmedPage({
             <p className="font-medium">Your Insider Portal</p>
             <p className="mt-2 text-sm text-ink-soft">
               {t.insiderUnlocked
-                ? "It's open now — explore partner perks, plan your days, and get your Guest Pass."
-                : `Opens ${t.daysUntilUnlock} days from now, once your stay is locked in. That's when partner perks, curated itineraries, and your Guest Pass appear.`}
+                ? "It's open now — get your Guest Pass and see any partner offers for guests."
+                : `Opens ${t.daysUntilUnlock} days from now, once your stay is locked in. That's when your Guest Pass and any partner offers appear.`}
             </p>
             <p className="mt-3 text-sm">Sign in anytime with <strong>{booking.email}</strong> and code <strong className="tracking-widest">{booking.code}</strong>.</p>
             <Link href={`/trip/login?email=${encodeURIComponent(booking.email)}`} className="btn-primary mt-5">Go to my trip</Link>

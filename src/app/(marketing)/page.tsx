@@ -16,7 +16,7 @@ import { todayLocal } from "@/lib/dates";
 const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProperties;
 
 const reasons = [
-  { title: "Our best rate, direct", body: "Booking here always gets you our lowest price, plus private perks with our local partners." },
+  { title: "Our best rate, direct", body: "Booking here always gets you our lowest price and a direct line to your hosts." },
   { title: "A real local host", body: `Call or text ${site.contactName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
   { title: "Flexible cancellation", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
 ];
@@ -24,7 +24,7 @@ const reasons = [
 const journey = [
   { title: "Pick your home", body: "Live availability and the full price up front." },
   { title: "Sign online", body: "A short digital rental agreement. Nothing to print." },
-  { title: "Unlock perks", body: "Your Insider Portal opens with partner offers." },
+  { title: "Your trip page", body: "Your Insider Portal opens with your Guest Pass and trip details." },
   { title: "Arrive", body: "Arrival details arrive in your trip page before check-in." },
 ];
 
@@ -176,11 +176,10 @@ export default function HomePage() {
             <p className="eyebrow !text-brass-light">The Insider Collection</p>
             <h2 className="mt-3 text-4xl sm:text-5xl">Exclusive privileges with our local partners</h2>
             <p className="mt-6 max-w-lg text-sand/80">
-              We've partnered with the best guides, vineyards, kitchens and stables around the lake. As our guest, you
-              unlock private discounts and extras, like an hour on the water, a reserved table or a tasting flight on
-              the house, all from your personal Insider Portal.
+              We're hand-selecting a small collection of guides, vineyards, kitchens and stables around the lake.
+              As each partner is confirmed, their private offers for our guests appear in your personal Insider Portal.
             </p>
-            <Link href="/experiences" className="btn-brass btn-sheen mt-8">Preview the perks</Link>
+            <Link href="/experiences" className="btn-brass btn-sheen mt-8">Learn more</Link>
           </div>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
             {Object.entries(vendorCategories).map(([key, c], i) => (
@@ -192,7 +191,7 @@ export default function HomePage() {
               >
                 <p className="text-3xl transition duration-500 group-hover:scale-110">{c.icon}</p>
                 <p className="mt-3 text-sm">{c.label}</p>
-                <p className="mt-1 text-[10px] uppercase tracking-luxe text-brass-light">🔒 Guests only</p>
+                <p className="mt-1 text-[10px] uppercase tracking-luxe text-brass-light">Coming soon</p>
               </div>
             ))}
           </div>

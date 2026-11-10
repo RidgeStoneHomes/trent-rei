@@ -85,14 +85,14 @@ export default async function TripPage() {
               <h2 className="mt-3 text-3xl sm:text-4xl">Unlocks in {t.daysUntilUnlock} days</h2>
               <p className="mt-4 max-w-xl text-sand/80">
                 Your stay is fully refundable until {formatDate(t.unlockDate)}. Once it's locked in, this portal opens
-                with private partner perks, reserved experiences, and your digital Guest Pass.
+                with your digital Guest Pass and any local partner offers we have for guests.
               </p>
               <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {Object.entries(vendorCategories).slice(0, 4).map(([k, c]) => (
                   <div key={k} className="rounded-2xl border border-sand/10 bg-sand/5 p-4">
                     <p className="text-2xl">{c.icon}</p>
                     <p className="mt-2 text-sm">{c.label}</p>
-                    <p className="mt-2 select-none text-xs text-sand/40 blur-[3px]">20% off · code ••••••</p>
+                    
                   </div>
                 ))}
               </div>

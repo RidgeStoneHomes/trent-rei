@@ -151,10 +151,10 @@ export default async function PropertyPage({
             <p className="eyebrow !text-brass-light">Included with every direct stay</p>
             <h3 className="mt-2 text-3xl">The Insider Portal</h3>
             <p className="mt-3 text-sand/80">
-              Exclusive guest pricing with our local partners — fishing guides, vineyards, horseback rides, restaurants,
-              and the casino — plus curated itineraries and your digital Guest Pass.
+              Your private trip page with arrival details, your digital Guest Pass, and private offers from the local
+              partners we're adding around the lake.
             </p>
-            <Link href="/experiences" className="btn-brass mt-6">Preview perks</Link>
+            <Link href="/experiences" className="btn-brass mt-6">Learn more</Link>
           </div>
 
           <RateTable property={property} today={todayLocal()} />

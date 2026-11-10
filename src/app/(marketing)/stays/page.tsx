@@ -43,7 +43,7 @@ export default async function StaysPage({ searchParams }: { searchParams: Promis
           <p className="eyebrow animate-rise !text-brass-light">The Homes</p>
           <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">Choose your retreat</h1>
           <p className="mt-4 max-w-xl animate-rise text-sand/80 [animation-delay:200ms]">
-            Both homes include the Insider Portal, partner perks and a personal host, at the best rate you'll find anywhere.
+            Both homes include the Insider Portal and a personal host, at the best rate you'll find anywhere.
           </p>
           <div className="mt-8 animate-rise text-ink [animation-delay:300ms]">
             <DateSearch today={todayLocal()} maxGuests={maxGuests} variant="bar" initial={{ checkIn: q.checkIn, checkOut: q.checkOut, guests }} />
