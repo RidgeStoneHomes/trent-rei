@@ -1,4 +1,6 @@
 // Sends email through Resend when RESEND_API_KEY is set; otherwise logs to the console.
+// Replies go to the host inbox (site.email), not the sending address.
+import { site } from "@/config/site";
 
 type Mail = { to: string; subject: string; html: string };
 
@@ -12,7 +14,7 @@ export async function sendEmail(mail: Mail) {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: process.env.EMAIL_FROM, to: mail.to, subject: mail.subject, html: mail.html }),
+      body: JSON.stringify({ from: process.env.EMAIL_FROM, reply_to: site.email, to: mail.to, subject: mail.subject, html: mail.html }),
     });
     if (!res.ok) console.error("[email] send failed", res.status, await res.text());
   } catch (err) {
