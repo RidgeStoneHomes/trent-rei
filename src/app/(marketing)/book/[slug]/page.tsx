@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { getProperty } from "@/config/site";
+import { getProperty, propertyPath } from "@/config/site";
 import { validateStay } from "@/lib/availability";
 import { quoteStay } from "@/lib/pricing";
 import { createBooking } from "@/app/actions/booking";
@@ -30,7 +30,7 @@ export default async function BookPage({
       <section className="container-x py-24 text-center">
         <h1 className="text-4xl">Let's find you different dates</h1>
         <p className="mt-4 text-ink-soft">{check.error}</p>
-        <Link href={`/stays/${property.slug}`} className="btn-primary mt-8">Back to {property.name}</Link>
+        <Link href={propertyPath(property.slug)} className="btn-primary mt-8">Back to {property.name}</Link>
       </section>
     );
   }

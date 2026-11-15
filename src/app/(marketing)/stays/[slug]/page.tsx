@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getProperty, properties, site } from "@/config/site";
+import { getProperty, properties, propertyPath, site } from "@/config/site";
 import { Media } from "@/components/Media";
 import { Gallery } from "@/components/Gallery";
 import { BookingWidget } from "@/components/BookingWidget";
@@ -15,7 +15,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const p = getProperty((await params).slug);
-  return p ? { title: p.name, description: p.summary } : {};
+  return p ? { title: p.name, description: p.summary, alternates: { canonical: propertyPath(p.slug) } } : {};
 }
 
 export default async function PropertyPage({
@@ -46,7 +46,6 @@ export default async function PropertyPage({
         <p className="eyebrow animate-rise">{property.location}</p>
         <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">{property.name}</h1>
         <p className="mt-3 animate-rise text-lg text-ink-soft [animation-delay:200ms]">{property.headline}</p>
-        <p className="mt-2 animate-rise text-sm text-brass-dark [animation-delay:250ms]">Owned and hosted by {site.hostName}</p>
         <div className="relative mt-8 grid h-[28rem] animate-rise grid-cols-4 grid-rows-2 gap-2 overflow-hidden rounded-3xl [animation-delay:300ms]">
           <div className="col-span-4 row-span-2 overflow-hidden sm:col-span-2">
             <Media property={property} index={0} size="full" eager className="h-full w-full transition duration-700 hover:scale-105" label="Photo coming soon" />
@@ -189,7 +188,7 @@ export default async function PropertyPage({
               <p className="mt-2 font-display text-3xl">{property.name} is almost ready.</p>
               <p className="mt-2 text-sm text-ink-soft">Join the guest list and we'll let you know the moment dates open.</p>
               <div className="mt-5"><LeadForm source={property.slug} compact /></div>
-              <p className="mt-4 text-xs text-ink-soft">Need room now? <Link href="/stays/ironwood-acres" className="underline">Ironwood Acres</Link> is half a mile away and booking today.</p>
+              <p className="mt-4 text-xs text-ink-soft">Need room now? <Link href={propertyPath("ironwood-acres")} className="underline">Ironwood Acres</Link> is half a mile away and booking today.</p>
             </div>
           ) : (
           <BookingWidget
@@ -219,7 +218,7 @@ export default async function PropertyPage({
               <p className="mt-2 font-display text-3xl">{other.name}</p>
               <p className="text-sm text-ink-soft">{other.headline}</p>
             </div>
-            <Link href={`/stays/${other.slug}`} className="btn-ghost">View {other.name}</Link>
+            <Link href={propertyPath(other.slug)} className="btn-ghost">View {other.name}</Link>
           </div>
         </section>
       )}

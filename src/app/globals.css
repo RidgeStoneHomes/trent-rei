@@ -4,6 +4,8 @@
 @tailwind utilities;
 
 @layer base {
+  /* Nothing (reveal animations, wide rows) can push the page sideways on phones */
+  html, body { overflow-x: clip; }
   html { scroll-behavior: smooth; }
   body { @apply bg-sand text-ink font-sans antialiased; }
   h1, h2, h3 { @apply font-display; }
@@ -64,4 +66,13 @@ details[open] .faq-icon { transform: rotate(45deg); }
 @media print {
   .no-print { display: none !important; }
   body { background: white; }
+}
+
+/* Homepage slideshow: each photo drifts slowly forward while it's on screen */
+@keyframes heroZoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.12); }
+}
+@media (prefers-reduced-motion: reduce) {
+  img[style*="heroZoom"] { animation: none !important; }
 }

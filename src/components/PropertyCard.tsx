@@ -1,12 +1,12 @@
 import Link from "next/link";
-import type { Property } from "@/config/site";
+import { propertyPath, type Property } from "@/config/site";
 import { Media } from "./Media";
 import { formatMoney } from "@/lib/money";
 import { lowestRate } from "@/lib/pricing";
 
 export function PropertyCard({ property, query = "" }: { property: Property; query?: string }) {
   return (
-    <Link href={`/stays/${property.slug}${query}`} className="group block">
+    <Link href={`${propertyPath(property.slug)}${query}`} className="group block">
       <div className="relative overflow-hidden rounded-2xl">
         <Media property={property} className="aspect-[4/3] w-full transition duration-700 group-hover:scale-105" label={property.location} />
         <span className="absolute right-4 top-4 rounded-full bg-sand/90 px-3 py-1 text-xs font-medium backdrop-blur">Sleeps {property.maxGuests}</span>

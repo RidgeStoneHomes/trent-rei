@@ -21,11 +21,12 @@ export function Header({ promo }: { promo?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(scrollY > 40);
+    // On the homepage, the bar turns solid once the photo hero is mostly scrolled past
+    const onScroll = () => setScrolled(scrollY > (overHero ? innerHeight * 0.6 : 40));
     onScroll();
     addEventListener("scroll", onScroll, { passive: true });
     return () => removeEventListener("scroll", onScroll);
-  }, []);
+  }, [overHero]);
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -42,7 +43,7 @@ export function Header({ promo }: { promo?: React.ReactNode }) {
       }`}
     >
       <div className={`container-x flex items-center justify-between gap-4 transition-all duration-500 ${clear ? "h-20" : "h-16"}`}>
-        <Link href="/" className="group flex items-baseline gap-2 font-display text-xl tracking-wide sm:text-2xl">
+        <Link href="/" className="group flex min-w-0 items-baseline gap-2 whitespace-nowrap font-display text-lg tracking-wide sm:text-2xl">
           <span>{site.brand}</span>
           <span className={`hidden text-[10px] font-sans uppercase tracking-luxe sm:inline ${clear ? "text-brass-light" : "text-brass-dark"}`}>Lake Texoma</span>
         </Link>
@@ -52,8 +53,16 @@ export function Header({ promo }: { promo?: React.ReactNode }) {
           ))}
           <Link href="/trip" className={`link-draw pb-0.5 ${clear ? "text-sand/70" : "text-ink-soft"}`}>Guest Login</Link>
         </nav>
-        <div className="flex items-center gap-2">
-          <Link href="/stays" className={`btn-sheen !px-5 !py-2 ${clear ? "btn-brass" : "btn-primary"}`}>Book Direct</Link>
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+          {/* Over the homepage photos, keep the bar clean; the button appears once you scroll */}
+          <Link
+            href="/stays"
+            aria-hidden={clear}
+            tabIndex={clear ? -1 : undefined}
+            className={`btn-primary btn-sheen !px-4 !py-1.5 text-xs transition-all duration-500 sm:!px-5 sm:!py-2 sm:text-sm ${clear ? "pointer-events-none hidden translate-y-1 opacity-0 sm:inline-flex" : "opacity-100"}`}
+          >
+            Book Direct
+          </Link>
           <button
             type="button"
             className="grid h-10 w-10 place-items-center rounded-full lg:hidden"

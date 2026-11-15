@@ -1,4 +1,4 @@
-import { properties, site } from "@/config/site";
+import { properties, propertyPath, site } from "@/config/site";
 import { faqs } from "@/content/faq";
 import { siteUrl } from "@/lib/url";
 
@@ -26,7 +26,7 @@ export function HomeJsonLd() {
           containsPlace: properties.map((p) => ({
             "@type": "Accommodation",
             name: p.name,
-            url: siteUrl(`/stays/${p.slug}`),
+            url: siteUrl(propertyPath(p.slug)),
             description: p.summary,
             numberOfBedrooms: p.bedrooms,
             numberOfBathroomsTotal: p.baths,

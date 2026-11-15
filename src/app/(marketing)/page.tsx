@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { properties, site, vendorCategories } from "@/config/site";
+import { properties, propertyPath, site, vendorCategories } from "@/config/site";
 import { faqs } from "@/content/faq";
 import { areaGuide, tripStyles } from "@/content/guide";
 import { Media } from "@/components/Media";
 import { LeadForm } from "@/components/LeadForm";
-import { LakeScene } from "@/components/LakeScene";
-import { DateSearch } from "@/components/DateSearch";
+import { HeroSlideshow, type Slide } from "@/components/HeroSlideshow";
+import { AvailabilityPill } from "@/components/AvailabilityPill";
 import { HomeJsonLd } from "@/components/JsonLd";
 import { CountUp, TiltCard } from "@/components/motion";
 import { activePromo } from "@/components/PromoBar";
@@ -33,32 +33,27 @@ export default function HomePage() {
   const maxGuests = Math.max(...properties.map((p) => p.maxGuests));
   const promo = activePromo();
 
+  // Alternate photos between the homes: A1, B1, A2, B2, ...
+  const decks = properties.map((p) => (p.heroSlides ?? []).map((s) => ({ ...s, home: p.name, href: propertyPath(p.slug) })));
+  const slides: Slide[] = [];
+  for (let i = 0; i < Math.max(0, ...decks.map((d) => d.length)); i++) for (const d of decks) if (d[i]) slides.push(d[i]);
+
   return (
     <>
       <HomeJsonLd />
 
-      {/* HERO */}
+      {/* HERO: the photos do the talking */}
       <section className="relative isolate flex min-h-[100svh] flex-col overflow-hidden text-sand">
-        <LakeScene photo={properties.find((p) => p.heroPhoto)?.heroPhoto?.src} video={properties.find((p) => p.heroVideo)?.heroVideo} />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/50 via-transparent to-ink/40" />
-        <div className={`container-x flex flex-1 flex-col items-center justify-center pb-16 text-center ${promo ? "pt-40" : "pt-32"}`}>
-          <p className="eyebrow animate-rise !text-brass-light">Lake Texoma · Pottsboro, Texas</p>
-          <h1 className="mt-5 max-w-4xl animate-rise text-5xl font-light leading-[1.05] tracking-wide [animation-delay:120ms] sm:text-7xl lg:text-8xl">
-            Private luxury estates
+        <HeroSlideshow slides={slides} />
+        <div className={`container-x flex flex-1 flex-col items-center justify-center pb-40 text-center sm:pb-28 ${promo ? "pt-40" : "pt-32"}`}>
+          <p className="eyebrow animate-rise !text-brass-light">Lake Texoma</p>
+          <h1 className="mt-4 animate-rise text-5xl font-light leading-[1.05] tracking-wide [animation-delay:120ms] sm:text-7xl lg:text-8xl">
+            {site.brand}
           </h1>
-          <p className="mx-auto mt-6 max-w-xl animate-rise text-base tracking-wide text-sand/85 [animation-delay:240ms] sm:text-lg">
-            Ironwood Acres and The Fog Line: two private homes near Highport Marina, thoughtfully designed for gathering.
-          </p>
-          <p className="mt-5 animate-rise text-sm tracking-wide text-brass-light [animation-delay:300ms]">Owned and hosted by {site.hostName}</p>
-          <div className="mt-8 w-full max-w-3xl animate-rise text-left [animation-delay:360ms]">
-            <DateSearch today={todayLocal()} maxGuests={maxGuests} />
-          </div>
+          <p className="mt-4 animate-rise text-sm uppercase tracking-luxe text-sand/80 [animation-delay:240ms]">Private luxury homes</p>
         </div>
-        <a href="#homes" className="mx-auto mb-8 flex flex-col items-center gap-2 text-[10px] uppercase tracking-luxe text-sand/70 hover:text-sand">
-          Explore
-          <span className="block h-10 w-px animate-pulse bg-gradient-to-b from-sand/80 to-transparent" />
-        </a>
       </section>
+      <AvailabilityPill today={todayLocal()} maxGuests={maxGuests} />
 
       {/* NUMBERS */}
       <section className="border-b border-ink/5 bg-sand">
@@ -88,7 +83,7 @@ export default function HomePage() {
             <article key={p.slug} className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <div data-reveal={i % 2 ? "right" : "left"} className={i % 2 ? "lg:order-2" : ""}>
                 <TiltCard className="rounded-3xl">
-                  <Link href={`/stays/${p.slug}`} className="relative block overflow-hidden rounded-3xl">
+                  <Link href={propertyPath(p.slug)} className="relative block overflow-hidden rounded-3xl">
                     <Media property={p} className="aspect-[4/3] w-full transition duration-700 group-hover:scale-105" label={p.location} />
                     <span className="absolute right-4 top-4 rounded-full bg-sand/90 px-3 py-1 text-xs font-medium text-ink backdrop-blur">
                       {p.comingSoon ? "Opening soon" : <>from {formatMoney(lowestRate(p))}/night</>}
@@ -108,7 +103,7 @@ export default function HomePage() {
                     <li key={h} className="flex gap-3 text-sm"><span className="text-ember">✦</span>{h}</li>
                   ))}
                 </ul>
-                <Link href={`/stays/${p.slug}`} className="btn-primary btn-sheen mt-8">Explore {p.name} →</Link>
+                <Link href={propertyPath(p.slug)} className="btn-primary btn-sheen mt-8">Explore {p.name} →</Link>
               </div>
             </article>
           ))}

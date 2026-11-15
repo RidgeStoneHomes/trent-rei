@@ -100,6 +100,8 @@ export type Property = {
   // Gallery photos in display order; the first is the main photo. With none, gradient placeholders show.
   images: Photo[];
   heroPhoto?: Photo; // wide photo behind the homepage headline
+  // Photos for the homepage slideshow, shown in this order (alternating between homes)
+  heroSlides?: Photo[];
   heroVideo?: string; // short silent loop behind the homepage headline (heroPhoto is its poster)
   video?: { src: string; poster: string; title: string }; // full video tour on the home's page
   palette: [string, string]; // placeholder gradient colors
@@ -329,6 +331,13 @@ export const properties: Property[] = [
       { src: "/images/ironwood-acres/121.jpg", sm: "/images/ironwood-acres/121-sm.jpg", alt: "Front entry" },
     ],
     heroPhoto: { src: "/images/ironwood-acres/132c.jpg", alt: "Ironwood Acres putting green at twilight" },
+    heroSlides: [
+      { src: "/images/ironwood-acres/118.jpg", sm: "/images/ironwood-acres/118-sm.jpg", alt: "Ironwood Acres at twilight" },
+      { src: "/images/ironwood-acres/132c.jpg", sm: "/images/ironwood-acres/132c-sm.jpg", alt: "Private putting green at twilight" },
+      { src: "/images/ironwood-acres/021.jpg", sm: "/images/ironwood-acres/021-sm.jpg", alt: "Living room with slate fireplace" },
+      { src: "/images/ironwood-acres/130.jpg", sm: "/images/ironwood-acres/130-sm.jpg", alt: "Hot tub on the covered porch at dusk" },
+      { src: "/images/ironwood-acres/133.jpg", sm: "/images/ironwood-acres/133-sm.jpg", alt: "Putting green lit up at dusk" },
+    ],
     video: { src: "/videos/ironwood-acres/tour.mp4", poster: "/images/ironwood-acres/118.jpg", title: "Ironwood Acres video tour" },
     palette: ["#1f3a2e", "#b08d57"],
     arrival: {
@@ -444,6 +453,10 @@ export const properties: Property[] = [
     },
   },
 ];
+
+// Each home's own web address, e.g. reynoldsretreats.com/ironwood-acres (served by
+// /stays/[slug] through a rewrite in next.config.mjs). Use this for links and marketing.
+export const propertyPath = (slug: string) => `/${slug}`;
 
 export function getProperty(slug: string) {
   return properties.find((p) => p.slug === slug) ?? properties.find((p) => p.formerSlugs?.includes(slug));
