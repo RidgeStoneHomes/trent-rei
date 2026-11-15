@@ -77,9 +77,9 @@ export async function runChecks(): Promise<Check[]> {
     fix: "Add STRIPE_SECRET_KEY (real payments), or ALLOW_DEMO_PAYMENTS=true for a free preview.",
   });
   envCheck("RESEND_API_KEY", "Confirmation emails", "Set up Resend and add RESEND_API_KEY and EMAIL_FROM.", true);
-  const orz = await ownerRezStatus();
+  const orz = await ownerRezStatus(properties);
   checks.push({
-    label: "OwnerRez (leads → guests)",
+    label: "OwnerRez (guests & bookings)",
     ok: orz.ok,
     optional: true,
     detail: orz.detail,

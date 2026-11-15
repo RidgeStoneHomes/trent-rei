@@ -38,6 +38,7 @@ model Booking {
   paidAt         DateTime?
   guestPassToken String   @unique @default(cuid()) // shown as QR to partner vendors
   codeReleasedAt DateTime? // host released the door code early for this booking
+  ownerRezBookingId Int? // reservation created in OwnerRez once paid
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 

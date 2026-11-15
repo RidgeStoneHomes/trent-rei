@@ -74,6 +74,8 @@ export type RateSeason = {
 export type Property = {
   slug: string;
   name: string;
+  // Words that identify this home among OwnerRez properties (name or street address)
+  ownerRezMatch?: string[];
   headline: string;
   summary: string;
   story: string[];
@@ -117,6 +119,7 @@ export type Property = {
 export const properties: Property[] = [
   {
     slug: "ironwood-acres",
+    ownerRezMatch: ["ironwood", "328 brandon"],
     name: "Ironwood Acres", // 328 Brandon Way
     headline: "Putting green + hot tub on a private acre, 2 miles from Highport Marina",
     summary:
@@ -338,6 +341,7 @@ export const properties: Property[] = [
   },
   {
     slug: "the-fog-line",
+    ownerRezMatch: ["fog line", "294 guy"],
     name: "The Fog Line",
     comingSoon: true, // shows "opening soon" with a guest-list signup instead of booking
     formerSlugs: ["the-overlook", "the-lake-house"],

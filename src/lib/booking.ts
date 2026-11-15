@@ -1,3 +1,4 @@
+import { after } from "next/server";
 import { site, getProperty } from "@/config/site";
 import { db } from "./db";
 import { randomCode } from "./codes";
@@ -6,6 +7,7 @@ import { formatRange } from "./dates";
 import { formatMoney } from "./money";
 import { siteUrl } from "./url";
 import { tripTimeline } from "./trip";
+import { pushBookingToOwnerRez } from "./ownerrez";
 
 export async function uniqueBookingCode() {
   for (;;) {
@@ -48,6 +50,12 @@ export async function confirmBooking(bookingId: string, stripeSession?: string) 
   const booking = await db.booking.findUniqueOrThrow({ where: { id: bookingId } });
   const property = getProperty(booking.propertySlug)!;
 
+  // Create the reservation in OwnerRez so it blocks these dates on VRBO/Airbnb too
+  after(async () => {
+    const ownerRezBookingId = await pushBookingToOwnerRez(booking, property);
+    if (ownerRezBookingId) await db.booking.update({ where: { id: booking.id }, data: { ownerRezBookingId } });
+  });
+
   if (booking.referralCode) {
     await db.referralCode.update({
       where: { code: booking.referralCode },
@@ -65,7 +73,7 @@ export async function confirmBooking(bookingId: string, stripeSession?: string) 
       `<h1 style="font-weight:400;font-size:32px;margin:0 0 16px">It's official, ${booking.firstName}.</h1>
       <p>${property.name} is yours for <strong>${formatRange(booking.checkIn, booking.checkOut)}</strong>.</p>
       <p>Confirmation code: <strong style="letter-spacing:.15em">${booking.code}</strong><br/>Total paid: ${formatMoney(booking.totalCents, { cents: true })}</p>
-      <p>Your private <strong>Insider Portal</strong> — local partner perks, curated experiences, and arrival details — ${
+      <p>Your private <strong>Insider Portal</strong>, with your Guest Pass and arrival details, ${
         timeline.insiderUnlocked ? "is open now" : `opens on ${timeline.unlockDate}`
       }. Sign in at <a href="${siteUrl("/trip")}">${siteUrl("/trip")}</a> with this email and your confirmation code.</p>
       <p>Know someone who'd love it here? Share your link and they'll get ${formatMoney(site.referral.friendDiscountCents)} off — you'll get ${formatMoney(site.referral.referrerCreditCents)} toward your next stay: <a href="${siteUrl(`/r/${myCode.code}`)}">${siteUrl(`/r/${myCode.code}`)}</a></p>
