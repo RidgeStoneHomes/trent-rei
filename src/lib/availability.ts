@@ -65,7 +65,7 @@ export async function validateStay(
 
   const taken = await unavailableRanges(property.slug, excludeBookingId);
   if (taken.some((r) => overlaps(checkIn, checkOut, r.start, r.end)))
-    return { ok: false, error: "Those dates were just taken — please try different dates." };
+    return { ok: false, error: "Some of those dates are already booked. Please choose different dates." };
   return { ok: true };
 }
 
