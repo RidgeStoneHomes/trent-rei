@@ -95,7 +95,7 @@ export async function ownerRezStatus(): Promise<{ ok: boolean; detail: string }>
     return { ok: false, detail: `${missing} not set.` };
   }
   try {
-    await call("/v2/guests?limit=1");
+    await call(`/v2/guests?limit=1&created_since_utc=${encodeURIComponent(new Date().toISOString())}`);
     return { ok: true, detail: "Connected: new website leads are added to OwnerRez as guests." };
   } catch (err) {
     const status = (err as { status?: number }).status;
