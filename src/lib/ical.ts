@@ -55,6 +55,26 @@ async function fetchFeed(url: string): Promise<Range[]> {
   }
 }
 
+// For the /status page: reads each feed fresh and reports what it found.
+export async function feedReport(slug: string): Promise<{ ok: boolean; detail: string }[]> {
+  return Promise.all(
+    importUrlsFor(slug).map(async (url) => {
+      const host = (() => { try { return new URL(url).hostname; } catch { return "invalid link"; } })();
+      try {
+        const res = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(8000) });
+        if (!res.ok) return { ok: false, detail: `${host}: HTTP ${res.status}` };
+        const text = await res.text();
+        if (!text.includes("BEGIN:VCALENDAR")) return { ok: false, detail: `${host}: not a calendar file` };
+        const today = new Date().toISOString().slice(0, 10);
+        const upcoming = parseIcal(text, "external").filter((r) => r.end > today);
+        return { ok: true, detail: `${host}: ${upcoming.length} upcoming booked/blocked range(s)` };
+      } catch (err) {
+        return { ok: false, detail: `${host}: ${err instanceof Error ? err.message : String(err)}` };
+      }
+    }),
+  );
+}
+
 function fmt(date: string) {
   return date.replace(/-/g, "");
 }

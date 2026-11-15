@@ -1,6 +1,6 @@
 import { db } from "./db";
 import { stripeEnabled, demoPaymentsAllowed } from "./stripe";
-import { importUrlsFor } from "./ical";
+import { feedReport } from "./ical";
 import { ownerRezStatus } from "./ownerrez";
 import { properties } from "@/config/site";
 
@@ -85,13 +85,18 @@ export async function runChecks(): Promise<Check[]> {
     detail: orz.detail,
     fix: "Add OWNERREZ_EMAIL (your OwnerRez login) and OWNERREZ_TOKEN (a Personal Access Token from OwnerRez → Settings → API), then Redeploy.",
   });
-  const feeds = properties.reduce((n, p) => n + importUrlsFor(p.slug).length, 0);
+  const reports = await Promise.all(
+    properties.map(async (p) => ({ p, feeds: await feedReport(p.slug) })),
+  );
+  const connected = reports.filter((r) => r.feeds.length);
   checks.push({
     label: "Calendar sync (OwnerRez/VRBO)",
-    ok: feeds > 0,
+    ok: connected.length > 0 && connected.every((r) => r.feeds.every((f) => f.ok)),
     optional: true,
-    detail: feeds ? `${feeds} calendar feed(s) connected.` : "No outside calendars connected yet.",
-    fix: "Add ICAL_IMPORT_IRONWOOD_ACRES with your OwnerRez or VRBO calendar link.",
+    detail: connected.length
+      ? connected.map((r) => `${r.p.name}: ${r.feeds.map((f) => (f.ok ? "" : "FAILED ") + f.detail).join("; ")}`).join(" · ")
+      : "No outside calendars connected yet.",
+    fix: "Add ICAL_IMPORT_IRONWOOD_ACRES with your OwnerRez calendar export link, then Redeploy.",
   });
   return checks;
 }
