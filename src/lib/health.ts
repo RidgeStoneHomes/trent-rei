@@ -76,6 +76,7 @@ export async function runChecks(): Promise<Check[]> {
     fix: "Add STRIPE_SECRET_KEY (real payments), or ALLOW_DEMO_PAYMENTS=true for a free preview.",
   });
   envCheck("RESEND_API_KEY", "Confirmation emails", "Set up Resend and add RESEND_API_KEY and EMAIL_FROM.", true);
+  envCheck("OWNERREZ_TOKEN", "OwnerRez (leads → guests)", "Add OWNERREZ_EMAIL (your OwnerRez login) and OWNERREZ_TOKEN (a Personal Access Token from OwnerRez → Settings → API), then Redeploy.", true);
   const feeds = properties.reduce((n, p) => n + importUrlsFor(p.slug).length, 0);
   checks.push({
     label: "Calendar sync (OwnerRez/VRBO)",

@@ -1,9 +1,11 @@
 "use server";
 
+import { after } from "next/server";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { emailLayout, sendEmail } from "@/lib/email";
-import { site } from "@/config/site";
+import { getProperty, site } from "@/config/site";
+import { syncLeadToOwnerRez } from "@/lib/ownerrez";
 
 const schema = z.object({
   email: z.string().email(),
@@ -26,6 +28,21 @@ export async function joinList(_prev: LeadState, form: FormData): Promise<LeadSt
   if (!parsed.success) return { ok: false, message: "Please enter a valid email address." };
   const lead = parsed.data;
   await db.lead.create({ data: { ...lead, email: lead.email.toLowerCase(), source: lead.source ?? "founding-list" } });
+
+  // Copy the lead into OwnerRez as a tagged guest, after the response is sent
+  const home = lead.source ? getProperty(lead.source) : undefined;
+  after(() =>
+    syncLeadToOwnerRez({
+      email: lead.email,
+      name: lead.name,
+      notes: [
+        `Joined the ${site.brand} guest list on the website (${new Date().toISOString().slice(0, 10)}).`,
+        lead.interest && `Interest: ${lead.interest}`,
+        lead.message && `Message: ${lead.message}`,
+      ].filter(Boolean).join("\n"),
+      tags: ["Website lead", ...(home ? [`${home.name} waitlist`] : [])],
+    }),
+  );
   await sendEmail({
     to: lead.email,
     subject: `Welcome to the ${site.brand} guest list`,

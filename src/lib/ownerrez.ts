@@ -1,0 +1,76 @@
+// OwnerRez API v2 (https://api.ownerrez.com/help/v2). Auth is HTTP Basic with the OwnerRez
+// account email as the username and a Personal Access Token (pt_…) as the password.
+// Everything here is best-effort: a failure is logged and never blocks the guest.
+
+const BASE = "https://api.ownerrez.com";
+
+export const ownerRezEnabled = Boolean(process.env.OWNERREZ_EMAIL && process.env.OWNERREZ_TOKEN);
+
+async function call<T>(path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
+  const auth = Buffer.from(`${process.env.OWNERREZ_EMAIL}:${process.env.OWNERREZ_TOKEN}`).toString("base64");
+  const res = await fetch(`${BASE}${path}`, {
+    method: init.method ?? "GET",
+    headers: {
+      Authorization: `Basic ${auth}`,
+      "User-Agent": "ReynoldsRetreatsWebsite/1.0", // OwnerRez rejects requests without one
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: init.body === undefined ? undefined : JSON.stringify(init.body),
+    cache: "no-store",
+  });
+  if (!res.ok) {
+    const err = new Error(`OwnerRez ${init.method ?? "GET"} ${path} → ${res.status}: ${await res.text()}`);
+    (err as Error & { status?: number }).status = res.status;
+    throw err;
+  }
+  return (await res.json()) as T;
+}
+
+type Guest = { id: number; email_addresses?: { address?: string }[] };
+
+async function findGuestByEmail(email: string): Promise<number | null> {
+  const page = await call<{ items?: Guest[] }>(`/v2/guests?q=${encodeURIComponent(email)}&limit=25`);
+  const match = page.items?.find((g) => g.email_addresses?.some((e) => e.address?.toLowerCase() === email));
+  return match?.id ?? null;
+}
+
+async function tagGuest(guestId: number, name: string) {
+  try {
+    await call("/v2/tags", { method: "POST", body: { entity_type: "guest", entity_id: guestId, name } });
+  } catch (err) {
+    if ((err as { status?: number }).status !== 409) throw err; // 409 = already tagged
+  }
+}
+
+// Adds a website lead to OwnerRez as a guest (or finds the existing one) and tags it.
+export async function syncLeadToOwnerRez(lead: {
+  email: string;
+  name?: string;
+  phone?: string;
+  notes: string;
+  tags: string[];
+}) {
+  if (!ownerRezEnabled) return;
+  try {
+    const email = lead.email.toLowerCase();
+    let guestId = await findGuestByEmail(email);
+    if (!guestId) {
+      const [first, ...rest] = (lead.name ?? "").trim().split(/\s+/).filter(Boolean);
+      const created = await call<Guest>("/v2/guests", {
+        method: "POST",
+        body: {
+          first_name: first ?? email.split("@")[0],
+          last_name: rest.join(" ") || undefined,
+          email_addresses: [{ address: email, is_default: true }],
+          phones: lead.phone ? [{ number: lead.phone, is_default: true }] : undefined,
+          notes: lead.notes,
+        },
+      });
+      guestId = created.id;
+    }
+    for (const tag of lead.tags) await tagGuest(guestId, tag);
+  } catch (err) {
+    console.error("[ownerrez] lead sync failed:", err);
+  }
+}
