@@ -1,6 +1,7 @@
 import { db } from "./db";
 import { stripeEnabled, demoPaymentsAllowed } from "./stripe";
 import { importUrlsFor } from "./ical";
+import { ownerRezStatus } from "./ownerrez";
 import { properties } from "@/config/site";
 
 export type Check = { label: string; ok: boolean; detail: string; fix?: string; optional?: boolean };
@@ -76,7 +77,14 @@ export async function runChecks(): Promise<Check[]> {
     fix: "Add STRIPE_SECRET_KEY (real payments), or ALLOW_DEMO_PAYMENTS=true for a free preview.",
   });
   envCheck("RESEND_API_KEY", "Confirmation emails", "Set up Resend and add RESEND_API_KEY and EMAIL_FROM.", true);
-  envCheck("OWNERREZ_TOKEN", "OwnerRez (leads → guests)", "Add OWNERREZ_EMAIL (your OwnerRez login) and OWNERREZ_TOKEN (a Personal Access Token from OwnerRez → Settings → API), then Redeploy.", true);
+  const orz = await ownerRezStatus();
+  checks.push({
+    label: "OwnerRez (leads → guests)",
+    ok: orz.ok,
+    optional: true,
+    detail: orz.detail,
+    fix: "Add OWNERREZ_EMAIL (your OwnerRez login) and OWNERREZ_TOKEN (a Personal Access Token from OwnerRez → Settings → API), then Redeploy.",
+  });
   const feeds = properties.reduce((n, p) => n + importUrlsFor(p.slug).length, 0);
   checks.push({
     label: "Calendar sync (OwnerRez/VRBO)",

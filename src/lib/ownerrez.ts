@@ -2,6 +2,8 @@
 // account email as the username and a Personal Access Token (pt_…) as the password.
 // Everything here is best-effort: a failure is logged and never blocks the guest.
 
+import { emailLayout, sendEmail } from "./email";
+
 const BASE = "https://api.ownerrez.com";
 
 export const ownerRezEnabled = Boolean(process.env.OWNERREZ_EMAIL && process.env.OWNERREZ_TOKEN);
@@ -72,5 +74,36 @@ export async function syncLeadToOwnerRez(lead: {
     for (const tag of lead.tags) await tagGuest(guestId, tag);
   } catch (err) {
     console.error("[ownerrez] lead sync failed:", err);
+    // Tell the host, so a lead never silently goes missing from OwnerRez
+    if (process.env.HOST_NOTIFY_EMAIL) {
+      await sendEmail({
+        to: process.env.HOST_NOTIFY_EMAIL,
+        subject: `OwnerRez didn't accept a website lead (${lead.email})`,
+        html: emailLayout(
+          "OwnerRez sync",
+          `<p>${lead.email} joined the guest list but couldn't be added to OwnerRez. They're still saved in /admin → Leads.</p><p style="font-family:monospace;font-size:12px">${String(err instanceof Error ? err.message : err).replace(/</g, "&lt;").slice(0, 1500)}</p>`,
+        ),
+      });
+    }
+  }
+}
+
+// For the /status page: confirms the saved login works, without changing anything.
+export async function ownerRezStatus(): Promise<{ ok: boolean; detail: string }> {
+  if (!ownerRezEnabled) {
+    const missing = ["OWNERREZ_EMAIL", "OWNERREZ_TOKEN"].filter((k) => !process.env[k]).join(" and ");
+    return { ok: false, detail: `${missing} not set.` };
+  }
+  try {
+    await call("/v2/guests?limit=1");
+    return { ok: true, detail: "Connected: new website leads are added to OwnerRez as guests." };
+  } catch (err) {
+    const status = (err as { status?: number }).status;
+    const hint =
+      status === 401 ? " OwnerRez rejected the login: check OWNERREZ_EMAIL is your OwnerRez login email and OWNERREZ_TOKEN is the full pt_ token."
+      : status === 403 ? " OwnerRez refused access: make sure the token's IP restriction is set to Allow All."
+      : "";
+    const msg = err instanceof Error ? err.message.replace(/^OwnerRez GET \S+ → /, "") : String(err);
+    return { ok: false, detail: `Error ${msg.slice(0, 300)}.${hint}` };
   }
 }
