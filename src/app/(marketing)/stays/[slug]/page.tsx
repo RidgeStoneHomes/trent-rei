@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { getProperty, properties, propertyPath, site } from "@/config/site";
+import { notFound, redirect } from "next/navigation";
+import { getProperty, hasComingSoon, listedProperties, propertyPath, site } from "@/config/site";
+import { ComingSoonCard } from "@/components/ComingSoonCard";
 import { Media } from "@/components/Media";
 import { Gallery } from "@/components/Gallery";
 import { BookingWidget } from "@/components/BookingWidget";
@@ -15,6 +16,7 @@ export const dynamic = "force-dynamic";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const p = getProperty((await params).slug);
+  if (p?.comingSoon) return {};
   return p ? { title: p.name, description: p.summary, alternates: { canonical: propertyPath(p.slug) } } : {};
 }
 
@@ -29,6 +31,8 @@ export default async function PropertyPage({
   const q = await searchParams;
   const initial = isIsoDate(q.checkIn) && isIsoDate(q.checkOut) ? { checkIn: q.checkIn, checkOut: q.checkOut, guests: Number(q.guests) || 2 } : undefined;
   if (!property) notFound();
+  // Homes that aren't public yet stay hidden behind the "Coming soon" card
+  if (property.comingSoon) redirect("/stays#coming-soon");
   // If the database isn't reachable yet, still show the home and offer contact instead of booking
   let booked: string[] = [];
   let bookingOpen = true;
@@ -38,7 +42,7 @@ export default async function PropertyPage({
     console.error("[stays] availability unavailable:", err);
     bookingOpen = false;
   }
-  const other = properties.find((p) => p.slug !== property.slug);
+  const other = listedProperties.find((p) => p.slug !== property.slug);
 
   return (
     <>
@@ -220,6 +224,11 @@ export default async function PropertyPage({
             </div>
             <Link href={propertyPath(other.slug)} className="btn-ghost">View {other.name}</Link>
           </div>
+        </section>
+      )}
+      {!other && hasComingSoon && (
+        <section className="border-t border-ink/5">
+          <div className="container-x py-12"><ComingSoonCard className="mx-auto max-w-3xl" /></div>
         </section>
       )}
 

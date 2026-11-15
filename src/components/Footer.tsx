@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site, properties, propertyPath } from "@/config/site";
+import { site, listedProperties, propertyPath } from "@/config/site";
 import { LeadForm } from "./LeadForm";
 
 export function Footer() {
@@ -27,7 +27,7 @@ export function Footer() {
         </div>
         <div className="text-sm">
           <p className="eyebrow mb-3 !text-brass-light">The Homes</p>
-          {properties.map((p) => (
+          {listedProperties.map((p) => (
             <Link key={p.slug} href={propertyPath(p.slug)} className="link-draw block w-fit py-1 hover:text-sand">{p.name}</Link>
           ))}
           <Link href="/stays" className="link-draw block w-fit py-1 hover:text-sand">Check availability</Link>

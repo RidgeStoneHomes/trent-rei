@@ -1,4 +1,4 @@
-import { properties, propertyPath, site } from "@/config/site";
+import { listedProperties, propertyPath, site } from "@/config/site";
 import { faqs } from "@/content/faq";
 import { siteUrl } from "@/lib/url";
 
@@ -23,7 +23,7 @@ export function HomeJsonLd() {
           areaServed: "Lake Texoma",
           checkinTime: site.policies.checkInTime,
           checkoutTime: site.policies.checkOutTime,
-          containsPlace: properties.map((p) => ({
+          containsPlace: listedProperties.map((p) => ({
             "@type": "Accommodation",
             name: p.name,
             url: siteUrl(propertyPath(p.slug)),

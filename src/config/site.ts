@@ -454,6 +454,11 @@ export const properties: Property[] = [
   },
 ];
 
+// Homes shown publicly. A coming-soon home stays hidden (name, page and details) and the
+// site shows an unnamed "Coming soon" card instead.
+export const listedProperties = properties.filter((p) => !p.comingSoon);
+export const hasComingSoon = properties.some((p) => p.comingSoon);
+
 // Each home's own web address, e.g. reynoldsretreats.com/ironwood-acres (served by
 // /stays/[slug] through a rewrite in next.config.mjs). Use this for links and marketing.
 export const propertyPath = (slug: string) => `/${slug}`;

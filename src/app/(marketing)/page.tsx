@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { properties, propertyPath, site, vendorCategories } from "@/config/site";
+import { hasComingSoon, listedProperties as properties, propertyPath, site, vendorCategories } from "@/config/site";
+import { ComingSoonCard } from "@/components/ComingSoonCard";
 import { faqs } from "@/content/faq";
 import { areaGuide, tripStyles } from "@/content/guide";
 import { Media } from "@/components/Media";
@@ -30,6 +31,7 @@ const journey = [
 
 export default function HomePage() {
   const totalGuests = properties.reduce((n, p) => n + p.maxGuests, 0);
+  const totalBedrooms = properties.reduce((n, p) => n + p.bedrooms, 0);
   const maxGuests = Math.max(...properties.map((p) => p.maxGuests));
   const promo = activePromo();
 
@@ -59,8 +61,8 @@ export default function HomePage() {
       <section className="border-b border-ink/5 bg-sand">
         <div className="container-x grid grid-cols-2 gap-y-8 py-12 text-center lg:grid-cols-4">
           {[
-            { value: <CountUp to={properties.length} />, label: "Private homes" },
-            { value: <CountUp to={totalGuests} />, label: "Guests across both" },
+            { value: <CountUp to={totalBedrooms} />, label: "Bedrooms" },
+            { value: <CountUp to={totalGuests} />, label: "Guests" },
             { value: <CountUp to={site.policies.refundWindowDays} />, label: "Days of free cancellation" },
             { value: <CountUp to={1} />, label: "Private acre" },
           ].map((s, i) => (
@@ -108,6 +110,7 @@ export default function HomePage() {
             </article>
           ))}
         </div>
+        {hasComingSoon && <div data-reveal className="mt-24 sm:mt-32"><ComingSoonCard className="mx-auto max-w-3xl" /></div>}
       </section>
 
       {/* FIND YOUR KIND OF WEEKEND */}

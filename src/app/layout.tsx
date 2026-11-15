@@ -3,7 +3,7 @@ import "./globals.css";
 import { site } from "@/config/site";
 import { siteUrl } from "@/lib/url";
 
-const description = `Two private luxury homes on Lake Texoma. Book direct for our best rate.`;
+const description = `Private luxury homes on Lake Texoma. Book direct for our best rate.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl()),

@@ -40,7 +40,7 @@ export async function joinList(_prev: LeadState, form: FormData): Promise<LeadSt
         lead.interest && `Interest: ${lead.interest}`,
         lead.message && `Message: ${lead.message}`,
       ].filter(Boolean).join("\n"),
-      tags: ["Website lead", ...(home ? [`${home.name} waitlist`] : [])],
+      tags: ["Website lead", ...(home ? [`${home.name} waitlist`] : lead.source === "coming-soon" ? ["Second home waitlist"] : [])],
     }),
   );
   await sendEmail({

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { properties, type Property } from "@/config/site";
+import { hasComingSoon, listedProperties as properties, propertyPath, type Property } from "@/config/site";
+import { ComingSoonCard } from "@/components/ComingSoonCard";
 import { PropertyCard } from "@/components/PropertyCard";
 import { DateSearch } from "@/components/DateSearch";
 import { validateStay } from "@/lib/availability";
@@ -43,7 +44,7 @@ export default async function StaysPage({ searchParams }: { searchParams: Promis
           <p className="eyebrow animate-rise !text-brass-light">The Homes</p>
           <h1 className="mt-3 animate-rise text-5xl [animation-delay:100ms] sm:text-6xl">Choose your retreat</h1>
           <p className="mt-4 max-w-xl animate-rise text-sand/80 [animation-delay:200ms]">
-            Both homes include the Insider Portal and a personal host, at the best rate you'll find anywhere.
+            Every stay includes the Insider Portal and a personal host, at the best rate you'll find anywhere.
           </p>
           <div className="mt-8 animate-rise text-ink [animation-delay:300ms]">
             <DateSearch today={todayLocal()} maxGuests={maxGuests} variant="bar" initial={{ checkIn: q.checkIn, checkOut: q.checkOut, guests }} />
@@ -77,7 +78,7 @@ export default async function StaysPage({ searchParams }: { searchParams: Promis
                 {r.ok ? (
                   <Link href={`/book/${r.property.slug}${stayQuery}`} className="btn-primary btn-sheen !py-2.5">Reserve</Link>
                 ) : (
-                  <Link href={`/stays/${r.property.slug}`} className="btn-ghost !py-2.5">See open dates</Link>
+                  <Link href={propertyPath(r.property.slug)} className="btn-ghost !py-2.5">See open dates</Link>
                 )}
               </div>
             ))}
@@ -92,6 +93,11 @@ export default async function StaysPage({ searchParams }: { searchParams: Promis
               <PropertyCard property={p} query={stayQuery} />
             </div>
           ))}
+          {hasComingSoon && (
+            <div data-reveal style={{ "--reveal-delay": "120ms" } as React.CSSProperties}>
+              <ComingSoonCard className="h-full min-h-[24rem]" />
+            </div>
+          )}
         </div>
       </section>
     </>

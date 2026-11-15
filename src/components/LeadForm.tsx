@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { joinList, type LeadState } from "@/app/actions/leads";
-import { properties } from "@/config/site";
+import { listedProperties } from "@/config/site";
 
 export function LeadForm({ dark = false, source = "founding-list", compact = false }: { dark?: boolean; source?: string; compact?: boolean }) {
   const [state, action, pending] = useActionState<LeadState, FormData>(joinList, null);
@@ -16,7 +16,7 @@ export function LeadForm({ dark = false, source = "founding-list", compact = fal
       <input name="email" type="email" required placeholder="Email address" className="input" autoComplete="email" />
       {!compact && <select name="interest" className="input sm:col-span-2" defaultValue="">
         <option value="" disabled>What are you dreaming about?</option>
-        {properties.map((p) => (
+        {listedProperties.map((p) => (
           <option key={p.slug}>{p.name}</option>
         ))}
         <option>Anniversary or celebration</option>
