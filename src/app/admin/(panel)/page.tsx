@@ -5,18 +5,20 @@ import { formatMoney } from "@/lib/money";
 import { tripTimeline } from "@/lib/trip";
 import { cancelBooking, toggleCodeRelease } from "@/app/actions/admin";
 import { codeRelease, formatLocalTime } from "@/lib/arrival";
+import { ownerRezAccount } from "@/lib/ownerrez";
 
 const stageLabel = { refundable: "Refundable", insider: "Portal open", arrival: "Arriving soon", staying: "In house", departed: "Departed" };
 
 export default async function AdminHome() {
   const today = todayLocal();
-  const [upcoming, pending, revenue, leads, arrivals, clicks] = await Promise.all([
+  const [upcoming, pending, revenue, leads, arrivals, clicks, orz] = await Promise.all([
     db.booking.findMany({ where: { status: "CONFIRMED", checkOut: { gte: today } }, orderBy: { checkIn: "asc" }, include: { agreement: true } }),
     db.booking.count({ where: { status: { in: ["PENDING_AGREEMENT", "PENDING_PAYMENT"] } } }),
     db.booking.aggregate({ where: { status: "CONFIRMED" }, _sum: { totalCents: true }, _count: true }),
     db.lead.count(),
     db.propertyArrival.findMany({ select: { propertySlug: true, codeRevealHours: true } }),
     db.click.count(),
+    ownerRezAccount(),
   ]);
 
   const revealHours = new Map(arrivals.map((a) => [a.propertySlug, a.codeRevealHours]));
@@ -37,6 +39,12 @@ export default async function AdminHome() {
           </div>
         ))}
       </div>
+      {orz && (
+        <p className="mt-4 text-sm text-ink-soft">
+          OwnerRez account: <strong className="text-ink">User ID {orz.id}</strong>
+          {orz.company ? ` · ${orz.company}` : ""}{orz.email ? ` · ${orz.email}` : ""}
+        </p>
+      )}
       {pending > 0 && <p className="mt-4 text-sm text-ink-soft">{pending} checkout(s) in progress or abandoned (holds release after 30 minutes).</p>}
 
       <h1 className="mt-10 text-3xl">Upcoming & current stays</h1>

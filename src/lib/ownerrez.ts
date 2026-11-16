@@ -245,3 +245,15 @@ export async function ownerRezStatus(homes: Property[]): Promise<{ ok: boolean; 
     return { ok: false, detail: `Error ${msg.slice(0, 300)}.${hint}` };
   }
 }
+
+// The connected OwnerRez account, for the host dashboard (support and channel setup ask for the user ID).
+export async function ownerRezAccount(): Promise<{ id: number; email?: string; company?: string } | null> {
+  if (!ownerRezEnabled) return null;
+  try {
+    const u = await call<{ id: number; email_address?: string; company_name?: string }>("/v2/users/me");
+    return { id: u.id, email: u.email_address, company: u.company_name };
+  } catch (err) {
+    console.error("[ownerrez] account lookup failed:", err);
+    return null;
+  }
+}
