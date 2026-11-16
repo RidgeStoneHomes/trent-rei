@@ -80,16 +80,23 @@ export function quoteStay(
   const nights = eachNight(checkIn, checkOut);
   const percent = stayDiscountPercent(property, nights.length);
   const floor = property.priceFloorCents ?? 0;
+  const launch = site.launchDiscount && checkIn <= site.launchDiscount.lastCheckIn ? site.launchDiscount : null;
 
   let nightlyCents = 0;
+  let afterStayCents = 0;
   let discountedCents = 0;
   for (const night of nights) {
     const rate = nightlyRate(property, night);
     nightlyCents += rate;
     // A discount can lower a night to the floor but never below it
-    discountedCents += Math.max(Math.min(rate, floor), Math.round(rate * (1 - percent / 100)));
+    const atFloor = (pct: number) => Math.max(Math.min(rate, floor), Math.round(rate * (1 - pct / 100)));
+    afterStayCents += atFloor(percent);
+    discountedCents += atFloor(percent + (launch && isWeekend(night) ? launch.percent : 0));
   }
-  const stayDiscountCents = nightlyCents - discountedCents;
+  const lengthOfStayCents = nightlyCents - afterStayCents;
+  const launchCents = afterStayCents - discountedCents;
+  // Stored together on the booking; shown as separate lines in the quote
+  const stayDiscountCents = lengthOfStayCents + launchCents;
 
   const cleaningCents = property.cleaningFeeCents;
   const petCents = opts.pets && property.petFeeCents ? property.petFeeCents : 0;
@@ -105,7 +112,8 @@ export function quoteStay(
   const lines = [
     { label: `${nights.length} night${nights.length === 1 ? "" : "s"} × avg $${(avg / 100).toFixed(0)}`, cents: nightlyCents },
   ];
-  if (stayDiscountCents) lines.push({ label: `${nights.length}-night stay discount (${percent}%)`, cents: -stayDiscountCents });
+  if (lengthOfStayCents) lines.push({ label: `${nights.length}-night stay discount (${percent}%)`, cents: -lengthOfStayCents });
+  if (launchCents && launch) lines.push({ label: `${launch.label} (${launch.percent}% off Fri & Sat)`, cents: -launchCents });
   lines.push({ label: "Cleaning & turndown", cents: cleaningCents });
   if (petCents) lines.push({ label: "Pet fee", cents: petCents });
   if (discountCents) lines.push({ label: "Referral savings", cents: -discountCents });

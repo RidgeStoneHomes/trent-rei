@@ -55,7 +55,19 @@ export const site = {
 
   // Announcement bar across the top of every guest page. It hides itself the day
   // after `endsOn`, so an expired offer never lingers. Set to null to turn it off.
-  promo: null as { label: string; text: string; href: string; endsOn: string } | null,
+  promo: {
+    label: "Launch pricing",
+    text: "10% off Friday and Saturday nights for stays through February 28",
+    href: "/ironwood-acres",
+    endsOn: "2027-02-28",
+  } as { label: string; text: string; href: string; endsOn: string } | null,
+
+  // Opening discount on Friday/Saturday nights for stays that begin on or before `lastCheckIn`.
+  // Never takes a night below the home's price floor. Mirror it in OwnerRez for VRBO
+  // (Settings > Discounts, Fri/Sat nights only). Set to null to turn it off.
+  launchDiscount: { percent: 10, lastCheckIn: "2027-02-28", label: "Launch pricing" } as
+    | { percent: number; lastCheckIn: string; label: string }
+    | null,
 
   // Real guest reviews only. The reviews section stays hidden until this has entries.
   reviews: [] as { quote: string; name: string; home: string }[],
