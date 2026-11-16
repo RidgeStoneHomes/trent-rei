@@ -287,6 +287,7 @@ export const properties: Property[] = [
       "Quiet hours 10 PM – 8 AM", // PLACEHOLDER: confirm quiet hours
       "No smoking indoors",
       "Park in the driveway only, never on the street or grass",
+      "Septic system: flush only toilet paper. No feminine products, wipes (even \"flushable\"), nicotine pouches, paper towels or cotton swabs",
     ],
     cameraDisclosure:
       "Exterior security cameras monitor the front door, the garage, and the left side of the house. There are no cameras inside the home.",
