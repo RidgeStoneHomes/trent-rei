@@ -1,10 +1,10 @@
-import { site, type Property } from "@/config/site";
+import { depositSentence, site, type Property } from "@/config/site";
 import { addDays, formatDate } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 
 // IMPORTANT: This is a starting template, not legal advice. Have a Texas attorney
 // review it before launch, then bump AGREEMENT_VERSION whenever the text changes.
-export const AGREEMENT_VERSION = "2026-10-v1";
+export const AGREEMENT_VERSION = "2026-11-v2";
 
 type AgreementInput = {
   property: Property;
@@ -67,6 +67,7 @@ export function renderAgreement(a: AgreementInput): { title: string; sections: {
         heading: "7. Damage & Security",
         body: [
           "Guest is responsible for any damage to the Property, its contents, or its grounds caused by Guest, their party, or their pets beyond normal wear and tear. Guest authorizes Host to charge the payment method on file for the reasonable cost of repairs, replacement, excessive cleaning, or missing items, with photo documentation provided.",
+          `${depositSentence()} Host will send a secure link to add the card for this hold. Guest authorizes Host to apply the deposit toward documented damage and remains responsible for costs beyond it.`,
           "Smoking or vaping indoors incurs a $500 cleaning fee.",
         ],
       },

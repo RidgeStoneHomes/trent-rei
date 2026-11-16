@@ -26,6 +26,9 @@ export const site = {
     checkOutTime: "11:00 AM",
     // Unpaid holds release after this many minutes
     holdMinutes: 30,
+    // Refundable damage deposit, held on the guest's card by OwnerRez (Rules > Security Deposits).
+    // Keep these numbers in sync with OwnerRez.
+    securityDeposit: { cents: 100000, heldDaysBefore: 2, releasedDaysAfter: 7 },
   },
 
   // Texas state hotel occupancy tax is 6%; add county/city rates for your address.
@@ -459,6 +462,13 @@ export const properties: Property[] = [
 // site shows an unnamed "Coming soon" card instead.
 export const listedProperties = properties.filter((p) => !p.comingSoon);
 export const hasComingSoon = properties.some((p) => p.comingSoon);
+
+// One sentence describing the security deposit, used on each home's page, checkout and the agreement
+export function depositSentence() {
+  const d = site.policies.securityDeposit;
+  const amount = (d.cents / 100).toLocaleString("en-US");
+  return `A $${amount} refundable security deposit is held on your card ${d.heldDaysBefore} days before arrival and released within ${d.releasedDaysAfter} days after checkout if there's no damage.`;
+}
 
 // Each home's own web address, e.g. reynoldsretreats.com/ironwood-acres (served by
 // /stays/[slug] through a rewrite in next.config.mjs). Use this for links and marketing.
