@@ -26,6 +26,8 @@ export const site = {
     checkOutTime: "11:00 AM",
     // Unpaid holds release after this many minutes
     holdMinutes: 30,
+    // Furthest arrival a guest can book, in days from today (match OwnerRez Rules > Booking Window)
+    bookingWindowDays: 180,
     // Refundable damage deposit, held on the guest's card by OwnerRez (Rules > Security Deposits).
     // Keep these numbers in sync with OwnerRez.
     securityDeposit: { cents: 100000, heldDaysBefore: 2, releasedDaysAfter: 7 },

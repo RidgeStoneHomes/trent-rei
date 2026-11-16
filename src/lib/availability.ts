@@ -59,7 +59,8 @@ export async function validateStay(
     };
   }
   if (nights > 30) return { ok: false, error: "For stays over 30 nights, please contact us directly." };
-  if (checkIn > addDays(todayLocal(), 540)) return { ok: false, error: "We take reservations up to 18 months out." };
+  if (checkIn > addDays(todayLocal(), site.policies.bookingWindowDays))
+    return { ok: false, error: `We take reservations up to ${Math.round(site.policies.bookingWindowDays / 30)} months out. Join the guest list to hear when later dates open.` };
   if (!Number.isInteger(guests) || guests < 1 || guests > property.maxGuests)
     return { ok: false, error: `This home sleeps up to ${property.maxGuests} guests.` };
 

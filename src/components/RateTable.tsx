@@ -9,11 +9,11 @@ function label(date: string) {
   return `${MONTHS[Number(m) - 1]} ${Number(d)}${y ? `, ${y}` : ""}`;
 }
 
-// Public rate card: yearly seasons in calendar order, then holidays dated in the next 18 months.
-export function RateTable({ property, today }: { property: Property; today: string }) {
+// Public rate card: yearly seasons in calendar order, then dated holidays up to the last bookable date.
+export function RateTable({ property, today, until }: { property: Property; today: string; until: string }) {
   const seasons = property.rateSeasons ?? [];
   if (seasons.length === 0) return null;
-  const horizon = `${Number(today.slice(0, 4)) + 2}${today.slice(4)}`;
+  const horizon = until;
   const yearly = seasons.filter((s) => s.from.length === 5).sort((a, b) => a.from.localeCompare(b.from));
   const dated = seasons
     .filter((s) => s.from.length === 10 && s.to >= today && s.from <= horizon)

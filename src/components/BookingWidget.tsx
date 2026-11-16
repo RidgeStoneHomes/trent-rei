@@ -23,6 +23,7 @@ function addDays(s: string, n: number) {
 export function BookingWidget({
   slug,
   today,
+  lastCheckIn,
   booked,
   maxGuests,
   minNights,
@@ -33,6 +34,7 @@ export function BookingWidget({
 }: {
   slug: string;
   today: string;
+  lastCheckIn: string; // furthest arrival date guests can book
   booked: string[];
   maxGuests: number;
   minNights: number;
@@ -45,13 +47,15 @@ export function BookingWidget({
   const bookedSet = useMemo(() => new Set(booked), [booked]);
   // Dates carried over from a search are only kept if they're actually bookable here
   const carried =
-    initial?.checkIn && initial.checkOut && initial.checkIn >= today && initial.checkIn < initial.checkOut && ![...bookedSet].some((d) => d >= initial.checkIn! && d < initial.checkOut!);
+    initial?.checkIn && initial.checkOut && initial.checkIn >= today && initial.checkIn <= lastCheckIn && initial.checkIn < initial.checkOut && ![...bookedSet].some((d) => d >= initial.checkIn! && d < initial.checkOut!);
   const [checkIn, setCheckIn] = useState<string | null>(carried ? initial!.checkIn! : null);
   const [checkOut, setCheckOut] = useState<string | null>(carried ? initial!.checkOut! : null);
   const [guests, setGuests] = useState(Math.min(maxGuests, Math.max(1, initial?.guests ?? 2)));
+  // The calendar pages forward only as far as the last bookable arrival month
+  const maxOffset = Math.max(0, (Number(lastCheckIn.slice(0, 4)) - Number(today.slice(0, 4))) * 12 + Number(lastCheckIn.slice(5, 7)) - Number(today.slice(5, 7)));
   // Open the calendar on the month of a carried-over check-in
   const [monthOffset, setMonthOffset] = useState(() =>
-    carried ? Math.min(16, (Number(initial!.checkIn!.slice(0, 4)) - Number(today.slice(0, 4))) * 12 + Number(initial!.checkIn!.slice(5, 7)) - Number(today.slice(5, 7))) : 0,
+    carried ? Math.min(maxOffset, (Number(initial!.checkIn!.slice(0, 4)) - Number(today.slice(0, 4))) * 12 + Number(initial!.checkIn!.slice(5, 7)) - Number(today.slice(5, 7))) : 0,
   );
   const [pets, setPets] = useState(0);
   const [quote, setQuote] = useState<QuoteResponse | null>(null);
@@ -91,6 +95,8 @@ export function BookingWidget({
 
   function dayState(day: string) {
     if (day < today) return "past";
+    // Arrivals beyond the booking window aren't offered (a checkout can still land after it)
+    if (day > lastCheckIn && (!checkIn || checkOut)) return "past";
     if (checkIn && day === checkIn) return "start";
     if (checkOut && day === checkOut) return "end";
     if (checkIn && checkOut && day > checkIn && day < checkOut) return "in";
@@ -133,7 +139,7 @@ export function BookingWidget({
         <p className="text-xs uppercase tracking-wider text-ink-soft">
           {checkIn && !checkOut ? "Select check-out" : "Select check-in"}
         </p>
-        <button type="button" className="rounded-full px-3 py-1 text-lg hover:bg-sand disabled:opacity-30" disabled={monthOffset >= 16} onClick={() => setMonthOffset((m) => m + 1)} aria-label="Next month">›</button>
+        <button type="button" className="rounded-full px-3 py-1 text-lg hover:bg-sand disabled:opacity-30" disabled={monthOffset >= maxOffset} onClick={() => setMonthOffset((m) => m + 1)} aria-label="Next month">›</button>
       </div>
 
       <div className="mt-3 grid gap-6 sm:grid-cols-2">

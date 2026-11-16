@@ -6,7 +6,7 @@ import { Media } from "@/components/Media";
 import { Gallery } from "@/components/Gallery";
 import { BookingWidget } from "@/components/BookingWidget";
 import { bookedNights } from "@/lib/availability";
-import { isIsoDate, todayLocal } from "@/lib/dates";
+import { addDays, isIsoDate, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import { lowestRate } from "@/lib/pricing";
 import { RateTable } from "@/components/RateTable";
@@ -160,7 +160,7 @@ export default async function PropertyPage({
             <Link href="/experiences" className="btn-brass mt-6">Learn more</Link>
           </div>
 
-          <RateTable property={property} today={todayLocal()} />
+          <RateTable property={property} today={todayLocal()} until={addDays(todayLocal(), site.policies.bookingWindowDays)} />
 
           <h2 className="mt-12 text-3xl">Good to know</h2>
           <div className="mt-5 grid gap-6 text-sm sm:grid-cols-3">
@@ -200,6 +200,7 @@ export default async function PropertyPage({
           <BookingWidget
             slug={property.slug}
             today={todayLocal()}
+            lastCheckIn={addDays(todayLocal(), site.policies.bookingWindowDays)}
             booked={booked}
             maxGuests={property.maxGuests}
             minNights={property.minNights}
