@@ -127,7 +127,7 @@ export const properties: Property[] = [
     summary:
       "Welcome to Ironwood Acres, a private 1-acre luxury estate with a fully fenced backyard, designed for ultimate group entertainment and relaxation near Lake Texoma.",
     story: [
-      "Five bedrooms, 4.5 baths (three of them en-suite), 4 king beds plus 2 queens, and room for 12, just 2 miles from Highport Marina. The huge backyard is lined with a beautiful 8-foot cedar fence, so the fun stays yours.",
+      "Five bedrooms, 4.5 baths (three of them en-suite), 4 king beds plus 2 queens, and room for 12, just 2 miles from Highport Marina. The huge backyard is enclosed by beautiful cedar fencing.",
       "Sink putts on the private green, soak in the 7-person hot tub, fire up the outdoor kitchen, and end the night at the stone fire pit beneath uplit trees. Inside, 16-foot vaulted ceilings rise over a floor-to-ceiling slate fireplace, and the professionally designed rooms are furnished with curated Pottery Barn pieces.",
       "Gather everyone around the custom 12-person dining table for a family dinner where nobody is stuck at the kids' table. When the sun goes down, the air-conditioned game room takes over. This is a house built for making memories together.",
     ],
@@ -237,7 +237,7 @@ export const properties: Property[] = [
           "Cornhole",
           "Paddle boards for the lake",
           "Lit pathways to a stone wood-burning fire pit ringed by uplit trees",
-          "Huge backyard lined with a beautiful 8' cedar fence",
+          "Huge backyard enclosed by beautiful cedar fencing",
         ],
       },
       {
