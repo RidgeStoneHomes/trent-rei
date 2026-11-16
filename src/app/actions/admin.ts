@@ -6,7 +6,9 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { endAdminSession, isAdmin, safeEqual, startAdminSession } from "@/lib/session";
 import { slugify } from "@/lib/codes";
-import { getProperty } from "@/config/site";
+import { getProperty, listedProperties } from "@/config/site";
+import { pushRatesToOwnerRez } from "@/lib/ownerrez";
+import { todayLocal } from "@/lib/dates";
 import { isIsoDate } from "@/lib/dates";
 
 async function guard() {
@@ -134,4 +136,16 @@ export async function toggleCodeRelease(form: FormData) {
   const b = await db.booking.findUniqueOrThrow({ where: { id }, select: { codeReleasedAt: true } });
   await db.booking.update({ where: { id }, data: { codeReleasedAt: b.codeReleasedAt ? null : new Date() } });
   revalidatePath("/admin");
+}
+
+// Sends the website's nightly rates and minimum stays to OwnerRez (next 18 months)
+export async function syncOwnerRezRates(_prev: { error: string } | null, _form: FormData) {
+  await guard();
+  try {
+    await pushRatesToOwnerRez(listedProperties, todayLocal(), 540);
+    return { error: "" };
+  } catch (err) {
+    console.error("[admin] OwnerRez rate sync failed:", err);
+    return { error: `OwnerRez didn't accept the rates: ${err instanceof Error ? err.message.slice(0, 300) : String(err)}` };
+  }
 }

@@ -3,7 +3,8 @@ import { db } from "@/lib/db";
 import { formatRange, todayLocal } from "@/lib/dates";
 import { formatMoney } from "@/lib/money";
 import { tripTimeline } from "@/lib/trip";
-import { cancelBooking, toggleCodeRelease } from "@/app/actions/admin";
+import { cancelBooking, syncOwnerRezRates, toggleCodeRelease } from "@/app/actions/admin";
+import { ActionForm, SubmitButton } from "@/components/forms";
 import { codeRelease, formatLocalTime } from "@/lib/arrival";
 import { ownerRezAccount } from "@/lib/ownerrez";
 
@@ -44,6 +45,12 @@ export default async function AdminHome() {
           OwnerRez account: <strong className="text-ink">User ID {orz.id}</strong>
           {orz.company ? ` · ${orz.company}` : ""}{orz.email ? ` · ${orz.email}` : ""}
         </p>
+      )}
+      {orz && (
+        <ActionForm action={syncOwnerRezRates} className="mt-3" successText="Rates sent. OwnerRez now has the website's nightly rates and minimum stays for the next 18 months.">
+          <SubmitButton className="btn-ghost !py-2 text-sm" pendingText="Sending rates to OwnerRez…">Send website rates to OwnerRez</SubmitButton>
+          <p className="mt-1 text-xs text-ink-soft">Run again whenever you change prices on the website.</p>
+        </ActionForm>
       )}
       {pending > 0 && <p className="mt-4 text-sm text-ink-soft">{pending} checkout(s) in progress or abandoned (holds release after 30 minutes).</p>}
 

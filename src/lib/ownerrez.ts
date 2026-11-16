@@ -257,3 +257,33 @@ export async function ownerRezAccount(): Promise<{ id: number; email?: string; c
     return null;
   }
 }
+
+// Copies the website's nightly rates and minimum stays into OwnerRez for the next 18 months,
+// so VRBO/Airbnb (fed by OwnerRez) price from the same numbers as the website.
+// OwnerRez's per-channel rate adjustment then adds each channel's markup on top.
+export async function pushRatesToOwnerRez(homes: Property[], from: string, days: number) {
+  if (!ownerRezEnabled) throw new Error("OwnerRez isn't connected (OWNERREZ_EMAIL / OWNERREZ_TOKEN).");
+  const { nightlyRate, seasonFor } = await import("./pricing");
+  const { addDays } = await import("./dates");
+  const all = await listProperties();
+  const sent: string[] = [];
+  for (const home of homes) {
+    const propertyId = await ownerRezPropertyId(home, all);
+    if (!propertyId) throw new Error(`No OwnerRez property matches "${home.name}".`);
+    const rows = Array.from({ length: days }, (_, i) => {
+      const date = addDays(from, i);
+      return {
+        property_id: propertyId,
+        date,
+        amount: nightlyRate(home, date) / 100,
+        currency: "USD",
+        min_nights: Math.max(home.minNights, seasonFor(home, date)?.minNights ?? 0),
+      };
+    });
+    for (let i = 0; i < rows.length; i += 100) {
+      await call("/v2/spotrates", { method: "PATCH", body: rows.slice(i, i + 100) });
+    }
+    sent.push(`${home.name}: ${rows.length} nights`);
+  }
+  return sent;
+}
