@@ -284,7 +284,7 @@ export const properties: Property[] = [
       "Maximum 12 guests",
       "No parties or events",
       "No pets",
-      "Quiet hours 10 PM – 8 AM", // PLACEHOLDER: confirm quiet hours
+      "Quiet hours 10 PM – 8 AM. This is a quiet neighborhood, so please keep music and outdoor voices low at night",
       "No smoking indoors",
       "Park in the driveway only, never on the street or grass",
       "Septic system: flush only toilet paper. No feminine products, wipes (even \"flushable\"), nicotine pouches, paper towels or cotton swabs",
