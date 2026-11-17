@@ -224,6 +224,7 @@ export const properties: Property[] = [
         items: [
           "Air-conditioned converted garage",
           "85\" TV and lounge sofa",
+          "Full-size stand-up 2-player arcade with trackball, loaded with classic games",
           "Infinity 32\" electronic game table: play the free games, or feel free to buy and download new ones",
           "Poker table for 8",
           "Foosball",
@@ -284,6 +285,7 @@ export const properties: Property[] = [
       "Poker table for 8",
       "Foosball & bumper pool",
       "Infinity 32\" electronic game table",
+      "Stand-up 2-player arcade",
       "Frisbee golf (2 baskets)",
       "Cornhole",
       "Paddle boards",
