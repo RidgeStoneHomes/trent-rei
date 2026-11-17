@@ -156,7 +156,7 @@ export const properties: Property[] = [
     minNights: 2,
     baseRateCents: 62500, // fallback for any night outside the seasons below
     weekendRateCents: 87500,
-    cleaningFeeCents: 32500,
+    cleaningFeeCents: 20000,
     // Seasonal calendar: owners' $550 weekday minimum, with weekends priced near the
     // Yellowpine Retreat comp (~$800–$900/night). Based on the Nov 2026 pricing report.
     rateSeasons: [
