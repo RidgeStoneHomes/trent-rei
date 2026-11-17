@@ -21,6 +21,7 @@ export function HomeJsonLd() {
           telephone: site.phone,
           address: { "@type": "PostalAddress", addressLocality: "Pottsboro", addressRegion: "TX", addressCountry: "US" },
           areaServed: "Lake Texoma",
+          sameAs: [site.facebook, site.instagram].filter(Boolean),
           checkinTime: site.policies.checkInTime,
           checkoutTime: site.policies.checkOutTime,
           containsPlace: listedProperties.map((p) => ({

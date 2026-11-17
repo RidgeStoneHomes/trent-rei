@@ -46,7 +46,8 @@ export function Footer() {
           <a href={`tel:${site.phone.replace(/[^\d+]/g, "")}`} className="link-draw block w-fit py-1 hover:text-sand">Call {site.contactName}: {site.phone}</a>
           <a href={`mailto:${site.email}`} className="link-draw block w-fit break-all py-1 hover:text-sand">{site.email}</a>
           <p className="py-1">{site.region}</p>
-          {site.instagram && <a href={site.instagram} className="link-draw block w-fit py-1 hover:text-sand">Instagram</a>}
+          {site.facebook && <a href={site.facebook} target="_blank" rel="noopener" className="link-draw block w-fit py-1 hover:text-sand">Facebook</a>}
+          {site.instagram && <a href={site.instagram} target="_blank" rel="noopener" className="link-draw block w-fit py-1 hover:text-sand">Instagram</a>}
         </div>
       </div>
       <div className="border-t border-sand/10 py-6 text-center text-xs text-sand/50">

@@ -13,6 +13,7 @@ export const site = {
   contactName: "Michelle",
   phone: "(682) 532-6007",
   instagram: "", // add your Instagram URL to show it in the footer
+  facebook: "https://www.facebook.com/profile.php?id=61596292037500",
   timeZone: "America/Chicago",
   currency: "usd",
 
