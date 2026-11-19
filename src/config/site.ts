@@ -480,6 +480,12 @@ export const properties: Property[] = [
 export const listedProperties = properties.filter((p) => !p.comingSoon);
 export const hasComingSoon = properties.some((p) => p.comingSoon);
 
+// The cancellation policy in one clear sentence, used everywhere it's shown
+export function cancellationSentence() {
+  const d = site.policies.refundWindowDays;
+  return `Cancel ${d} or more days before check-in for a full refund. Cancellations made less than ${d} days before check-in are non-refundable.`;
+}
+
 // One sentence describing the security deposit, used on each home's page, checkout and the agreement
 export function depositSentence() {
   const d = site.policies.securityDeposit;

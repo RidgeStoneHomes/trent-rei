@@ -1,4 +1,4 @@
-import { site } from "@/config/site";
+import { cancellationSentence, site } from "@/config/site";
 
 // Shown on the homepage and published as FAQPage structured data for search engines.
 export const faqs: { q: string; a: string }[] = [
@@ -16,7 +16,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What's the cancellation policy?",
-    a: `Full refund up to ${site.policies.refundWindowDays} days before check-in. After that the stay is non-refundable, and that's also when your Insider Portal unlocks.`,
+    a: `${cancellationSentence()} That's also when your Insider Portal unlocks.`,
   },
   {
     q: "What is the Insider Portal?",

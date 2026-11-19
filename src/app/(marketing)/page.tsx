@@ -19,7 +19,7 @@ const delay = (ms: number) => ({ "--reveal-delay": `${ms}ms` }) as React.CSSProp
 const reasons = [
   { title: "Our best rate, direct", body: "Booking here always gets you our lowest price and a direct line to your hosts." },
   { title: "A real local host", body: `Call or text ${site.contactName} directly, whether it's a dinner tip or an extra bundle of firewood.` },
-  { title: "Flexible cancellation", body: `Full refund up to ${site.policies.refundWindowDays} days before arrival.` },
+  { title: "Clear cancellation", body: `Full refund when you cancel ${site.policies.refundWindowDays} or more days before arrival.` },
 ];
 
 const journey = [
@@ -63,7 +63,7 @@ export default function HomePage() {
           {[
             { value: <CountUp to={totalBedrooms} />, label: "Bedrooms" },
             { value: <CountUp to={totalGuests} />, label: "Guests" },
-            { value: <CountUp to={site.policies.refundWindowDays} />, label: "Days of free cancellation" },
+            { value: <CountUp to={site.policies.refundWindowDays} />, label: "Days' notice for a full refund" },
             { value: <CountUp to={1} />, label: "Private acre" },
           ].map((s, i) => (
             <div key={s.label} data-reveal style={delay(i * 90)}>

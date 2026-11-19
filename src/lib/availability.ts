@@ -58,7 +58,7 @@ export async function validateStay(
         : `This home has a ${minimum.min}-night minimum.`,
     };
   }
-  if (nights > 30) return { ok: false, error: "For stays over 30 nights, please contact us directly." };
+  if (nights > 30) return { ok: false, error: "For stays over 30 nights, see Extended Stays (reynoldsretreats.com/extended-stays) for monthly rates." };
   if (checkIn > addDays(todayLocal(), site.policies.bookingWindowDays))
     return { ok: false, error: `We take reservations up to ${Math.round(site.policies.bookingWindowDays / 30)} months out. Join the guest list to hear when later dates open.` };
   if (!Number.isInteger(guests) || guests < 1 || guests > property.maxGuests)

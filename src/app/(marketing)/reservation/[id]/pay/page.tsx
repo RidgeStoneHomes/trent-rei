@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { depositSentence, site } from "@/config/site";
+import { cancellationSentence, depositSentence, site } from "@/config/site";
 import { loadReservation, bookingLines } from "@/lib/reservation";
 import { startPayment } from "@/app/actions/booking";
 import { ActionForm, SubmitButton } from "@/components/forms";
@@ -26,7 +26,7 @@ export default async function PayPage({ params }: { params: Promise<{ id: string
         <div className="card mt-8 !bg-white">
           <p className="font-medium">Pay in full · {formatMoney(booking.totalCents, { cents: true })}</p>
           <p className="mt-2 text-sm text-ink-soft">
-            Fully refundable until {site.policies.refundWindowDays} days before check-in. Payments are processed securely by Stripe — we never see your card number.
+            {cancellationSentence()} Payments are processed securely by Stripe — we never see your card number.
           </p>
           <p className="mt-2 text-sm text-ink-soft">{depositSentence()} We'll email you a secure link to add the card for this hold before your stay.</p>
           {paymentsAvailable ? (

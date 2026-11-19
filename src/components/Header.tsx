@@ -9,6 +9,7 @@ const nav = [
   { href: "/stays", label: "The Homes" },
   { href: "/experiences", label: "Insider Perks" },
   { href: "/#guide", label: "Area Guide" },
+  { href: "/extended-stays", label: "Extended Stays" },
   { href: "/share", label: "Share the Lake" },
   { href: "/#faq", label: "FAQ" },
 ];

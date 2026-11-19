@@ -31,6 +31,7 @@ export function Footer() {
             <Link key={p.slug} href={propertyPath(p.slug)} className="link-draw block w-fit py-1 hover:text-sand">{p.name}</Link>
           ))}
           <Link href="/stays" className="link-draw block w-fit py-1 hover:text-sand">Check availability</Link>
+          <Link href="/extended-stays" className="link-draw block w-fit py-1 hover:text-sand">Extended & corporate stays</Link>
         </div>
         <div className="text-sm">
           <p className="eyebrow mb-3 !text-brass-light">Guests</p>

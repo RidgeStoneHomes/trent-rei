@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { depositSentence, getProperty, hasComingSoon, listedProperties, propertyPath, site } from "@/config/site";
+import { cancellationSentence, depositSentence, getProperty, hasComingSoon, listedProperties, propertyPath, site } from "@/config/site";
 import { ComingSoonCard } from "@/components/ComingSoonCard";
 import { Media } from "@/components/Media";
 import { Gallery } from "@/components/Gallery";
@@ -170,7 +170,7 @@ export default async function PropertyPage({
             </div>
             <div>
               <p className="font-medium">Cancellation</p>
-              <p className="mt-1 text-ink-soft">Full refund up to {site.policies.refundWindowDays} days before check-in.</p>
+              <p className="mt-1 text-ink-soft">{cancellationSentence()}</p>
               <p className="mt-3 font-medium">Security deposit</p>
               <p className="mt-1 text-ink-soft">{depositSentence()}</p>
             </div>
