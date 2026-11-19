@@ -48,7 +48,7 @@ export function AvailabilityPill({ today, maxGuests }: { today: string; maxGuest
           className={`absolute inset-0 bg-ink/60 backdrop-blur-sm transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}
         />
         <div
-          className={`absolute inset-x-0 bottom-0 mx-auto max-w-3xl rounded-t-3xl bg-sand p-5 pb-8 shadow-2xl transition-transform duration-500 ease-out sm:bottom-8 sm:rounded-3xl ${
+          className={`absolute inset-x-0 bottom-0 mx-auto max-h-[92svh] max-w-3xl overflow-y-auto overscroll-contain rounded-t-3xl bg-sand p-5 pb-8 shadow-2xl transition-transform duration-500 ease-out sm:bottom-8 sm:rounded-3xl ${
             open ? "translate-y-0" : "translate-y-[110%] sm:translate-y-[130%]"
           }`}
         >
